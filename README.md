@@ -2,10 +2,11 @@
 
 Ferramenta web standalone para projetar instalações de eletrônica marítima Garmin, criada para a Wonder BOAT (Lucas Araújo Souza · IN07169).
 
-Inspirada no [System Builder da Navico](https://systembuilder.navico.com), mas focada em produtos Garmin, com cálculos de NMEA 2000 conforme a referência técnica oficial Garmin.
+Inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos para auxílio a navegação e pesca esportiva, mas focada em produtos da marca Garmin, com cálculos de NMEA 2000 conforme a referência técnica oficial Garmin publicada na web.
 
 🔗 **Acesse online:** [wonderboat-ai.github.io/WBSystemBuilder](https://wonderboat-ai.github.io/WBSystemBuilder/)
 📦 **Repositório:** [github.com/wonderboat-ai/WBSystemBuilder](https://github.com/wonderboat-ai/WBSystemBuilder)
+🏷️ **Versão atual:** `v2026.07.24` (ver `APP_VERSION` em `src/app.js`)
 
 > Publicado no GitHub como **WB System Builder** — nome do repositório da família de ferramentas Wonder BOAT (este app cobre especificamente o catálogo Garmin; próximos: Raymarine, Simrad, Icom).
 
@@ -71,12 +72,12 @@ WBSystemBuilder/
 ## Roadmap
 
 Veja seção "Frentes pendentes" em `CLAUDE.md`:
-1. Revisar os 11 conflitos de SKU sinalizados em `scripts/sku_corrections_log.json` (`skipped_deliberately`)
-2. Drag pra reordenar devices no N2K Backbone
-3. Split visual Branch A/B quando power tap não está no extremo
-4. Wireless gateway (Yacht Devices YDWG-02, iKommunicate)
-5. Tools (calculadoras avulsas — voltage drop, antenna range, banco de baterias)
-6. Versionamento de catálogo (`version: "AAAA.MM"` + `sourceAuthority`)
+1. Drag pra reordenar devices no N2K Backbone
+2. Split visual Branch A/B quando power tap não está no extremo
+3. Wireless gateway (Yacht Devices YDWG-02, iKommunicate)
+4. Tools (calculadoras avulsas — voltage drop, antenna range, banco de baterias)
+5. Versionamento de catálogo (`version: "AAAA.MM"` + `sourceAuthority`)
+6. Completar os SKUs sem foto restantes (`scripts/photo_failures.json`)
 
 ## Licença
 

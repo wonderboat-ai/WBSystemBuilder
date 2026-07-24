@@ -90,6 +90,14 @@ UI, mensagens, comentários de código relevantes ao usuário, todo conteúdo de
 - Marca d'água Wonder BOAT (leme + texto) opacity 0.04-0.07 nas páginas de cliente
 - Bordões patrimoniais: "600 projetos. Zero improviso." (não inventar novos)
 
+### REGRA #6 — Versão do build
+App não tem etapa de build/CI (zero build, ver Stack). A "versão" é uma constante `APP_VERSION` no topo de
+`src/app.js` (formato `AAAA.MM.DD`, data do último release relevante), exibida discretamente no header
+(`#app-version-tag`) e no toast de boot (`showBootOK`). **Bump manual sempre que fizer uma mudança relevante**
+(correção de catálogo, feature nova, fix de regra de validação) — não bump em ajustes triviais de texto/CSS.
+`package.json` tem seu próprio `version` (semver, `0.x.0`) pra metadata npm — bump junto, mas são convenções
+independentes (não precisa bater o número exato).
+
 ## Como adicionar um novo SKU Garmin
 
 Em `src/data.js`, adicionar entrada no `CATALOG`:

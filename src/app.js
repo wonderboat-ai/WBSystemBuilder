@@ -1,3 +1,6 @@
+/* === Versão do build (bump manual a cada release relevante — sem etapa de build/CI) === */
+const APP_VERSION = '2026.07.24';
+
 /* === Boot error catcher (deve rodar primeiro) === */
 /* === Captura erros antes de qualquer coisa, exibe visível na tela === */
 window.__bootErrors = [];
@@ -23,7 +26,7 @@ function showErrPanel(){
 function showBootOK(catN, adpN){
   var p = document.createElement('div');
   p.style.cssText='position:fixed;bottom:6px;left:6px;background:#3ec78f;color:#000;padding:4px 10px;font-family:monospace;font-size:10px;z-index:99999;border-radius:3px;opacity:.85';
-  p.textContent='✓ '+catN+' equipamentos · '+adpN+' adapters · 11 regras · Item Livre habilitado';
+  p.textContent='✓ v'+APP_VERSION+' · '+catN+' equipamentos · '+adpN+' adapters · 11 regras · Item Livre habilitado';
   document.body.appendChild(p);
   setTimeout(function(){p.style.display='none'},6000);
 }
@@ -2140,6 +2143,8 @@ function init(){
     bindGlobal();
     bindWizard();
     render();
+    var vtag = document.getElementById('app-version-tag');
+    if(vtag) vtag.textContent = 'v'+APP_VERSION;
     if(typeof showBootOK==='function') showBootOK(CATALOG.length, ADAPTERS.length);
   } catch(e) {
     window.__bootErrors.push('init() falhou: ' + e.message + ' @ ' + (e.stack||'').split('\n')[1]);
