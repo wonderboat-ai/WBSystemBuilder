@@ -2,7 +2,7 @@
 
 ## O que é este projeto
 
-Ferramenta web standalone (single-user, offline) que replica conceitualmente o **System Builder da Navico** — mas focada em **eletrônica marítima Garmin**. Permite ao instalador (Lucas Araújo, Wonder BOAT, IN07169) montar projetos completos de instalação eletrônica de barco com:
+Ferramenta web standalone (single-user, offline) inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos para auxílio a navegação e pesca esportiva — mas focada em **eletrônica marítima Garmin**. Permite ao instalador (Lucas Araújo, Wonder BOAT, IN07169) montar projetos completos de instalação eletrônica de barco com:
 
 - Catálogo Garmin Marine (153 devices + 22 adapters/cabos cobrindo MFD/Radar/Sonar/Autopilot/VHF/AIS/Network/Sensors/Audio/TrollingMotor/Camera/Antenna)
 - Canvas drag-and-drop livre com 4 vistas: Tudo / N2K Backbone estruturada / Ethernet hub-and-spoke / Energia
@@ -11,7 +11,7 @@ Ferramenta web standalone (single-user, offline) que replica conceitualmente o *
 - Validação automática contra normas NMEA 2000 (R-N2K-01..03), Garmin BlueNet (R-BN-01), Panoptix (R-PANO-01), PoE (R-POE-01), Radar (R-RADAR-01), Autopilot (R-AP-01), VHF DSC (R-VHF-01), J1939 (R-J1939-01), porta sobrecarregada (R-DUP-01) e cabo sem comprimento (R-CABLE-01)
 - Cálculo de **Power Use** (12V/24V Battery+Max)
 - Cálculo de **N2K Network LEN** com voltage drop usando fórmula oficial Garmin (R = 0.053 Ω/m, drop ≤ 1.67V)
-- Vista N2K Backbone vertical estilo Navico (T-Joiners, drops com comprimento editável, voltage por nó com cor semafórica)
+- Vista N2K Backbone vertical estruturada profissional (T-Joiners, drops com comprimento editável, voltage por nó com cor semafórica)
 - 3 modos de impressão: Slide Cliente (A4 paisagem), A3 Técnico (instalador), Lista de Cabos (A4)
 - Item Livre (equipamentos não-Garmin de outras marcas)
 - Wizard inicial 3 perguntas (tipo / comprimento / foco)
@@ -85,9 +85,15 @@ UI, mensagens, comentários de código relevantes ao usuário, todo conteúdo de
 ### REGRA #5 — Identidade Wonder BOAT
 - Tom: maduro, técnico-premium, sábio + guardião do setor náutico
 - Tipografia print: serif Georgia para títulos, Helvetica para metadados, Menlo/Consolas para SKUs e medidas
-- Cores: dourado `#d4a64a` (accent Wonder BOAT), azul `#1f5dc4`/`#5b8df6` (Garmin)
+- Cores: dourado `#d4a64a` (accent Wonder BOAT), azul `#1f5dc4`/`#5b8df6` (Garmin), teal `#3BC6D6` (logo/marca Wonder HUB.AI)
+- Logo oficial: `favicon.svg` (leme de 8 raios + dial de radar/sonar central) — usado como favicon, no header (`.brand-logo`) e
+  reimplementado em `#000` como marca d'água (`.wb-logo-mark`) no PDF Cliente. Reaproveitar esse SVG (não recriar) sempre que
+  precisar do logo em novo lugar — só ajustar cor/opacity via CSS.
 - Selo institucional circular "WONDER BOAT · IN07169" em todos os PDFs
-- Marca d'água Wonder BOAT (leme + texto) opacity 0.04-0.07 nas páginas de cliente
+- Marca d'água Wonder BOAT (logo + texto) opacity 0.04-0.07 nas páginas de cliente
+- Atribuição de empresa nos rodapés de impressão (A3/Lista de Cabos): `proj.company` default `'Wonder BOAT | Wonder HUB.AI'`
+- **Nunca mencionar concorrentes por nome** (Navico, Simrad, Lowrance, B&G) em nenhum lugar — código, comentários, docs, UI. Usar
+  linguagem genérica ("estilo profissional", "layout estruturado") quando precisar descrever uma inspiração de design.
 - Bordões patrimoniais: "600 projetos. Zero improviso." (não inventar novos)
 
 ### REGRA #6 — Versão do build
@@ -198,16 +204,17 @@ python3 -m http.server 8080
 
 ## Histórico de decisões importantes
 
-- **2026-05-02**: Versão v1 multi-marca descontinuada em favor de apps separados por marca (Garmin primeiro, próximos: Raymarine, Simrad, Icom)
+- **2026-05-02**: Versão v1 multi-marca descontinuada em favor de apps separados por marca (Garmin primeiro, próximos: Raymarine, Icom)
 - **2026-05-02**: Orçamento (BOM/markup) removido — foco em diagrama de instalação técnica + lista de cabos
 - **2026-05-03**: Fórmula voltage drop migrada de chute (0.08 Ω/m) para padrão Garmin oficial (0.053 Ω/m)
-- **2026-05-03**: Vista N2K Backbone estruturada implementada (substitui filtro simples por layout vertical estilo Navico)
+- **2026-05-03**: Vista N2K Backbone estruturada implementada (substitui filtro simples por layout vertical profissional)
 - **2026-05-03**: Projeto modularizado em `data.js + app.js + styles.css + index.html` para edição via Claude Code
 - **2026-07-24**: Catálogo estendido de ~83 pra 153 devices + 22 adapters via `data-extension.js` (pesquisa profunda por categoria, PNs corrigidos, ~60 SKUs novos)
 - **2026-07-24**: Repositório publicado no GitHub (`wonderboat-ai/garmin-system-builder`), depois renomeado por Lucas pra `wonderboat-ai/WBSystemBuilder` + GitHub Pages ativado
 - **2026-07-24**: Vista Ethernet hub-and-spoke implementada + auto-hide/dim por vista + toggle Foto/Silhueta com banco de imagens (`src/images.js`, `scripts/fetch_photos.py`)
 - **2026-07-24**: Banco de fotos ampliado de 32 pra 164/175 SKUs (94%) via pesquisa em paralelo (23 agentes). Pesquisa revelou 36 SKUs errados no catálogo original — todos corrigidos com fonte oficial cruzada (ver `scripts/sku_corrections_log.json`). 11 itens ficaram com conflito não resolvido, aguardando revisão do Lucas.
 - **2026-07-24**: Os 11 conflitos de SKU acima foram revisados e resolvidos (8 agentes de pesquisa em paralelo, fontes cruzadas garmin.com + revendedores). Resultado: 2 itens removidos do catálogo por serem produtos fantasma ("Reactor 40 for Trim Tabs" tinha SKU de um relógio Garmin Instinct; "VHF 315 AIS" não existe — o SKU real é do VHF 315i), 1 item split em 3 variantes por comprimento de eixo (GT56UHD-TR 48"/63"/75"), demais tiveram SKU corrigido ou reclassificado (GMR Fantom 124, LVS32, GT56UHD-IH→TH, Force Kraken 87"→90", ECHOMAP UHD2 64cv→UHD 64cv 1ª geração, GNX Wireless Sail Pack, gWind Wireless, YDEM-01→YDEG-04N, cabo BlueNet 30m→12m). Detalhes completos em `scripts/sku_corrections_log.json` (chave `revised_2026_07_24`). `scripts/photo_failures.json` e `scripts/extra_skus.json` atualizados com os ids/SKUs corrigidos.
+- **2026-07-24**: Logo oficial Wonder BOAT criado (`favicon.svg` — leme 8 raios + dial radar/sonar, teal `#3BC6D6`), aplicado como favicon, logo do header (`.brand-logo`) e marca d'água do PDF Cliente (substituindo o antigo `wb-anchor`/bússola por `wb-logo-mark`). Atribuição de empresa nos rodapés de impressão passou a `'Wonder BOAT | Wonder HUB.AI'`. Todas as menções a concorrentes (Navico/Simrad/Lowrance/B&G) removidas de código, comentários e docs — ver REGRA #5. PDF A3 Técnico passou de 3 pra 4 páginas (Tudo/Ethernet/N2K Backbone/Energia, uma por vista do canvas). Corrigido bug de crash "Cannot read properties of undefined (reading 'deviceId')" — causa raiz era `state.ui.pendingConnection` não limpo ao deletar o node de origem de uma conexão pendente; centralizado num helper `clearPendingConnection()` chamado em todos os pontos que removem nodes ou trocam de projeto. Inspector também ganhou tratamento pra device órfão (id de catálogo que não existe mais, ex: projeto salvo antes de uma correção de SKU) em vez de crashar.
 
 ## Artefatos de auditoria (não deletar)
 

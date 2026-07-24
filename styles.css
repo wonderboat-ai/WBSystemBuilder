@@ -31,7 +31,9 @@ input,select,textarea{font-family:inherit;background:var(--bg);border:1px solid 
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
 .app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 header{display:flex;align-items:center;gap:14px;padding:8px 14px;background:var(--bg-2);border-bottom:1px solid var(--line);flex:0 0 auto}
-.brand{display:flex;flex-direction:column;line-height:1.1}
+.brand{display:flex;flex-direction:row;align-items:center;gap:9px;line-height:1.1}
+.brand-logo{width:34px;height:34px;flex:0 0 auto;display:block}
+.brand-text{display:flex;flex-direction:column}
 .brand .b1{font-weight:700;letter-spacing:.18em;font-size:13px;color:var(--accent)}
 .brand .b2{font-size:9px;letter-spacing:.3em;color:var(--text-muted);font-weight:500;margin-top:2px}
 .brand .b3{font-size:9px;letter-spacing:.18em;color:var(--garmin-accent);font-weight:700;margin-top:1px}
@@ -152,7 +154,7 @@ main{display:flex;flex:1;min-height:0}
 .canvas-legend .lg-swatch{width:18px;height:3px;border-radius:1px}
 .canvas-legend .lg-swatch.dashed{background:transparent !important;border-top:2px dashed currentColor}
 
-/* ============ PRINT PAGES — refatorado pra parecer com SIMRAD reference ============ */
+/* ============ PRINT PAGES — refatorado pra padrão técnico profissional ============ */
 .print-page{display:none}
 @media print {
   body{background:#fff;color:#000;font-family:Georgia,'Times New Roman',serif}
@@ -182,7 +184,7 @@ main{display:flex;flex:1;min-height:0}
   pointer-events:none;text-align:center;line-height:.9;width:100%;font-family:Helvetica,Arial,sans-serif
 }
 .print-cliente .wb-watermark small{display:block;font-size:14pt;letter-spacing:.4em;font-weight:500;margin-top:6pt;opacity:.7}
-.print-cliente .wb-anchor{
+.print-cliente .wb-logo-mark{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:340pt;height:340pt;opacity:.07;pointer-events:none
 }

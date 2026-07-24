@@ -408,7 +408,7 @@ const ADAPTERS = [
 ];
 
 /* =========================================================================
-   ZONAS PADRÃO — agrupamentos visuais usados nos PDFs SIMRAD do Lucas
+   ZONAS PADRÃO — agrupamentos visuais usados nos PDFs técnicos do Lucas
    ========================================================================= */
 const DEFAULT_ZONES = [
   {name:'LEFT HELM',color:'#1d3557'},

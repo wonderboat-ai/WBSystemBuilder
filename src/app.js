@@ -65,7 +65,7 @@ function emptyProject(){
     name:'Novo Projeto',client:'',vessel:'',
     date:new Date().toISOString().slice(0,10),
     nodes:[],edges:[],zones:[],freeItems:[],
-    notes:'',installer:'Lucas de Araújo Souza',cert:'IN07169',company:'Wonder BOAT'
+    notes:'',installer:'Lucas de Araújo Souza',cert:'IN07169',company:'Wonder BOAT | Wonder HUB.AI'
   };
 }
 
@@ -175,7 +175,13 @@ function newProject(){
   // abre wizard automaticamente
   setTimeout(openWizard,100);
 }
-function resetSelection(){state.ui.selectedNode=null;state.ui.selectedEdge=null;state.ui.selectedZone=null}
+function resetSelection(){state.ui.selectedNode=null;state.ui.selectedEdge=null;state.ui.selectedZone=null;clearPendingConnection()}
+function clearPendingConnection(){
+  if(state.ui.pendingConnection){
+    state.ui.pendingConnection=null;
+    document.getElementById('canvas')?.classList.remove('connecting');
+  }
+}
 
 /* =================== RENDER =================== */
 function render(){renderHeader();renderLibrary();renderCanvas();renderInspector();renderLegend()}
@@ -399,6 +405,7 @@ function renderFreeItemsPanel(list){
         return (fn?.deviceId!==fid && tn?.deviceId!==fid);
       });
       state.project.nodes=state.project.nodes.filter(n=>n.deviceId!==fid);
+      clearPendingConnection();
       render();
     });
   });
@@ -510,7 +517,7 @@ function getNodePortPositions(node){
 
 
 
-/* =================== N2K BACKBONE VIEW ESTILO NAVICO =================== */
+/* =================== N2K BACKBONE VIEW ESTRUTURADA =================== */
 function buildN2kBackbone(){
   // pega devices N2K do projeto
   const all = state.project.nodes.map(n=>{
@@ -730,7 +737,7 @@ function _openInlineEditor(uid, current){
   });
 }
 
-/* =================== ETHERNET VIEW ESTILO NAVICO ===================
+/* =================== ETHERNET VIEW ESTRUTURADA ===================
    Vista hub-and-spoke: identifica switch(es) central(is), distribui devices
    Ethernet ao redor com cabos rotulados (PN + comprimento). Inclui cabling
    list lateral. Análoga à renderN2kBackboneView mas sem voltage drop / LEN.
@@ -966,7 +973,7 @@ function isN2kInfraOnly(dev){
 }
 
 function renderCanvas(){
-  // Se filtro é N2K, usa vista estruturada estilo Navico
+  // Se filtro é N2K, usa vista estruturada dedicada
   if(state.ui.canvasFilter === 'n2k'){
     renderN2kBackboneView();
     return;
@@ -999,7 +1006,7 @@ function renderCanvas(){
   const filterFn = (() => {
     const f = state.ui.canvasFilter;
     if(f==='all') return ()=>true;
-    if(f==='ethernet') return e=>['gmn','bluenet','eth-generic','eth-ray','eth-navico','eth-furuno'].includes(PORT_TYPES[e.type]?.group);
+    if(f==='ethernet') return e=>['gmn','bluenet','eth-generic','eth-ray','eth-furuno'].includes(PORT_TYPES[e.type]?.group);
     if(f==='n2k') return e=>edgeIsType(e,'n2k');
     if(f==='power') return e=>['pwr12','pwr24'].includes(PORT_TYPES[e.type]?.group);
     return ()=>true;
@@ -1138,7 +1145,14 @@ function renderInspector(){
   // Selected node
   if(state.ui.selectedNode){
     const node=state.project.nodes.find(n=>n.uid===state.ui.selectedNode);
-    if(node){
+    if(node && !getDeviceById(node.deviceId)){
+      html+=`<div class="inspector-section"><h4>Item Selecionado</h4>
+        <div style="padding:8px 10px;background:#3a1a1a;border-left:2px solid #e05a5a;font-size:11px;color:#e0a0a0">
+          Dispositivo (id: <code>${node.deviceId}</code>) não existe mais no catálogo — provavelmente veio de um projeto salvo antes de uma correção de SKU. Remova este item e adicione a versão atual.
+        </div>
+        <div style="margin-top:10px"><button class="danger small" id="btn-del-node">Remover do projeto</button></div>
+      </div>`;
+    }else if(node){
       const dev=getDeviceById(node.deviceId);
       const zoneOpts='<option value="">— sem zona —</option>'+state.project.zones.map(z=>`<option value="${z.uid}" ${node.zoneUid===z.uid?'selected':''}>${z.name}</option>`).join('');
       html+=`<div class="inspector-section"><h4>Item Selecionado</h4>
@@ -1210,7 +1224,7 @@ function renderInspector(){
       <div style="font-size:10px;color:var(--text-muted);margin-top:6px">Watts não confirmados aparecem como 0. Selecione um item e preencha "Consumo (W)" se faltar.</div>
     </div>`;
   }
-  // Network LEN com Voltage Drop e semáforo (estilo Navico)
+  // Network LEN com Voltage Drop e semáforo
   const lens=computeNetworkLen();
   // N2K Backbone Summary detalhado
   if(state.ui.canvasFilter==='n2k'){
@@ -1300,6 +1314,7 @@ function bindInspector(){
       g('btn-del-node')?.addEventListener('click',()=>{
         state.project.edges=state.project.edges.filter(ed=>ed.fromNode!==n.uid&&ed.toNode!==n.uid);
         state.project.nodes=state.project.nodes.filter(x=>x.uid!==n.uid);
+        clearPendingConnection();
         state.ui.selectedNode=null;render();
       });
     }
@@ -1365,6 +1380,7 @@ function bindCanvas(){
         if(a.nodeUid===nUid&&a.portIdx===pIdx){state.ui.pendingConnection=null;svg.classList.remove('connecting');render();return}
         const aNode=state.project.nodes.find(n=>n.uid===a.nodeUid);
         const bNode=state.project.nodes.find(n=>n.uid===nUid);
+        if(!aNode||!bNode){clearPendingConnection();render();return;}
         const aP=getNodePortPositions(aNode)[a.portIdx];
         const bP=getNodePortPositions(bNode)[pIdx];
         const compat=COMPAT[aP.type]&&COMPAT[aP.type].includes(bP.type);
@@ -1580,6 +1596,7 @@ function bindGlobal(){
       if(state.ui.selectedNode){
         state.project.edges=state.project.edges.filter(ed=>ed.fromNode!==state.ui.selectedNode&&ed.toNode!==state.ui.selectedNode);
         state.project.nodes=state.project.nodes.filter(n=>n.uid!==state.ui.selectedNode);
+        clearPendingConnection();
         state.ui.selectedNode=null;render();
       }else if(state.ui.selectedEdge){
         state.project.edges=state.project.edges.filter(ed=>ed.uid!==state.ui.selectedEdge);
@@ -1719,6 +1736,7 @@ function computeNetworkLen(){
     let hasTerm=0,hasPower=0;
     comp.forEach(uid=>{
       const node=state.project.nodes.find(n=>n.uid===uid);
+      if(!node)return;
       const dev=getDeviceById(node.deviceId);
       if(!dev)return;
       devs++;
@@ -1840,14 +1858,29 @@ function renderClienteMode(){
 
   const slide=(svgInner,viewLabel)=>`
     <div class="slide">
-      <svg class="wb-anchor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="44" fill="none" stroke="#000" stroke-width="2"/>
-        <circle cx="50" cy="50" r="6" fill="#000"/>
-        <g stroke="#000" stroke-width="2.5" fill="none">
-          <line x1="50" y1="6" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="94"/>
-          <line x1="6" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="94" y2="50"/>
-          <line x1="18.6" y1="18.6" x2="29.3" y2="29.3"/><line x1="70.7" y1="70.7" x2="81.4" y2="81.4"/>
-          <line x1="81.4" y1="18.6" x2="70.7" y2="29.3"/><line x1="29.3" y1="70.7" x2="18.6" y2="81.4"/>
+      <svg class="wb-logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round">
+          <circle cx="50" cy="50" r="36"/>
+          <line x1="50" y1="2" x2="50" y2="17"/><line x1="50" y1="83" x2="50" y2="98"/>
+          <line x1="2" y1="50" x2="17" y2="50"/><line x1="83" y1="50" x2="98" y2="50"/>
+          <line x1="13.3" y1="13.3" x2="23.95" y2="23.95"/><line x1="76.05" y1="76.05" x2="86.7" y2="86.7"/>
+          <line x1="86.7" y1="13.3" x2="76.05" y2="23.95"/><line x1="23.95" y1="76.05" x2="13.3" y2="86.7"/>
+        </g>
+        <g fill="#000">
+          <circle cx="50" cy="7" r="7"/><circle cx="50" cy="93" r="7"/>
+          <circle cx="7" cy="50" r="7"/><circle cx="93" cy="50" r="7"/>
+          <circle cx="18.65" cy="18.65" r="7"/><circle cx="81.35" cy="81.35" r="7"/>
+          <circle cx="81.35" cy="18.65" r="7"/><circle cx="18.65" cy="81.35" r="7"/>
+        </g>
+        <g fill="none" stroke="#000" stroke-width="1.7" stroke-linecap="round">
+          <path d="M 31 50 A 19 19 0 0 1 50 31"/>
+          <path d="M 24 50 A 26 26 0 0 1 50 24"/>
+          <path d="M 17 50 A 33 33 0 0 1 50 17"/>
+        </g>
+        <circle cx="50" cy="50" r="5.5" fill="none" stroke="#000" stroke-width="2"/>
+        <line x1="54" y1="46" x2="73" y2="27" stroke="#000" stroke-width="1.7" stroke-linecap="round"/>
+        <g fill="#000">
+          <circle cx="64" cy="37" r="2.6"/><circle cx="37.5" cy="34" r="2.8"/><circle cx="31" cy="63" r="2.6"/>
         </g>
       </svg>
       <div class="wb-watermark">WONDER BOAT<small>SYSTEM BUILDER</small></div>
@@ -1870,7 +1903,7 @@ function renderClienteMode(){
   const svg1 = buildSchematicSvg(1100, 620, {padding:60, watermark:false});
   // Página 2: só ETHERNET (Garmin Net + BlueNet)
   const svg2 = buildSchematicSvg(1100, 620, {padding:60, watermark:false,
-    filterEdge:e=>['gmn','bluenet','eth-generic'].includes(PORT_TYPES[e.type]?.group)});
+    filterEdge:e=>['gmn','bluenet','eth-generic','eth-ray','eth-furuno'].includes(PORT_TYPES[e.type]?.group)});
   // Página 3: só N2K
   const svg3 = buildSchematicSvg(1100, 620, {padding:60, watermark:false,
     filterEdge:e=>edgeIsType(e,'n2k')});
@@ -1922,7 +1955,7 @@ function renderA3Mode(){
           <div style="margin-top:3mm;font-size:8pt;color:#666">
             ${proj.notes?proj.notes.replace(/\n/g,'<br>')+'<br>':''}
             Projeto técnico · ABYC E-11 · ISO 13297 · ISO 10133<br>
-            ${proj.installer||'Lucas de Araújo Souza'} · ${proj.cert||'IN07169'} · ${proj.company||'Wonder BOAT'}
+            ${proj.installer||'Lucas de Araújo Souza'} · ${proj.cert||'IN07169'} · ${proj.company||'Wonder BOAT | Wonder HUB.AI'}
           </div>
         </div>
         <div class="a3-power">
@@ -1938,14 +1971,16 @@ function renderA3Mode(){
     </div>
   `;
 
-  // Página 1: Layout completo, Página 2: ETHERNET, Página 3: N2K
+  // Página 1: Tudo, Página 2: Ethernet, Página 3: N2K Backbone, Página 4: Energia
   const sLayout = buildSchematicSvg(1450, 800, {padding:40, watermark:false});
   const sEth = buildSchematicSvg(1450, 800, {padding:40, watermark:false,
-    filterEdge:e=>['gmn','bluenet','eth-generic'].includes(PORT_TYPES[e.type]?.group)});
+    filterEdge:e=>['gmn','bluenet','eth-generic','eth-ray','eth-furuno'].includes(PORT_TYPES[e.type]?.group)});
   const sN2K = buildSchematicSvg(1450, 800, {padding:40, watermark:false,
     filterEdge:e=>edgeIsType(e,'n2k')});
+  const sPower = buildSchematicSvg(1450, 800, {padding:40, watermark:false,
+    filterEdge:e=>['pwr12','pwr24'].includes(PORT_TYPES[e.type]?.group)});
 
-  document.getElementById('print-a3').innerHTML = a3(sLayout,'LAYOUT GERAL') + a3(sEth,'ETHERNET') + a3(sN2K,'NMEA 2000');
+  document.getElementById('print-a3').innerHTML = a3(sLayout,'TUDO') + a3(sEth,'ETHERNET') + a3(sN2K,'N2K BACKBONE') + a3(sPower,'ENERGIA');
 }
 
 /* =================== RENDER PRINT — LISTA DE CABOS =================== */
@@ -1999,7 +2034,7 @@ function renderCabosMode(){
         Projeto técnico segundo normas ABYC E-11, ISO 13297 e ISO 10133.<br>
         Confirmar SKU/medida antes da compra junto à fonte oficial Garmin.
       </div>
-      <div class="signature"><span class="seal">WONDER<br>BOAT<br>·IN07169·</span>${proj.installer||'Lucas de Araújo Souza'} · ${proj.cert||'IN07169'} · ${proj.company||'Wonder BOAT'}</div>
+      <div class="signature"><span class="seal">WONDER<br>BOAT<br>·IN07169·</span>${proj.installer||'Lucas de Araújo Souza'} · ${proj.cert||'IN07169'} · ${proj.company||'Wonder BOAT | Wonder HUB.AI'}</div>
     </div>
   `;
 }

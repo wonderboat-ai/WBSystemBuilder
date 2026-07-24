@@ -8,14 +8,14 @@ Inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos
 📦 **Repositório:** [github.com/wonderboat-ai/WBSystemBuilder](https://github.com/wonderboat-ai/WBSystemBuilder)
 🏷️ **Versão atual:** `v2026.07.24` (ver `APP_VERSION` em `src/app.js`)
 
-> Publicado no GitHub como **WB System Builder** — nome do repositório da família de ferramentas Wonder BOAT (este app cobre especificamente o catálogo Garmin; próximos: Raymarine, Simrad, Icom).
+> Publicado no GitHub como **WB System Builder** — nome do repositório da família de ferramentas Wonder BOAT (este app cobre especificamente o catálogo Garmin; próximos: Raymarine, Icom).
 
 ## Recursos
 
 - Catálogo Garmin Marine com **153 SKUs** (MFD, Radar, Sonar, Autopilot, VHF/AIS, Network, Câmera, Sensores, Antena, Trolling Motor, Áudio)
 - Canvas drag-and-drop livre com **4 vistas dedicadas**:
   - **Tudo** — layout geral livre
-  - **N2K Backbone** — vertical estruturada estilo Navico (T-Joiners, drops editáveis, voltagem por nó)
+  - **N2K Backbone** — vertical estruturada profissional (T-Joiners, drops editáveis, voltagem por nó)
   - **Ethernet** — hub-and-spoke estruturada (switch/gateway central + devices ao redor + cabling list + Power Use)
   - **Energia** — filtra por consumo, com auto-hide de infraestrutura irrelevante (Tees/terminadores N2K)
 - Auto-hide/dim de dispositivos irrelevantes por vista (reduz poluição visual em projetos grandes)
@@ -26,7 +26,7 @@ Inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos
 - Suporte a equipamentos de outras marcas via "Item Livre"
 - Wizard inicial (3 perguntas)
 - Busca global Ctrl+K
-- 3 modos de exportação PDF: Cliente (A4 paisagem), A3 Técnico, Lista de Cabos
+- 3 modos de exportação PDF: Cliente (A4 paisagem), A3 Técnico (4 páginas — Tudo/Ethernet/N2K Backbone/Energia), Lista de Cabos
 - Persistência via localStorage + Export/Import JSON
 - Tema claro/escuro
 
