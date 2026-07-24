@@ -29,21 +29,39 @@ Decisão arquitetural: zero build, zero deploy, zero dependência. Lucas pode ab
 ## Estrutura de arquivos
 
 ```
-garmin-system-builder/
+WBSystemBuilder/
 ├── CLAUDE.md              ← este arquivo (contexto pra próximas sessões)
 ├── README.md              ← docs de uso
 ├── package.json           ← metadata + scripts npm (apenas pra dev server)
 ├── .gitignore
 ├── index.html             ← estrutura HTML + monta UI shell
 ├── styles.css             ← todo CSS (tema claro/escuro via CSS vars)
+├── scripts/
+│   └── fetch_photos.py   ← baixa fotos oficiais Garmin, converte pra webp 200x150 base64
 └── src/
-    ├── data.js            ← CATALOG (83 SKUs Garmin) + ADAPTERS (17 cabos/gateways) +
-    │                         RULES (11 regras validação) + DEFAULT_ZONES + PORT_TYPES + COMPAT
-    │                         + watts patch (estimados de spec sheets, todos _verify)
+    ├── data.js            ← CATALOG base + ADAPTERS + RULES (11 regras validação) +
+    │                         DEFAULT_ZONES + PORT_TYPES + COMPAT + watts patch (_verify)
+    ├── data-extension.js  ← extensão do catálogo (SKUs adicionais + correções de PN,
+    │                         carrega DEPOIS de data.js, ANTES de app.js)
+    ├── images.js          ← banco de fotos oficiais Garmin (base64 webp) + silhuetas
     └── app.js             ← TUDO o resto: error catcher + state + render + canvas +
-                              N2K backbone view + library + inspector + header +
-                              search + wizard + toast + theme + print + auto-fix + init
+                              N2K backbone view + Ethernet hub-and-spoke view + library +
+                              inspector + header + search + wizard + toast + theme +
+                              print + auto-fix + toggle foto/silhueta + init
 ```
+
+## Publicação / repositório
+
+Publicado no GitHub como **`wonderboat-ai/WBSystemBuilder`** (renomeado de
+`garmin-system-builder` em 2026-07-24 pelo próprio Lucas, via GitHub web UI —
+nome da família de ferramentas Wonder BOAT, não específico de marca).
+Repositório público com GitHub Pages ativo:
+- Site: https://wonderboat-ai.github.io/WBSystemBuilder/
+- Repo: https://github.com/wonderboat-ai/WBSystemBuilder
+
+Ao clonar/atualizar o remote local, usar essa URL (o nome antigo
+`garmin-system-builder` ainda redireciona via GitHub, mas não confiar nisso
+indefinidamente).
 
 ## Padrões de código importantes
 

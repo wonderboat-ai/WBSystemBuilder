@@ -1,8 +1,13 @@
-# Garmin System Builder
+# WB System Builder — Garmin
 
 Ferramenta web standalone para projetar instalações de eletrônica marítima Garmin, criada para a Wonder BOAT (Lucas Araújo Souza · IN07169).
 
 Inspirada no [System Builder da Navico](https://systembuilder.navico.com), mas focada em produtos Garmin, com cálculos de NMEA 2000 conforme a referência técnica oficial Garmin.
+
+🔗 **Acesse online:** [wonderboat-ai.github.io/WBSystemBuilder](https://wonderboat-ai.github.io/WBSystemBuilder/)
+📦 **Repositório:** [github.com/wonderboat-ai/WBSystemBuilder](https://github.com/wonderboat-ai/WBSystemBuilder)
+
+> Publicado no GitHub como **WB System Builder** — nome do repositório da família de ferramentas Wonder BOAT (este app cobre especificamente o catálogo Garmin; próximos: Raymarine, Simrad, Icom).
 
 ## Recursos
 
@@ -40,7 +45,7 @@ Aceitar em http://localhost:8080
 ## Estrutura
 
 ```
-garmin-system-builder/
+WBSystemBuilder/
 ├── index.html              # entry point
 ├── styles.css              # toda a folha de estilos
 ├── src/
