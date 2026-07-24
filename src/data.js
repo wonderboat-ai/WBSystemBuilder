@@ -541,7 +541,7 @@ const RULES = [
      const hasCoupler=directEdges.some(e=>{
        const otherUid=e.fromNode===n.uid?e.toNode:e.fromNode;
        const o=project.nodes.find(x=>x.uid===otherUid);
-       const od=api.getDeviceById(o.deviceId);
+       const od=o&&api.getDeviceById(o.deviceId);
        return od&&/PoE\s*Isolation/i.test(od.model);
      });
      if(!hasCoupler) issues.push({title:`Câmera PoE sem coupler: ${d.model}`,msg:'Dispositivos PoE conectados direto à rede Marine Network podem causar danos.',fix:'Inserir PoE Isolation Coupler entre a câmera e o switch/MFD.'});
@@ -611,7 +611,7 @@ const RULES = [
      const ok=eds.some(e=>{
        const ouid=e.fromNode===n.uid?e.toNode:e.fromNode;
        const o=project.nodes.find(x=>x.uid===ouid);
-       const od=api.getDeviceById(o.deviceId);
+       const od=o&&api.getDeviceById(o.deviceId);
        return od&&(od.ports||[]).some(p=>p.type==='J1939')&&(od.ports||[]).some(p=>p.type==='N2K-Micro');
      });
      if(!ok) issues.push({title:`Motor J1939 sem gateway: ${d.model}`,msg:'Conexão J1939↔N2K direta não é permitida.',fix:'Adicionar Maretron J2K100 ou Yacht Devices YDEG-04N.'});

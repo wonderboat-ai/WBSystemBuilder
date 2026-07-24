@@ -189,10 +189,12 @@ main{display:flex;flex:1;min-height:0}
   width:340pt;height:340pt;opacity:.07;pointer-events:none
 }
 .print-cliente .slide-brand-tl{
-  position:absolute;top:10mm;left:14mm;
+  position:absolute;top:10mm;left:14mm;display:flex;align-items:center;gap:6pt;
   font-family:Helvetica,Arial,sans-serif;font-weight:700;letter-spacing:.18em;font-size:11pt;color:#666
 }
 .print-cliente .slide-brand-tl small{display:block;font-size:7.5pt;letter-spacing:.3em;color:#999;font-weight:500;margin-top:1pt}
+.print-head-logo{height:16pt;width:16pt;display:block;flex:0 0 auto}
+.slide-brand-tl span,.a3-head .left span{display:flex;flex-direction:column}
 .print-cliente .slide-canvas{position:absolute;left:0;right:0;top:18mm;bottom:50mm;display:flex;align-items:center;justify-content:center}
 .print-cliente .slide-info{
   position:absolute;bottom:14mm;right:14mm;width:115mm;text-align:right;
@@ -238,7 +240,8 @@ main{display:flex;flex:1;min-height:0}
   pointer-events:none;font-family:Helvetica,Arial,sans-serif
 }
 .print-a3 .a3-head{border-bottom:2pt solid #0a3d8a;padding:6mm 14mm;display:flex;justify-content:space-between;align-items:center;background:#fff;position:relative;z-index:2}
-.print-a3 .a3-head .left{font-weight:700;letter-spacing:.18em;font-size:13pt}
+.print-a3 .a3-head .left{font-weight:700;letter-spacing:.18em;font-size:13pt;display:flex;align-items:center;gap:7pt}
+.print-a3 .a3-head .left .print-head-logo{height:20pt;width:20pt}
 .print-a3 .a3-head .left small{display:block;font-size:8pt;letter-spacing:.3em;color:#666;font-weight:500;margin-top:1pt}
 .print-a3 .a3-head .right{text-align:right;font-size:10pt;line-height:1.5}
 .print-a3 .a3-head .right strong{font-size:13pt;color:#0a3d8a;font-family:Georgia,serif;letter-spacing:.04em}
@@ -267,7 +270,9 @@ main{display:flex;flex:1;min-height:0}
 /* ===== Lista de Cabos (A4 retrato) ===== */
 .print-cabos{font-family:Georgia,'Times New Roman',serif}
 .print-cabos .cabos-page-inner{padding:18mm 16mm;color:#000}
-.print-cabos h1{font-size:18pt;letter-spacing:.04em;border-bottom:2pt solid #0a3d8a;padding-bottom:4pt;margin-bottom:12pt;color:#0a3d8a;font-family:Georgia,serif}
+.print-cabos h1{font-size:18pt;letter-spacing:.04em;border-bottom:2pt solid #0a3d8a;padding-bottom:4pt;margin-bottom:12pt;color:#0a3d8a;font-family:Georgia,serif;display:flex;align-items:center;gap:8pt}
+.print-cabos h1 .print-head-logo{height:22pt;width:22pt}
+.print-cabos h1 span{display:flex;flex-direction:column}
 .print-cabos h1 small{display:block;font-size:9pt;color:#666;letter-spacing:.18em;font-weight:500;margin-top:3pt;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase}
 .print-cabos .meta-block{font-size:11pt;line-height:1.6;margin-bottom:14pt;font-family:Helvetica,Arial,sans-serif}
 .print-cabos .meta-block strong{color:#444;font-size:9pt;letter-spacing:.1em;text-transform:uppercase;font-weight:500}

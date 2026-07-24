@@ -41,6 +41,7 @@ function showBootOK(catN, adpN){
 */
 
 function uid(){return 'n'+Math.random().toString(36).slice(2,9)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function getDeviceById(id){
   // free item: id começa com 'free:' — busca no project.freeItems
   if(id && id.indexOf('free:')===0){
@@ -73,7 +74,7 @@ function emptyProject(){
 function getNetworkComponents(filterFn){
   const adj={};state.project.nodes.forEach(n=>adj[n.uid]=new Set());
   state.project.edges.forEach(e=>{
-    if(filterFn(e)){adj[e.fromNode]?.add(e.toNode);adj[e.toNode]?.add(e.fromNode)}
+    if(filterFn(e)&&adj[e.fromNode]&&adj[e.toNode]){adj[e.fromNode].add(e.toNode);adj[e.toNode].add(e.fromNode)}
   });
   const visited=new Set(),comps=[];
   state.project.nodes.forEach(n=>{
@@ -166,7 +167,11 @@ function importJSON(){document.getElementById('file-input').click()}
 document.getElementById('file-input').addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=()=>{try{state.project=JSON.parse(r.result);resetSelection();render()}catch(err){alert('Inválido.')}};
+  r.onload=()=>{try{
+    const p=JSON.parse(r.result);
+    p.nodes=p.nodes||[];p.edges=p.edges||[];p.zones=p.zones||[];p.freeItems=p.freeItems||[];
+    state.project=p;resetSelection();render();
+  }catch(err){alert('Inválido.')}};
   r.readAsText(f);e.target.value='';
 });
 function newProject(){
@@ -997,7 +1002,7 @@ function renderCanvas(){
     const sel=state.ui.selectedZone===z.uid?' selected':'';
     zonesSvg+=`<g class="zone" data-zone="${z.uid}">
       <rect class="zone-rect${sel}" x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" rx="6" fill="${z.color}" stroke="${z.color}"/>
-      <text class="zone-label" x="${z.x+10}" y="${z.y+18}">${z.name}</text>
+      <text class="zone-label" x="${z.x+10}" y="${z.y+18}">${esc(z.name)}</text>
       ${state.ui.selectedZone===z.uid?'<rect class="resize-handle" x="'+(z.x+z.w-9)+'" y="'+(z.y+z.h-9)+'" width="9" height="9" fill="'+z.color+'" stroke="#fff" stroke-width="1" data-resize-zone="'+z.uid+'" style="cursor:nwse-resize"/>':''}
     </g>`;
   });
@@ -1109,7 +1114,7 @@ function renderCanvas(){
       <rect class="node-rect" width="${nW}" height="${nH}" rx="4" stroke="${stColor}" stroke-width="${nStatus!=='ok'?2:1.5}" style="${stShadow}"/>
       <circle cx="${nW-8}" cy="8" r="4" fill="${stColor}" stroke="#000" stroke-width="0.5"/>
       <text class="node-fam" x="${nW/2}" y="14" text-anchor="middle">${(dev.family||dev.brand||'').toUpperCase()}</text>
-      <text class="node-title" x="${nW/2}" y="28" text-anchor="middle">${modelDisplay}</text>
+      <text class="node-title" x="${nW/2}" y="28" text-anchor="middle">${esc(modelDisplay)}</text>
       <text class="node-sub" x="${nW/2}" y="40" text-anchor="middle">${dev.sku}</text>
       ${portsSvg}
       ${state.ui.selectedNode===node.uid?'<rect class="resize-handle" x="'+(nW-10)+'" y="'+(nH-10)+'" width="10" height="10" rx="1" fill="var(--accent)" data-resize-node="'+node.uid+'" style="cursor:nwse-resize"/>':''}
@@ -1130,7 +1135,7 @@ function renderInspector(){
     const z=state.project.zones.find(x=>x.uid===state.ui.selectedZone);
     if(z){
       html+=`<div class="inspector-section"><h4>Zona Selecionada</h4>
-        <div class="inspector-row"><label>Nome</label><input id="z-name" value="${z.name}"/></div>
+        <div class="inspector-row"><label>Nome</label><input id="z-name" value="${esc(z.name)}"/></div>
         <div class="inspector-row"><label>Cor</label><input id="z-color" type="color" value="${z.color}" style="width:60px;height:24px;padding:0"/></div>
         <div class="inspector-row"><label>Largura</label><input id="z-w" type="number" value="${z.w}" min="100"/></div>
         <div class="inspector-row"><label>Altura</label><input id="z-h" type="number" value="${z.h}" min="100"/></div>
@@ -1162,7 +1167,7 @@ function renderInspector(){
         <div class="inspector-row"><label>Categoria</label><span>${dev.category}</span></div>
         ${dev.power?.voltage?`<div class="inspector-row"><label>Tensão</label><span>${dev.power.voltage}</span></div>`:''}
         <div class="inspector-row"><label>Zona</label><select id="n-zone">${zoneOpts}</select></div>
-        <div class="inspector-row"><label>Rótulo extra</label><input id="n-label" value="${node.customLabel||''}" placeholder="ex: PROA"/></div>
+        <div class="inspector-row"><label>Rótulo extra</label><input id="n-label" value="${esc(node.customLabel)}" placeholder="ex: PROA"/></div>
         <div class="inspector-row"><label>Consumo (W) override</label><input id="n-watts" type="number" step="0.1" min="0" value="${node.wattsOverride||''}" placeholder="${dev.power?.watts||'-'}"/></div>
         <div style="margin-top:10px"><button class="danger small" id="btn-del-node">Remover do projeto</button></div>
         ${dev._verify?'<div style="margin-top:8px;padding:6px 8px;background:#3a2a10;border-left:2px solid var(--warn);font-size:10px;color:var(--warn)">Dados marcados como _verify — confirmar contra fonte oficial Garmin.</div>':''}
@@ -1602,7 +1607,9 @@ function bindGlobal(){
         state.project.edges=state.project.edges.filter(ed=>ed.uid!==state.ui.selectedEdge);
         state.ui.selectedEdge=null;render();
       }else if(state.ui.selectedZone){
-        state.project.zones=state.project.zones.filter(z=>z.uid!==state.ui.selectedZone);
+        const zid=state.ui.selectedZone;
+        state.project.zones=state.project.zones.filter(z=>z.uid!==zid);
+        state.project.nodes.forEach(n=>{if(n.zoneUid===zid) delete n.zoneUid});
         state.ui.selectedZone=null;render();
       }
     }else if(e.key==='Escape'){
@@ -1800,7 +1807,7 @@ function buildSchematicSvg(width,height,opts){
 
   proj.zones.forEach(z=>{
     svg+=`<rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" rx="6" fill="${z.color}" fill-opacity="0.05" stroke="${z.color}" stroke-width="1" stroke-dasharray="5 4"/>`;
-    svg+=`<text x="${z.x+12}" y="${z.y+22}" font-size="13" font-weight="700" fill="#222" letter-spacing="3">${z.name}</text>`;
+    svg+=`<text x="${z.x+12}" y="${z.y+22}" font-size="13" font-weight="700" fill="#222" letter-spacing="3">${esc(z.name)}</text>`;
   });
 
   proj.edges.forEach(edge=>{
@@ -1834,7 +1841,7 @@ function buildSchematicSvg(width,height,opts){
     svg+=`<g transform="translate(${node.x},${node.y})">`;
     svg+=`<rect width="${w}" height="${h}" rx="4" fill="#fff" stroke="#222" stroke-width="0.8"/>`;
     svg+=`<text x="${w/2}" y="14" font-size="9" font-weight="700" fill="#0a3d8a" letter-spacing="1.5" text-anchor="middle">${(dev.family||dev.brand||'').toUpperCase()}</text>`;
-    svg+=`<text x="${w/2}" y="28" font-size="11" font-weight="700" fill="#000" text-anchor="middle">${dev.model}${node.customLabel?' · '+node.customLabel:''}</text>`;
+    svg+=`<text x="${w/2}" y="28" font-size="11" font-weight="700" fill="#000" text-anchor="middle">${esc(dev.model)}${node.customLabel?' · '+esc(node.customLabel):''}</text>`;
     svg+=`<text x="${w/2}" y="40" font-size="9" fill="#666" font-family="Menlo,Consolas,monospace" text-anchor="middle">${dev.sku}</text>`;
     getNodePortPositions(node).forEach((p)=>{
       const color=PORT_TYPES[p.type]?.color||'#888';
@@ -1854,37 +1861,13 @@ function buildSchematicSvg(width,height,opts){
 function renderClienteMode(){
   const proj=state.project;
   const dateFmt=new Date(proj.date).toLocaleDateString('pt-BR');
-  const subtitle=`GARMIN${proj.vessel?' · '+proj.vessel.toUpperCase():''}${proj.name?' — '+proj.name.toUpperCase():''}`;
+  const subtitle=`GARMIN${proj.vessel?' · '+esc(proj.vessel.toUpperCase()):''}${proj.name?' — '+esc(proj.name.toUpperCase()):''}`;
 
   const slide=(svgInner,viewLabel)=>`
     <div class="slide">
-      <svg class="wb-logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round">
-          <circle cx="50" cy="50" r="36"/>
-          <line x1="50" y1="2" x2="50" y2="17"/><line x1="50" y1="83" x2="50" y2="98"/>
-          <line x1="2" y1="50" x2="17" y2="50"/><line x1="83" y1="50" x2="98" y2="50"/>
-          <line x1="13.3" y1="13.3" x2="23.95" y2="23.95"/><line x1="76.05" y1="76.05" x2="86.7" y2="86.7"/>
-          <line x1="86.7" y1="13.3" x2="76.05" y2="23.95"/><line x1="23.95" y1="76.05" x2="13.3" y2="86.7"/>
-        </g>
-        <g fill="#000">
-          <circle cx="50" cy="7" r="7"/><circle cx="50" cy="93" r="7"/>
-          <circle cx="7" cy="50" r="7"/><circle cx="93" cy="50" r="7"/>
-          <circle cx="18.65" cy="18.65" r="7"/><circle cx="81.35" cy="81.35" r="7"/>
-          <circle cx="81.35" cy="18.65" r="7"/><circle cx="18.65" cy="81.35" r="7"/>
-        </g>
-        <g fill="none" stroke="#000" stroke-width="1.7" stroke-linecap="round">
-          <path d="M 31 50 A 19 19 0 0 1 50 31"/>
-          <path d="M 24 50 A 26 26 0 0 1 50 24"/>
-          <path d="M 17 50 A 33 33 0 0 1 50 17"/>
-        </g>
-        <circle cx="50" cy="50" r="5.5" fill="none" stroke="#000" stroke-width="2"/>
-        <line x1="54" y1="46" x2="73" y2="27" stroke="#000" stroke-width="1.7" stroke-linecap="round"/>
-        <g fill="#000">
-          <circle cx="64" cy="37" r="2.6"/><circle cx="37.5" cy="34" r="2.8"/><circle cx="31" cy="63" r="2.6"/>
-        </g>
-      </svg>
+      <img class="wb-logo-mark" src="logo.png" alt="">
       <div class="wb-watermark">WONDER BOAT<small>SYSTEM BUILDER</small></div>
-      <div class="slide-brand-tl">WONDER BOAT<small>SYSTEM BUILDER · GARMIN</small></div>
+      <div class="slide-brand-tl"><img class="print-head-logo" src="logo.png" alt=""><span>WONDER BOAT<small>SYSTEM BUILDER · GARMIN</small></span></div>
       ${viewLabel?`<div class="view-tag">${viewLabel}</div>`:''}
       <div class="slide-canvas">${svgInner}</div>
       <div class="slide-info">
@@ -1892,8 +1875,8 @@ function renderClienteMode(){
         <div class="info-block">
           <div class="info-tag">SISTEMA ELETRÔNICO DE NAVEGAÇÃO</div>
           <div class="info-title">${subtitle}</div>
-          <div class="info-client">Cliente<strong>${proj.client||'—'}</strong></div>
-          <div class="info-sig"><span>${proj.installer||'Lucas de Araújo Souza'}</span><span>${dateFmt}</span></div>
+          <div class="info-client">Cliente<strong>${esc(proj.client)||'—'}</strong></div>
+          <div class="info-sig"><span>${esc(proj.installer)||'Lucas de Araújo Souza'}</span><span>${dateFmt}</span></div>
         </div>
       </div>
     </div>
@@ -1938,12 +1921,12 @@ function renderA3Mode(){
     <div class="a3">
       <div class="a3-watermark">WONDER BOAT</div>
       <div class="a3-head">
-        <div class="left">WONDER BOAT<small>SYSTEM BUILDER · GARMIN${viewLabel?' — '+viewLabel:''}</small></div>
+        <div class="left"><img class="print-head-logo" src="logo.png" alt=""><span>WONDER BOAT<small>SYSTEM BUILDER · GARMIN${viewLabel?' — '+viewLabel:''}</small></span></div>
         <div style="display:flex;align-items:center">
           <div class="right">
-            <strong>${proj.name||'Projeto sem nome'}</strong><br>
-            ${proj.vessel||''}${proj.vessel&&proj.client?' · ':''}${proj.client||''}<br>
-            ${dateFmt} · ${proj.installer||''} · ${proj.cert||''}
+            <strong>${esc(proj.name)||'Projeto sem nome'}</strong><br>
+            ${esc(proj.vessel)}${proj.vessel&&proj.client?' · ':''}${esc(proj.client)}<br>
+            ${dateFmt} · ${esc(proj.installer)} · ${esc(proj.cert)}
           </div>
           <div class="seal">WONDER<br>BOAT<br>·IN07169·</div>
         </div>
@@ -1953,9 +1936,9 @@ function renderA3Mode(){
         <div style="flex:1">
           <div class="a3-legend">${legend}</div>
           <div style="margin-top:3mm;font-size:8pt;color:#666">
-            ${proj.notes?proj.notes.replace(/\n/g,'<br>')+'<br>':''}
+            ${proj.notes?esc(proj.notes).replace(/\n/g,'<br>')+'<br>':''}
             Projeto técnico · ABYC E-11 · ISO 13297 · ISO 10133<br>
-            ${proj.installer||'Lucas de Araújo Souza'} · ${proj.cert||'IN07169'} · ${proj.company||'Wonder BOAT | Wonder HUB.AI'}
+            ${esc(proj.installer)||'Lucas de Araújo Souza'} · ${esc(proj.cert)||'IN07169'} · ${esc(proj.company)||'Wonder BOAT | Wonder HUB.AI'}
           </div>
         </div>
         <div class="a3-power">
@@ -2020,21 +2003,21 @@ function renderCabosMode(){
 
   document.getElementById('print-cabos').innerHTML=`
     <div class="cabos-page-inner">
-      <h1>Lista de Cabos<small>Wonder BOAT · System Builder · Garmin</small></h1>
+      <h1><img class="print-head-logo" src="logo.png" alt=""><span>Lista de Cabos<small>Wonder BOAT · System Builder · Garmin</small></span></h1>
       <div class="meta-block">
-        <strong>Projeto</strong> ${proj.name||'—'}<br>
-        <strong>Embarcação</strong> ${proj.vessel||'—'}<br>
-        <strong>Cliente</strong> ${proj.client||'—'}<br>
+        <strong>Projeto</strong> ${esc(proj.name)||'—'}<br>
+        <strong>Embarcação</strong> ${esc(proj.vessel)||'—'}<br>
+        <strong>Cliente</strong> ${esc(proj.client)||'—'}<br>
         <strong>Data</strong> ${dateFmt}
       </div>
       ${table}
       ${powerBlock}
       <div class="footer">
-        ${proj.notes?'<strong>Notas:</strong> '+proj.notes.replace(/\n/g,'<br>')+'<br><br>':''}
+        ${proj.notes?'<strong>Notas:</strong> '+esc(proj.notes).replace(/\n/g,'<br>')+'<br><br>':''}
         Projeto técnico segundo normas ABYC E-11, ISO 13297 e ISO 10133.<br>
         Confirmar SKU/medida antes da compra junto à fonte oficial Garmin.
       </div>
-      <div class="signature"><span class="seal">WONDER<br>BOAT<br>·IN07169·</span>${proj.installer||'Lucas de Araújo Souza'} · ${proj.cert||'IN07169'} · ${proj.company||'Wonder BOAT | Wonder HUB.AI'}</div>
+      <div class="signature"><span class="seal">WONDER<br>BOAT<br>·IN07169·</span>${esc(proj.installer)||'Lucas de Araújo Souza'} · ${esc(proj.cert)||'IN07169'} · ${esc(proj.company)||'Wonder BOAT | Wonder HUB.AI'}</div>
     </div>
   `;
 }
