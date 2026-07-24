@@ -18,7 +18,7 @@ Inspirada no [System Builder da Navico](https://systembuilder.navico.com), mas f
   - **Ethernet** — hub-and-spoke estruturada (switch/gateway central + devices ao redor + cabling list + Power Use)
   - **Energia** — filtra por consumo, com auto-hide de infraestrutura irrelevante (Tees/terminadores N2K)
 - Auto-hide/dim de dispositivos irrelevantes por vista (reduz poluição visual em projetos grandes)
-- Toggle **Foto oficial Garmin / Silhueta Wonder BOAT** nos cards da biblioteca (32 SKUs com foto real embutida em base64, restante com silhueta categórica desenhada à mão)
+- Toggle **Foto oficial Garmin / Silhueta Wonder BOAT** nos cards da biblioteca (164/175 SKUs com foto real embutida em base64 — 94% de cobertura — restante com silhueta categórica desenhada à mão)
 - Validação automática contra normas NMEA 2000 / ABYC E-11 / ISO 13297 com 11 regras (R-N2K-01..R-CABLE-01)
 - Cálculo de Power Use 12V/24V (Battery + Max)
 - Cálculo de Network LEN com voltage drop estimado (fórmula oficial Garmin: R = 0.053 Ω/m)
@@ -71,12 +71,12 @@ WBSystemBuilder/
 ## Roadmap
 
 Veja seção "Frentes pendentes" em `CLAUDE.md`:
-1. Drag pra reordenar devices no N2K Backbone
-2. Split visual Branch A/B quando power tap não está no extremo
-3. Wireless gateway (Yacht Devices YDWG-02, iKommunicate)
-4. Tools (calculadoras avulsas — voltage drop, antenna range, banco de baterias)
-5. Versionamento de catálogo (`version: "AAAA.MM"` + `sourceAuthority`)
-6. Ampliar banco de fotos oficiais além dos 32 SKUs prioritários
+1. Revisar os 11 conflitos de SKU sinalizados em `scripts/sku_corrections_log.json` (`skipped_deliberately`)
+2. Drag pra reordenar devices no N2K Backbone
+3. Split visual Branch A/B quando power tap não está no extremo
+4. Wireless gateway (Yacht Devices YDWG-02, iKommunicate)
+5. Tools (calculadoras avulsas — voltage drop, antenna range, banco de baterias)
+6. Versionamento de catálogo (`version: "AAAA.MM"` + `sourceAuthority`)
 
 ## Licença
 

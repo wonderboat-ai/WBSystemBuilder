@@ -4,8 +4,10 @@
 
 Ferramenta web standalone (single-user, offline) que replica conceitualmente o **System Builder da Navico** — mas focada em **eletrônica marítima Garmin**. Permite ao instalador (Lucas Araújo, Wonder BOAT, IN07169) montar projetos completos de instalação eletrônica de barco com:
 
-- Catálogo Garmin Marine (~83 SKUs cobrindo MFD/Radar/Sonar/Autopilot/VHF/AIS/Network/Sensors/Audio)
-- Canvas drag-and-drop livre + vista N2K Backbone estruturada
+- Catálogo Garmin Marine (153 devices + 22 adapters/cabos cobrindo MFD/Radar/Sonar/Autopilot/VHF/AIS/Network/Sensors/Audio/TrollingMotor/Camera/Antenna)
+- Canvas drag-and-drop livre com 4 vistas: Tudo / N2K Backbone estruturada / Ethernet hub-and-spoke / Energia
+- Auto-hide/dim de dispositivos irrelevantes por vista
+- Toggle Foto oficial Garmin / Silhueta Wonder BOAT nos cards (164/175 SKUs com foto real, 94% cobertura)
 - Validação automática contra normas NMEA 2000 (R-N2K-01..03), Garmin BlueNet (R-BN-01), Panoptix (R-PANO-01), PoE (R-POE-01), Radar (R-RADAR-01), Autopilot (R-AP-01), VHF DSC (R-VHF-01), J1939 (R-J1939-01), porta sobrecarregada (R-DUP-01) e cabo sem comprimento (R-CABLE-01)
 - Cálculo de **Power Use** (12V/24V Battery+Max)
 - Cálculo de **N2K Network LEN** com voltage drop usando fórmula oficial Garmin (R = 0.053 Ω/m, drop ≤ 1.67V)
@@ -171,13 +173,13 @@ python3 -m http.server 8080
 
 ## Frentes pendentes (próximas iterações)
 
-1. **Imagens dos produtos** (Frente 2 do roadmap) — baixar fotos oficiais Garmin dos top 30 SKUs e embutir como base64 em `data.js`. Substituir caixas de texto nos cards por imagens.
-2. **Vista ETHERNET estruturada** — réplica do tab Ethernet do Navico: hub central (GMS-10 ou BlueNet 20), devices ao redor com cabos rotulados, Power Use box, Cabling list com PNs.
-3. **Drag pra reordenar devices no N2K Backbone** — atualmente ordem é por categoria.
-4. **Split visual em Branch A / Branch B** quando power tap não está no extremo do backbone.
-5. **Wireless (Yacht Devices YDWG-02, iKommunicate)** como gateway IP cross-brand.
-6. **Tools** — calculadoras avulsas (voltage drop standalone, antenna range, banco de baterias).
-7. **Versionamento de catálogo** — campo `version: "AAAA.MM"` + `sourceAuthority: url` por catálogo. Rejeitar dados >12 meses.
+1. **Revisar 11 conflitos de SKU** sinalizados em `scripts/sku_corrections_log.json` (chave `skipped_deliberately`) — colisões de SKU entre entradas (ex: VHF 315i vs VHF 315 AIS ambos candidatos a `010-02047-01`; GNX Sail Pack Wireless vs gWind Wireless ambos candidatos a `010-01616-30`) e produtos que parecem não existir na linha oficial Garmin (Force Kraken 87", GT56UHD-IH, Reactor 40 for Trim Tabs — este último tinha SKU de um relógio GPS Instinct cadastrado por engano). Nenhum foi alterado automaticamente — decisão manual do Lucas.
+2. **Drag pra reordenar devices no N2K Backbone** — atualmente ordem é por categoria.
+3. **Split visual em Branch A / Branch B** quando power tap não está no extremo do backbone.
+4. **Wireless (Yacht Devices YDWG-02, iKommunicate)** como gateway IP cross-brand.
+5. **Tools** — calculadoras avulsas (voltage drop standalone, antenna range, banco de baterias).
+6. **Versionamento de catálogo** — campo `version: "AAAA.MM"` + `sourceAuthority: url` por catálogo. Rejeitar dados >12 meses.
+7. **Completar os 11 SKUs sem foto** (ver `scripts/photo_failures.json`) — depende da revisão do item 1 acima.
 
 ## Convenções gerais Wonder BOAT (do Lucas)
 
@@ -194,6 +196,17 @@ python3 -m http.server 8080
 - **2026-05-03**: Fórmula voltage drop migrada de chute (0.08 Ω/m) para padrão Garmin oficial (0.053 Ω/m)
 - **2026-05-03**: Vista N2K Backbone estruturada implementada (substitui filtro simples por layout vertical estilo Navico)
 - **2026-05-03**: Projeto modularizado em `data.js + app.js + styles.css + index.html` para edição via Claude Code
+- **2026-07-24**: Catálogo estendido de ~83 pra 153 devices + 22 adapters via `data-extension.js` (pesquisa profunda por categoria, PNs corrigidos, ~60 SKUs novos)
+- **2026-07-24**: Repositório publicado no GitHub (`wonderboat-ai/garmin-system-builder`), depois renomeado por Lucas pra `wonderboat-ai/WBSystemBuilder` + GitHub Pages ativado
+- **2026-07-24**: Vista Ethernet hub-and-spoke implementada + auto-hide/dim por vista + toggle Foto/Silhueta com banco de imagens (`src/images.js`, `scripts/fetch_photos.py`)
+- **2026-07-24**: Banco de fotos ampliado de 32 pra 164/175 SKUs (94%) via pesquisa em paralelo (23 agentes). Pesquisa revelou 36 SKUs errados no catálogo original — todos corrigidos com fonte oficial cruzada (ver `scripts/sku_corrections_log.json`). 11 itens ficaram com conflito não resolvido (ver Frentes pendentes #1) — decisão deliberada de não adivinhar, aguardando revisão do Lucas.
+
+## Artefatos de auditoria (não deletar)
+
+- `scripts/sku_corrections_log.json` — todo SKU corrigido nesta sessão (id, sku antigo, sku novo, fonte/nota) + lista dos 11 itens deliberadamente não tocados por ambiguidade.
+- `scripts/photo_failures.json` — os SKUs que ainda não têm foto (hoje, os mesmos 11 do log acima).
+- `scripts/research_overrides.json` — URLs de imagem descobertas pela pesquisa, consumidas por `fetch_photos.py` via `URL_OVERRIDES`.
+- `scripts/extra_skus.json` — lista de trabalho de SKUs sem foto que o `fetch_photos.py` tenta buscar via CDN direto (regenerar via extração do catálogo antes de rodar de novo, se o catálogo mudou).
 
 ## Fontes autoritativas (sempre verificar antes de adicionar SKU)
 
