@@ -1,0 +1,340 @@
+{
+ "applied": [
+  {
+   "id": "gar-echomap-ultra2-106sv",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-02893-00",
+   "new_sku": "010-02880-00",
+   "note": "PN oficial confirmado via press release Garmin 24/10/2023 + revendedores (thegpsstore, russellmarineproducts, summitfishing)."
+  },
+  {
+   "id": "gar-echomap-ultra2-126sv",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-02893-01",
+   "new_sku": "010-02882-00",
+   "note": "Mesma fonte do 106sv — press release oficial + revendedores."
+  },
+  {
+   "id": "gar-echomap-uhd2-74sv",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-02595-01",
+   "new_sku": "010-02685-01",
+   "note": "SKU antigo (010-02595-01) pertence na verdade ao 74CV (bundle), confirmado via Amazon/eBay. PN real do 74sv confirmado por West Marine, Englund Marine, American Diving Supply."
+  },
+  {
+   "id": "gar-echomap-uhd2-94sv",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-02692-50",
+   "new_sku": "010-02689-00",
+   "note": "SKU antigo não existe. PN real (sem transdutor) confirmado por Trionics, eBay, TheOutdoorWarehouse, Aztek Computers."
+  },
+  {
+   "id": "gar-lvs62",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-13128-00",
+   "new_sku": "010-02719-10",
+   "note": "SKU antigo não existe. PN real confirmado por 8+ revendedores + página oficial garmin.com/en-US/p/814793/."
+  },
+  {
+   "id": "gar-lvs32-th",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-12784-04",
+   "new_sku": "010-12928-01",
+   "note": "SKU antigo não existe. PN real confirmado por página oficial garmin.com/en-US/p/677128/ + 4 revendedores (Trionics, Hodges Marine, MyGreenOutdoors, Marine Electronic Shop)."
+  },
+  {
+   "id": "gar-ps31",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-01469-10",
+   "new_sku": "010-01284-01",
+   "note": "SKU antigo não existe em nenhuma fonte. Produto DISCONTINUED — PN real confirmado por página oficial + Walmart/Trionics/GPS Nation/Russell Marine."
+  },
+  {
+   "id": "gar-ps51-th",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-01469-21",
+   "new_sku": "010-01753-00",
+   "note": "SKU antigo não existe. Página oficial garmin.com/en-US/p/567680/ mostra \"Part Number: 010-01753-00\" explicitamente + West Marine/Russell Marine/Sportfish Outfitters/GPS Store."
+  },
+  {
+   "id": "gar-gt56uhd-tm",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-13066-00",
+   "new_sku": "010-13073-00",
+   "note": "GRAVE: SKU antigo (010-13066-00) pertence a um MAPA DE PAPEL Garmin DeLorme (Missouri), sem relação com transdutores. PN real confirmado via garmin.com/en-US/p/736677/."
+  },
+  {
+   "id": "gar-gt51m-thp",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-12404-20",
+   "new_sku": "010-01966-11",
+   "note": "SKU antigo pertence à família GT23M-TM (produto diferente). PN real confirmado via garmin.com/en-US/p/540991/."
+  },
+  {
+   "id": "gar-reactor40-compact",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-02502-00",
+   "new_sku": "010-00705-06",
+   "note": "SKU antigo não existe. PN real = \"Compact Reactor 40 Hydraulic Autopilot Starter Pack\", confirmado via garmin.com/en-US/p/599825/."
+  },
+  {
+   "id": "gar-reactor40-kicker",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-01827-00",
+   "new_sku": "010-00705-95",
+   "note": "SKU antigo não existe. PN real confirmado via garmin.com/en-US/p/672710/ (variante sem GHC 20 Display)."
+  },
+  {
+   "id": "gar-reactor-wireless-remote",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-12466-00",
+   "new_sku": "010-12833-10",
+   "note": "GRAVE: SKU antigo (010-12466-00) é na verdade o Garmin MS-RA70DC DIN Cage (acessório de instalação Fusion/áudio) — confirmado na Amazon. PN real confirmado via garmin.com/en-US/p/636376/."
+  },
+  {
+   "id": "gar-force-kraken-48",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-02835-00",
+   "new_sku": "010-02573-30",
+   "note": "SKU antigo não existe (família errada). PN real segue o padrão 010-02573-XX (Black) confirmado por Hodges Marine, Russell Marine, GPS Nation, eBay, TackleShack."
+  },
+  {
+   "id": "gar-force-kraken-white-48",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-02835-50",
+   "new_sku": "010-02574-30",
+   "note": "Mesma situação — família White 010-02574-XX confirmada por eBay, GPS Nation, Russell Marine, NavStore, JL Marine Shop, Sea Swivel."
+  },
+  {
+   "id": "gar-force-kraken-75",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-02835-20",
+   "new_sku": "010-02573-10",
+   "note": "Assumido Black (nome do catálogo não tem \"White\"). PN confirmado por Russell Marine, TackleShack (\"Black w/GT56 #010-02573-10\"), Hodges Marine."
+  },
+  {
+   "id": "gar-vhf-315",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-01958-00",
+   "new_sku": "010-02047-00",
+   "note": "Confirma o mesmo fix já usado pro VHF 315 AIS — página oficial garmin.com/en-US/p/615464/."
+  },
+  {
+   "id": "gar-vhf-110",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-02095-00",
+   "new_sku": "010-01653-00",
+   "note": "SKU antigo não existe em nenhuma fonte. PN real confirmado via garmin.com/en-US/p/545988/ + histórico oficial de mudanças Garmin."
+  },
+  {
+   "id": "gar-vhf-115i",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-02096-10",
+   "new_sku": "010-02096-01",
+   "note": "SKU antigo não existe. PN real confirmado via garmin.com/en-GB/p/625344/pn/010-02096-01/ (mostra o PN explicitamente no corpo da página)."
+  },
+  {
+   "id": "gar-vhf-215i",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-02097-10",
+   "new_sku": "010-02097-01",
+   "note": "Mesmo padrão do 115i — PN real confirmado via garmin.com/en-IE/p/625346/pn/010-02097-01/."
+  },
+  {
+   "id": "gar-gnx-sail-pack-43",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-01536-30",
+   "new_sku": "010-01248-60",
+   "note": "SKU antigo não existe em nenhuma fonte. PN real confirmado por Amazon, Defender Marine, NavStore, Anchor Express, mygreenoutdoors, Wholesale Marine, Vema Electronics, Marshland Marine."
+  },
+  {
+   "id": "gar-gst-10",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-01802-00",
+   "new_sku": "010-11328-00",
+   "note": "SKU antigo não bate com PN oficial atual — confirmado via garmin.com/en-US/p/35610/ (JSON embutido da página)."
+  },
+  {
+   "id": "gar-gst-43",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-01802-21",
+   "new_sku": "010-04284-00",
+   "note": "SKU antigo não bate — confirmado via garmin.com/en-US/p/513029/. ATENÇÃO: página também menciona 010-04283-00 em outro campo (possível variante/kit) — vale confirmar manualmente."
+  },
+  {
+   "id": "gar-gdt-43",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-01802-22",
+   "new_sku": "010-01749-00",
+   "note": "SKU antigo não bate — confirmado via garmin.com/en-US/p/567275/. ATENÇÃO: página também menciona 010-01749-10 (possível variante de conector) — vale confirmar manualmente."
+  },
+  {
+   "id": "gar-dst-800",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-12646-10",
+   "new_sku": "010-11051-00",
+   "note": "SKU antigo não bate — página en-US retorna 404 (produto descontinuado nos EUA); confirmado via garmin.com/en-CA/p/13578/ (variante 0° tilt)."
+  },
+  {
+   "id": "gar-dst-810",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-12646-00",
+   "new_sku": "010-11051-20",
+   "note": "SKU antigo não bate — confirmado via garmin.com/en-US/p/724089/ (variante 0°; existem variantes 12°/20° com PN distintos)."
+  },
+  {
+   "id": "gar-gra-10",
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-11400-00",
+   "new_sku": "010-11324-00",
+   "note": "SKU antigo não bate — confirmado via garmin.com/en-US/p/35606/."
+  },
+  {
+   "id": "gar-gsv-10",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-12005-00",
+   "new_sku": "010-02482-00",
+   "note": "SKU antigo não existe. GSV 10 só é vendido dentro do bundle \"Surround View Camera System\" — PN confirmado via change-history oficial Garmin (www8.garmin.com/support/ch.jsp) + revendedores internacionais."
+  },
+  {
+   "id": "gar-gps-24xd-hvs",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-02315-10",
+   "new_sku": "010-02316-10",
+   "note": "SKU antigo não existe. Página oficial lista apenas 010-02316-00/-10/-20 — escolhido -10 (NMEA 2000) por consistência com o GPS 24xd sem HVS já catalogado (N2K-only)."
+  },
+  {
+   "id": "gar-gtb-10",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-12082-00",
+   "new_sku": "010-02134-00",
+   "note": "SKU antigo não existe. PN real confirmado via garmin.com/en-US/p/634370/ + manual de instalação oficial."
+  },
+  {
+   "id": "adp-n2k-term-m",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-11521-10",
+   "new_sku": "010-11080-00",
+   "note": "SKU antigo não existe em nenhuma fonte. PN real confirmado via garmin.com/en-US/p/13375/ (variante Male) + West Marine."
+  },
+  {
+   "id": "adp-n2k-term-f",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-11521-00",
+   "new_sku": "010-11081-00",
+   "note": "Mesma situação — variante Female confirmada via garmin.com/en-US/p/13375/pn/010-11081-00/ + Amazon."
+  },
+  {
+   "id": "cab-bn-2m",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-13500-00",
+   "new_sku": "010-12528-30",
+   "note": "SKU antigo não existe. PN real confirmado na tabela oficial do PDF \"Technical Reference for Garmin BlueNet Technology\" (2m/6.5ft)."
+  },
+  {
+   "id": "cab-bn-6m",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-13500-01",
+   "new_sku": "010-12528-31",
+   "note": "Mesma fonte — variante 6m/20ft."
+  },
+  {
+   "id": "cab-bn-15m",
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-13500-02",
+   "new_sku": "010-12528-03",
+   "note": "Mesma fonte — variante 15m/50ft."
+  },
+  {
+   "id": "gar-force-kraken-75",
+   "status": "OK (model renomeado p/ consistencia)",
+   "note": "model -> \"Force Kraken 75\\\" Black\""
+  }
+ ],
+ "errors": [],
+ "skipped_deliberately": [
+  {
+   "id": "gar-echomap-uhd2-64cv",
+   "reason": "Produto/SKU não localizado em nenhuma fonte — pode não existir como cadastrado (linha 6\" só tem variantes \"sv\", não \"cv\")."
+  },
+  {
+   "id": "gar-fantom-124",
+   "reason": "CONFLITO: pesquisa atribui a imagem K10-00012-19 ao Fantom 124, mas essa mesma imagem já está em uso pro Fantom 126 (gar-fantom-126) desde a pesquisa anterior. Duas fontes discordam — não decidido automaticamente, precisa revisão manual."
+  },
+  {
+   "id": "gar-lvs32",
+   "reason": "Ambiguidade recorrente (2ª vez): SKU 010-12968-00 cadastrado vs 010-12784-03 sugerido pela pesquisa — já tinha sido sinalizado antes e mantido como estava. Mantendo o padrão de não alterar sem confirmação direta."
+  },
+  {
+   "id": "gar-gt56uhd-tr",
+   "reason": "Existem 2 PNs reais dependendo do motor (Force Kraken=010-02732-03 vs Force/Pro=010-02732-04) — catálogo tem só 1 entrada genérica. Precisa decisão de qual variante representar."
+  },
+  {
+   "id": "gar-gt56uhd-ih",
+   "reason": "GRAVE: produto provavelmente NÃO EXISTE — GT56UHD não tem variante \"in-hull\" confirmada em nenhuma fonte. Candidato a remoção ou correção pra GT56UHD-TH (thru-hull single)."
+  },
+  {
+   "id": "gar-reactor40-trim-tab",
+   "reason": "GRAVÍSSIMO: SKU cadastrado (010-02064-00) é na verdade um relógio GPS Garmin Instinct. Além disso, \"Reactor 40 for Trim Tabs\" NÃO EXISTE na linha oficial Reactor (só existem: Compact/Kicker/Hydraulic/Steer-By-Wire/Mechanical). Candidato forte a remoção."
+  },
+  {
+   "id": "gar-force-kraken-87",
+   "reason": "Força Kraken de 87\" NÃO EXISTE — a linha só vai até 48/63/75/90/110\". SKU cadastrado é inválido. Candidato mais próximo real seria 90\" Black (010-02573-20)."
+  },
+  {
+   "id": "gar-vhf-315i",
+   "reason": "CONFLITO DE SKU: pesquisa sugere 010-02047-01 pro 315i, mas esse SKU já está em uso por gar-vhf-315-ais no catálogo. Há inclusive uma 3ª candidata (010-02047-10, já usada via PN_FIXES/_pnInferred). Precisa decisão manual de qual VHF usa qual PN."
+  },
+  {
+   "id": "gar-gnx-sail-pack-43-wireless",
+   "reason": "CONFLITO DE SKU: pesquisa sugere 010-01616-30 pro Sail Pack Wireless, mas esse SKU já está em uso por gar-gwind-wireless (transdutor individual) no catálogo — provável confusão entre SKU do componente e do kit/bundle."
+  },
+  {
+   "id": "adp-ydem-01",
+   "reason": "SKU cadastrado (YDEM-01N) não existe na linha real da Yacht Devices (produtos reais: YDEG-04, YDES-04, YDOG-01). Candidato mais próximo seria YDEG-04N, mas não confirmado — não alterado."
+  },
+  {
+   "id": "cab-bn-30m",
+   "reason": "Cabo BlueNet de 30m NÃO EXISTE pronto na linha oficial (comprimentos reais: 0.3/2/6/12/15m). SKU cadastrado é inválido."
+  },
+  {
+   "id": "gar-vhf-315-ais (existente)",
+   "reason": "ATENÇÃO INDIRETA: a pesquisa do 315i encontrou evidência de que o SKU 010-02047-01 (atualmente atribuído a VHF 315 AIS) pode na verdade pertencer ao VHF 315i (intercom), não ao 315 AIS. Precisa confirmação cruzada — ver gar-vhf-315i acima."
+  }
+ ]
+}

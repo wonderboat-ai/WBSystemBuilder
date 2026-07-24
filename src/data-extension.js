@@ -28,8 +28,11 @@ const PN_FIXES = {
   'gar-vhf-115':       '010-02096-00',  // era 010-01957-00
   'gar-vhf-215':       '010-02097-00',  // era 010-01959-00
   'gar-vhf-215-ais':   '010-02098-00',  // era 010-01959-01
-  'gar-vhf-315':       '010-02047-00',  // era 010-01958-00
-  'gar-vhf-315i':      '010-02047-10',  // era 010-01958-10 — PN INFERIDO (sem confirmação Garmin)
+  // gar-vhf-315 removido daqui 2026-07-24: SKU 010-02047-00 corrigido direto na fonte (data.js).
+  'gar-vhf-315i':      '010-02047-10',  // era 010-01958-10 — PN INFERIDO (sem confirmação Garmin).
+                                        // ATENÇÃO: pesquisa em 2026-07-24 sugere que 010-02047-01 (hoje
+                                        // atribuído a gar-vhf-315-ais) pode na verdade ser o 315i —
+                                        // conflito não resolvido, ver scripts/sku_corrections_log.json.
   'gar-gls10':         '010-12954-00',  // era 010-02610-00
   'gar-lvs34':         '010-02706-10',  // era 010-12516-00
   'gar-gsd-26':        '010-00958-00',  // era 010-01112-00
@@ -126,10 +129,10 @@ const NEW_MFDS = [
 {id:'gar-echomap-uhd2-74cv', sku:'010-02595-00', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 74cv', category:'MFD',
  description:'MFD 7" ClearVü+ — sucessor do 73cv.', power:{voltage:'12VDC',watts:14},
  ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
-{id:'gar-echomap-uhd2-74sv', sku:'010-02595-01', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 74sv', category:'MFD',
+{id:'gar-echomap-uhd2-74sv', sku:'010-02685-01', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 74sv', category:'MFD',
  description:'MFD 7" SideVü+ — sucessor do 73sv.', power:{voltage:'12VDC',watts:16},
  ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
-{id:'gar-echomap-uhd2-94sv', sku:'010-02692-50', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 94sv', category:'MFD',
+{id:'gar-echomap-uhd2-94sv', sku:'010-02689-00', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 94sv', category:'MFD',
  description:'MFD 9" SideVü+ — sucessor do 93sv.', power:{voltage:'12VDC',watts:20},
  ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
 
@@ -161,7 +164,7 @@ const NEW_RADARS = [
 const NEW_PANOPTIX = [
 // REMOVIDO 2026-05-03: gar-lvs32 (ID já existe em data.js:207 com SKU 010-12968-00).
 //   Extension trazia 010-12784-03 — divergência. Confirmar qual é o SKU oficial do LVS32 transom antes de mexer.
-{id:'gar-lvs32-th', sku:'010-12784-04', family:'Panoptix LiveScope', model:'LVS32-TH Transducer (Thru-Hull)', category:'Sonar',
+{id:'gar-lvs32-th', sku:'010-12928-01', family:'Panoptix LiveScope', model:'LVS32-TH Transducer (Thru-Hull)', category:'Sonar',
  description:'LiveScope thru-hull mount.', power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
 {id:'gar-ps21-tr', sku:'010-01749-30', family:'Panoptix', model:'PS21-TR Transducer', category:'Sonar',
  description:'Panoptix Down/Forward LiveVü, conexão direta a MFD compatível (sem GLS 10).',
@@ -171,9 +174,9 @@ const NEW_PANOPTIX = [
  power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
 {id:'gar-ps22-th', sku:'010-01750-21', family:'Panoptix', model:'PS22-TH Transducer (Thru-Hull)', category:'Sonar',
  description:'Panoptix RealVü 3D thru-hull.', power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
-{id:'gar-ps31', sku:'010-01469-10', family:'Panoptix', model:'PS31 Forward Transducer', category:'Sonar',
+{id:'gar-ps31', sku:'010-01284-01', family:'Panoptix', model:'PS31 Forward Transducer', category:'Sonar',
  description:'Panoptix FrontVü forward-looking — colisão prevention.', power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
-{id:'gar-ps51-th', sku:'010-01469-21', family:'Panoptix', model:'PS51-TH FrontVü Thru-Hull', category:'Sonar',
+{id:'gar-ps51-th', sku:'010-01753-00', family:'Panoptix', model:'PS51-TH FrontVü Thru-Hull', category:'Sonar',
  description:'Panoptix FrontVü thru-hull — preferido pra cruzeiro/yacht.', power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
 {id:'gar-ps60', sku:'010-01749-50', family:'Panoptix', model:'PS60 RealVü 3D Historical', category:'Sonar',
  description:'Panoptix RealVü 3D Historical view.', power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
@@ -201,7 +204,7 @@ const NEW_TRANSDUCERS = [
 {id:'gar-gt54uhd-tm', sku:'010-12909-00', family:'GT UHD', model:'GT54UHD-TM Ultra HD Transom', category:'Sensor',
  description:'Transdutor Ultra HD all-in-one CHIRP wide + ClearVü (até 60m) + SideVü 455/1200kHz (150m).',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
-{id:'gar-gt56uhd-tm', sku:'010-13066-00', family:'GT UHD', model:'GT56UHD-TM Ultra HD Transom', category:'Sensor',
+{id:'gar-gt56uhd-tm', sku:'010-13073-00', family:'GT UHD', model:'GT56UHD-TM Ultra HD Transom', category:'Sensor',
  description:'Sucessor do GT54UHD com mais alcance e clarity.',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
 {id:'gar-gt56uhd-tr', sku:'010-13066-10', family:'GT UHD', model:'GT56UHD-TR Trolling Motor', category:'Sensor',
@@ -210,7 +213,7 @@ const NEW_TRANSDUCERS = [
 {id:'gar-gt56uhd-ih', sku:'010-13066-20', family:'GT UHD', model:'GT56UHD-IH In-Hull', category:'Sensor',
  description:'GT56UHD in-hull (sem furar casco).',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
-{id:'gar-gt51m-thp', sku:'010-12404-20', family:'GT THP', model:'GT51M-THP Thru-Hull Pair Mid CHIRP', category:'Sensor',
+{id:'gar-gt51m-thp', sku:'010-01966-11', family:'GT THP', model:'GT51M-THP Thru-Hull Pair Mid CHIRP', category:'Sensor',
  description:'Par 12-pin thru-hull · Mid CHIRP 80-160kHz 600W + ClearVü/SideVü 260/455kHz 500W.',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
 {id:'gar-b265lh', sku:'010-11635-21', family:'Airmar', model:'B-265LH Thru-Hull CHIRP', category:'Sensor',
@@ -237,7 +240,7 @@ const NEW_AUTOPILOT = [
 {id:'gar-reactor40-trim-tab', sku:'010-02064-00', family:'Reactor 40', model:'Reactor 40 for Trim Tabs', category:'Autopilot',
  description:'Pacote autopilot integrado a sistema de flaps Garmin/Lenco.',
  power:{voltage:'12VDC',watts:18}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-reactor-wireless-remote', sku:'010-12466-00', family:'Reactor', model:'Reactor Wireless Remote', category:'Autopilot',
+{id:'gar-reactor-wireless-remote', sku:'010-12833-10', family:'Reactor', model:'Reactor Wireless Remote', category:'Autopilot',
  description:'Controle remoto wireless ANT+ para autopilot Reactor 40.',
  power:{voltage:'-'}, ports:[], _verify:true, notes:'Bateria interna · pareamento ANT+.'},
 {id:'gar-shadow-drive', sku:'010-11052-08', family:'Reactor', model:'Shadow Drive Sensor', category:'Autopilot',
@@ -249,12 +252,12 @@ const NEW_AUTOPILOT = [
    8) FORCE TROLLING MOTOR — versões White (saltwater) + 57"/87"
    ======================================================================== */
 const NEW_TROLLING = [
-{id:'gar-force-kraken-white-48', sku:'010-02835-50', family:'Force Kraken', model:'Force Kraken 48" White (Saltwater)', category:'TrollingMotor',
+{id:'gar-force-kraken-white-48', sku:'010-02574-30', family:'Force Kraken', model:'Force Kraken 48" White (Saltwater)', category:'TrollingMotor',
  description:'Trolling motor saltwater 48" eixo, 100lb thrust.',
  power:{voltage:'24-36VDC',watts:240}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _verify:true},
-{id:'gar-force-kraken-white-63', sku:'010-02835-60', family:'Force Kraken', model:'Force Kraken 63" White (Saltwater)', category:'TrollingMotor',
+{id:'gar-force-kraken-white-63', sku:'010-02574-00', family:'Force Kraken', model:'Force Kraken 63" White (Saltwater)', category:'TrollingMotor',
  description:'Versão saltwater 63".', power:{voltage:'24-36VDC',watts:240},
- ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _verify:true},
+ ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _skuConfirmedByLucas:true},
 {id:'gar-force-kraken-87', sku:'010-02835-30', family:'Force Kraken', model:'Force Kraken 87" Black', category:'TrollingMotor',
  description:'Versão 87" eixo (águas profundas/grandes barcos). 100lb thrust.',
  power:{voltage:'24-36VDC',watts:240}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _verify:true},
@@ -264,13 +267,13 @@ const NEW_TROLLING = [
    9) VHF/AIS adicionais
    ======================================================================== */
 const NEW_VHF = [
-{id:'gar-vhf-110', sku:'010-02095-00', family:'VHF', model:'VHF 110', category:'VHF',
+{id:'gar-vhf-110', sku:'010-01653-00', family:'VHF', model:'VHF 110', category:'VHF',
  description:'VHF DSC fixo entry — sem AIS, sem GPS interno. Microfone fist incluso.',
  power:{voltage:'12VDC',watts:5}, ports:[{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-vhf-115i', sku:'010-02096-10', family:'VHF', model:'VHF 115i (Intercom)', category:'VHF',
+{id:'gar-vhf-115i', sku:'010-02096-01', family:'VHF', model:'VHF 115i (Intercom)', category:'VHF',
  description:'VHF 115 com intercom 2-way (segunda estação).', power:{voltage:'12VDC',watts:7},
  ports:[{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-vhf-215i', sku:'010-02097-10', family:'VHF', model:'VHF 215i (Intercom)', category:'VHF',
+{id:'gar-vhf-215i', sku:'010-02097-01', family:'VHF', model:'VHF 215i (Intercom)', category:'VHF',
  description:'VHF 215 com intercom + N2K + GPS interno.', power:{voltage:'12VDC',watts:8},
  ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
 {id:'gar-vhf-315-ais', sku:'010-02047-01', family:'VHF', model:'VHF 315 AIS', category:'VHF',
@@ -294,7 +297,7 @@ const NEW_INSTRUMENTS = [
 {id:'gar-gnx-wind', sku:'010-01142-00', family:'GNX', model:'GNX Wind Display', category:'Instrument',
  description:'Display dedicado vento + true/apparent direction analog dial.',
  power:{voltage:'12VDC',watts:1.5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:1},
-{id:'gar-gnx-sail-pack-43', sku:'010-01536-30', family:'GNX', model:'GNX Wired Sail Pack 43', category:'Instrument',
+{id:'gar-gnx-sail-pack-43', sku:'010-01248-60', family:'GNX', model:'GNX Wired Sail Pack 43', category:'Instrument',
  description:'Kit completo veleiro: GNX Wind + GNX 20 + gWind Wired + GST 43 + GDT 43 (ambos thru-hull 43mm).',
  power:{voltage:'12VDC',watts:5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:3,
  notes:'Kit substitui Nexus completo.'},
@@ -307,7 +310,7 @@ const NEW_INSTRUMENTS = [
    11) SENSORES adicionais
    ======================================================================== */
 const NEW_SENSORS = [
-{id:'gar-gst-10', sku:'010-01802-00', family:'GST', model:'GST 10 Speed/Temp Wired (legacy)', category:'Sensor',
+{id:'gar-gst-10', sku:'010-11328-00', family:'GST', model:'GST 10 Speed/Temp Wired (legacy)', category:'Sensor',
  description:'Sensor speed/temp NMEA 0183, conexão antiga.',
  ports:[{type:'NMEA0183',qty:1}], _verify:true},
 {id:'gar-gfl-10', sku:'010-11197-00', family:'GFL', model:'GFL 10 Fluid Level Adapter', category:'Sensor',
@@ -319,10 +322,10 @@ const NEW_SENSORS = [
 {id:'gar-gtu-10', sku:'010-11401-00', family:'GTU', model:'GTU 10 Tank Monitor', category:'Sensor',
  description:'Monitor de nível de tanque (combustível, água) ultrasonic. NMEA 2000.',
  ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:1},
-{id:'gar-gra-10', sku:'010-11400-00', family:'GRA', model:'GRA 10 Rudder Angle Adapter', category:'Sensor',
+{id:'gar-gra-10', sku:'010-11324-00', family:'GRA', model:'GRA 10 Rudder Angle Adapter', category:'Sensor',
  description:'Adaptador para sensor analógico de ângulo de leme legacy → NMEA 2000.',
  ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:1},
-{id:'gar-dst-800', sku:'010-12646-10', family:'Airmar', model:'DST 800 Smart Triducer (Wired)', category:'Sensor',
+{id:'gar-dst-800', sku:'010-11051-00', family:'Airmar', model:'DST 800 Smart Triducer (Wired)', category:'Sensor',
  description:'Airmar passante velocidade/temp/profundidade NMEA 2000 wired.',
  ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:1},
 {id:'gar-gwind-race', sku:'010-01616-40', family:'gWind', model:'gWind Race Transducer', category:'Sensor',

@@ -110,8 +110,8 @@ SKUS = [
      'https://www.garmin.com/en-US/p/581087/pn/010-01616-20'),
 
     # Trolling / Audio (2)
-    ('gar-force-kraken-white-63', '010-02835-60', 'Force Kraken 63" White',
-     'https://www.garmin.com/en-US/p/957895/pn/010-02835-60'),
+    ('gar-force-kraken-white-63', '010-02574-00', 'Force Kraken 63" White',
+     'https://www.garmin.com/en-US/p/957895/pn/010-02574-00'),
     ('gar-fusion-ra770', '010-01905-00', 'Fusion Apollo MS-RA770',
      'https://www.garmin.com/en-US/p/630625/pn/010-01905-00'),
 
@@ -119,6 +119,31 @@ SKUS = [
     ('gar-ais-800', '010-02087-00', 'AIS 800',
      'https://www.garmin.com/en-US/p/697061/pn/010-02087-00'),
 ]
+
+def load_research_overrides():
+    """Carrega scripts/research_overrides.json (gerado pela pesquisa em
+    paralelo de 23 agentes sobre os SKUs que falharam na 1ª rodada) e
+    mescla em URL_OVERRIDES — essas têm prioridade sobre os overrides
+    hardcoded acima caso haja conflito de id (não deveria haver)."""
+    path = os.path.join(ROOT, 'scripts', 'research_overrides.json')
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding='utf-8') as f:
+        return json.load(f)
+
+URL_OVERRIDES.update(load_research_overrides())
+
+def load_extra_skus():
+    """Carrega scripts/extra_skus.json (gerado por extração automática do
+    catálogo) — itens sem productPageUrl curada, dependem só de CDN direto
+    (Estratégia 1) ou de URL_OVERRIDES preenchido via pesquisa."""
+    path = os.path.join(ROOT, 'scripts', 'extra_skus.json')
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding='utf-8') as f:
+        extra = json.load(f)
+    existing_ids = {s[0] for s in SKUS}
+    return [(e['id'], e['sku'], e['model'], None) for e in extra if e['id'] not in existing_ids]
 
 OG_RE  = re.compile(rb'<meta\s+property=["\']og:image["\']\s+content=["\']([^"\']+)["\']', re.I)
 OG_RE2 = re.compile(rb'<meta\s+content=["\']([^"\']+)["\']\s+property=["\']og:image["\']', re.I)
@@ -182,10 +207,21 @@ def try_cdn_direct(sku):
     return None, None
 
 def main():
+    all_skus = SKUS + load_extra_skus()
+    # Aditivo: preserva fotos já existentes em images.js que não fazem parte
+    # desta rodada (ex: sucessos de uma rodada anterior cujo id não está
+    # mais em extra_skus.json). Reprocessa (sobrescreve) qualquer id que
+    # esteja em all_skus desta vez.
     results = {}
+    if os.path.exists(OUT_JS):
+        with open(OUT_JS, encoding='utf-8') as f:
+            prev = f.read()
+        for m in re.finditer(r"WB_IMAGES\.photo\['([^']+)'\] = '([^']+)';", prev):
+            results[m.group(1)] = m.group(2)
+    failures = []
     log_lines = []
     total_in = 0
-    for (id_, sku, model, page) in SKUS:
+    for (id_, sku, model, page) in all_skus:
         log_lines.append(f'\n--- {id_}  ({sku})  {model}')
         img_bytes = None
         img_url = None
@@ -204,8 +240,8 @@ def main():
             img_url, img_bytes = try_cdn_direct(sku)
             if img_url:
                 log_lines.append(f'  CDN direto: {img_url} ({len(img_bytes)/1024:.1f} KB raw)')
-        # Estratégia 2: extrair og:image da productPage (se nada antes funcionou)
-        if not img_bytes:
+        # Estratégia 2: extrair og:image da productPage (só se tivermos uma URL curada)
+        if not img_bytes and page:
             try:
                 html = fetch(page, max_bytes=600_000)
                 img_url = find_image_url(html, sku)
@@ -218,6 +254,7 @@ def main():
                 log_lines.append(f'  ! erro: {type(e).__name__}: {e}')
         if not img_bytes:
             log_lines.append('  ! NAO ACHOU foto em nenhum lugar')
+            failures.append({'id': id_, 'sku': sku, 'model': model})
             continue
         try:
             data_uri, size_b = to_webp_b64(img_bytes)
@@ -226,6 +263,11 @@ def main():
             log_lines.append(f'  OK {size_b/1024:.1f} KB webp final')
         except Exception as e:
             log_lines.append(f'  ! resize/encode falhou: {type(e).__name__}: {e}')
+            failures.append({'id': id_, 'sku': sku, 'model': model})
+
+    # Recalcula total_in a partir de TODAS as entradas finais (novas + preservadas),
+    # senão o tamanho reportado fica subestimado quando reaproveitamos fotos antigas.
+    total_in = sum(len(uri.split(',', 1)[1]) * 3 // 4 for uri in results.values())
 
     # Gera images.js
     js = ['/* =========================================================================',
@@ -249,7 +291,13 @@ def main():
     with open(LOG, 'w', encoding='utf-8') as f:
         f.write('\n'.join(log_lines))
 
-    print(f'OK: {len(results)}/{len(SKUS)} fotos baixadas · {total_in/1024:.0f} KB total')
+    failures_path = os.path.join(ROOT, 'scripts', 'photo_failures.json')
+    with open(failures_path, 'w', encoding='utf-8') as f:
+        json.dump(failures, f, ensure_ascii=False, indent=1)
+
+    print(f'total tentado: {len(all_skus)}')
+    print(f'sucesso: {len(results)} ({total_in/1024:.0f} KB)')
+    print(f'falhas: {len(failures)} -> {failures_path}')
     print(f'Saida: {OUT_JS}')
     print(f'Log:   {LOG}')
 

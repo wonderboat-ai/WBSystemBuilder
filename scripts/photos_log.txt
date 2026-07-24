@@ -1,15 +1,15 @@
 
 --- gar-gpsmap-1243xsv  (010-02675-62)  GPSMAP 1243xsv
-  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.8 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
   OK 3.3 KB webp final
 
 --- gar-gpsmap-9012  (010-02675-50)  GPSMAP 9012
-  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.8 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
   OK 3.3 KB webp final
 
 --- gar-gpsmap-9019  (010-02675-10)  GPSMAP 9019
-  CDN direto: https://res.garmin.com/en/products/010-02675-10/v/cf-lg.jpg (30.3 KB raw)
-  OK 2.4 KB webp final
+  CDN direto: https://res.garmin.com/en/products/010-02675-10/v/cf-lg.jpg (6.3 KB raw)
+  OK 0.5 KB webp final
 
 --- gar-gpsmap-8612xsv  (010-02092-52)  GPSMAP 8612xsv
   CDN direto: https://res.garmin.com/en/products/010-02092-00/g/cf-lg.jpg (18.7 KB raw)
@@ -20,15 +20,15 @@
   OK 1.7 KB webp final
 
 --- gar-gpsmap-743xsv  (010-02365-50)  GPSMAP 743xsv
-  CDN direto: https://res.garmin.com/en/products/010-02365-50/v/cf-lg.jpg (11.8 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-02365-50/v/cf-lg.jpg (13.7 KB raw)
   OK 1.3 KB webp final
 
 --- gar-gpsmap-9013xsv  (010-02697-00)  GPSMAP 9013xsv
-  override: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.8 KB raw)
+  override: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
   OK 3.3 KB webp final
 
 --- gar-echomap-uhd2-93sv  (010-02692-01)  ECHOMAP UHD2 93sv
-  override: https://res.garmin.com/en/products/010-02593-00/v/cf-lg.jpg (30.9 KB raw)
+  override: https://res.garmin.com/en/products/010-02593-00/v/cf-lg.jpg (36.7 KB raw)
   OK 2.2 KB webp final
 
 --- gar-fantom-18x  (010-02584-00)  GMR Fantom 18x
@@ -40,16 +40,16 @@
   OK 1.1 KB webp final
 
 --- gar-radar-18xhd3  (010-02841-00)  GMR 18 xHD3
-  CDN direto: https://res.garmin.com/en/products/010-02841-00/v/cf-lg.jpg (11.2 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-02841-00/v/cf-lg.jpg (12.5 KB raw)
   OK 1.2 KB webp final
 
 --- gar-fantom-126  (010-01366-00)  GMR Fantom 126
-  override: https://res.garmin.com/en/products/K10-00012-19/g/cf-lg-16f4fc63-9ea4-40d2-8ec7-2fd8318897a7.jpg (8.1 KB raw)
+  override: https://res.garmin.com/en/products/K10-00012-19/g/cf-lg-16f4fc63-9ea4-40d2-8ec7-2fd8318897a7.jpg (8.7 KB raw)
   OK 0.8 KB webp final
 
 --- gar-gls10  (010-12954-00)  GLS 10 LiveScope Module
-  CDN direto: https://res.garmin.com/en/products/010-12954-00/g/cf-lg.jpg (13.4 KB raw)
-  OK 1.3 KB webp final
+  CDN direto: https://res.garmin.com/en/products/010-12954-00/g/cf-lg.jpg (14.7 KB raw)
+  OK 1.2 KB webp final
 
 --- gar-lvs34  (010-02706-10)  LVS34 Transducer
   CDN direto: https://res.garmin.com/en/products/010-02706-00/v/cf-lg.jpg (14.6 KB raw)
@@ -60,11 +60,11 @@
   OK 1.6 KB webp final
 
 --- gar-gsd-28  (010-02797-00)  GSD 28
-  CDN direto: https://res.garmin.com/en/products/010-02797-00/g/cf-lg.jpg (13.0 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-02797-00/g/cf-lg.jpg (13.1 KB raw)
   OK 1.4 KB webp final
 
 --- gar-ps70-th  (010-02768-10)  Panoptix PS70-TH
-  CDN direto: https://res.garmin.com/en/products/010-02768-10/g/cf-lg.jpg (6.9 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-02768-10/g/cf-lg.jpg (8.2 KB raw)
   OK 0.6 KB webp final
 
 --- gar-ghc50  (010-02496-00)  GHC 50
@@ -72,12 +72,12 @@
   OK 2.4 KB webp final
 
 --- gar-reactor40-hyd-corepack  (010-00705-86)  Reactor 40 Hyd Corepack
-  CDN direto: https://res.garmin.com/en/products/010-00705-86/g/cf-lg.jpg (31.1 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-00705-86/g/cf-lg.jpg (34.6 KB raw)
   OK 3.1 KB webp final
 
 --- gar-reactor40-hyd-1l2  (010-00705-08)  Reactor 40 Hyd 1.2L Pump
-  CDN direto: https://res.garmin.com/en/products/010-00705-08/v/cf-lg.jpg (24.4 KB raw)
-  OK 2.5 KB webp final
+  CDN direto: https://res.garmin.com/en/products/010-00705-08/v/cf-lg.jpg (27.0 KB raw)
+  OK 2.4 KB webp final
 
 --- gar-vhf-215-ais  (010-02098-00)  VHF 215 AIS
   via og:image: https://res.garmin.com/en/products/010-02098-00/g/cf-lg-57198f47-47c2-4737-80ab-88e989d7dc3a.jpg
@@ -92,12 +92,12 @@
   OK 1.8 KB webp final
 
 --- gar-gms-10  (010-00351-00)  GMS 10
-  CDN direto: https://res.garmin.com/en/products/010-00351-00/g/cf-lg.jpg (4.6 KB raw)
+  CDN direto: https://res.garmin.com/en/products/010-00351-00/g/cf-lg.jpg (4.7 KB raw)
   OK 1.9 KB webp final
 
 --- gar-bluenet-30  (010-12346-00)  BlueNet 30 Gateway
-  override: https://res.garmin.com/en/products/010-02613-00/g/cf-lg.jpg (20.9 KB raw)
-  OK 1.6 KB webp final
+  override: https://res.garmin.com/en/products/010-02613-00/g/cf-lg.jpg (22.7 KB raw)
+  OK 1.7 KB webp final
 
 --- gar-gc-200  (010-02164-00)  GC 200 Marine IP Camera
   via og:image: https://res.garmin.com/en/products/010-02164-00/g/cf-lg-5624a810-92ae-4293-9152-1152dd7538a3.jpg
@@ -115,7 +115,7 @@
   CDN direto: https://res.garmin.com/en/products/010-01616-00/g/cf-lg.jpg (16.5 KB raw)
   OK 1.6 KB webp final
 
---- gar-force-kraken-white-63  (010-02835-60)  Force Kraken 63" White
+--- gar-force-kraken-white-63  (010-02574-00)  Force Kraken 63" White
   override: https://res.garmin.com/en/products/010-02574-00/v/cf-lg.jpg (8.3 KB raw)
   OK 0.6 KB webp final
 
@@ -126,3 +126,564 @@
 --- gar-ais-800  (010-02087-00)  AIS 800
   via og:image: https://res.garmin.com/en/products/010-02087-00/g/cf-lg-691df03b-2990-42fd-9d88-388c9c8525ff.jpg
   OK 1.1 KB webp final
+
+--- gar-gpsmap-9016  (010-02675-00)  GPSMAP 9016
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
+  OK 3.3 KB webp final
+
+--- gar-gpsmap-9022  (010-02675-20)  GPSMAP 9022
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
+  OK 3.3 KB webp final
+
+--- gar-gpsmap-9024  (010-02675-30)  GPSMAP 9024
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
+  OK 3.3 KB webp final
+
+--- gar-gpsmap-9027  (010-02675-40)  GPSMAP 9027
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
+  OK 3.3 KB webp final
+
+--- gar-gpsmap-8410  (010-02091-00)  GPSMAP 8410
+  CDN direto: https://res.garmin.com/en/products/010-02091-00/g/cf-lg.jpg (41.1 KB raw)
+  OK 2.4 KB webp final
+
+--- gar-gpsmap-8410xsv  (010-02091-50)  GPSMAP 8410xsv
+  CDN direto: https://res.garmin.com/en/products/010-02091-50/g/cf-lg.jpg (38.1 KB raw)
+  OK 2.2 KB webp final
+
+--- gar-gpsmap-8412  (010-02092-00)  GPSMAP 8412
+  CDN direto: https://res.garmin.com/en/products/010-02092-00/g/cf-lg.jpg (18.7 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-gpsmap-8412xsv  (010-02092-50)  GPSMAP 8412xsv
+  CDN direto: https://res.garmin.com/en/products/010-02092-50/g/cf-lg.jpg (25.2 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gpsmap-8416  (010-02093-00)  GPSMAP 8416
+  CDN direto: https://res.garmin.com/en/products/010-02093-00/g/cf-lg.jpg (18.6 KB raw)
+  OK 1.7 KB webp final
+
+--- gar-gpsmap-8416xsv  (010-02093-50)  GPSMAP 8416xsv
+  CDN direto: https://res.garmin.com/en/products/010-02093-50/g/cf-lg.jpg (38.7 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gpsmap-8612  (010-02092-02)  GPSMAP 8612
+  CDN direto: https://res.garmin.com/en/products/010-02092-02/g/cf-lg.jpg (23.2 KB raw)
+  OK 1.7 KB webp final
+
+--- gar-gpsmap-8616  (010-02093-02)  GPSMAP 8616
+  CDN direto: https://res.garmin.com/en/products/010-02093-02/g/cf-lg.jpg (16.0 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-gpsmap-1223  (010-02367-00)  GPSMAP 1223
+  CDN direto: https://res.garmin.com/en/products/010-02367-00/g/cf-lg.jpg (17.5 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-gpsmap-1223xsv  (010-02367-02)  GPSMAP 1223xsv
+  CDN direto: https://res.garmin.com/en/products/010-02367-02/v/cf-lg.jpg (15.8 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-gpsmap-1243  (010-02675-60)  GPSMAP 1243
+  CDN direto: https://res.garmin.com/en/products/010-02675-00/g/cf-lg.jpg (41.9 KB raw)
+  OK 3.3 KB webp final
+
+--- gar-echomap-uhd2-54cv  (010-02690-00)  ECHOMAP UHD2 54cv
+  CDN direto: https://res.garmin.com/en/products/010-02690-00/v/cf-lg.jpg (33.4 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-echomap-uhd2-72cv  (010-02691-00)  ECHOMAP UHD2 72cv
+  CDN direto: https://res.garmin.com/en/products/010-02691-00/g/cf-lg.jpg (10.2 KB raw)
+  OK 0.9 KB webp final
+
+--- gar-echomap-uhd2-73sv  (010-02691-01)  ECHOMAP UHD2 73sv
+  CDN direto: https://res.garmin.com/en/products/010-02691-01/v/cf-lg.jpg (12.4 KB raw)
+  OK 0.8 KB webp final
+
+--- gar-echomap-ultra2-106sv  (010-02880-00)  ECHOMAP Ultra 2 106sv
+  override: https://res.garmin.com/en/products/010-02880-00/v/cf-lg.jpg (22.5 KB raw)
+  OK 1.9 KB webp final
+
+--- gar-echomap-ultra2-126sv  (010-02882-00)  ECHOMAP Ultra 2 126sv
+  override: https://res.garmin.com/en/products/010-02882-00/v/cf-lg.jpg (33.0 KB raw)
+  OK 2.5 KB webp final
+
+--- gar-fantom-124  (010-01365-00)  GMR Fantom 124
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-gmr-434-xhd3  (010-02544-00)  GMR 434 xHD3 (4ft 4kW)
+  override: https://res.garmin.com/en/products/K10-00012-24/g/cf-lg.jpg (8.1 KB raw)
+  OK 0.6 KB webp final
+
+--- gar-gmr-436-xhd3  (010-02544-10)  GMR 436 xHD3 (6ft 4kW)
+  override: https://res.garmin.com/en/products/K10-00012-25/g/cf-lg.jpg (6.3 KB raw)
+  OK 0.4 KB webp final
+
+--- gar-gmr-1234-xhd3  (010-02545-00)  GMR 1234 xHD3 (4ft 12kW)
+  override: https://res.garmin.com/en/products/K10-00012-26/g/cf-lg.jpg (8.1 KB raw)
+  OK 0.6 KB webp final
+
+--- gar-gmr-1236-xhd3  (010-02545-10)  GMR 1236 xHD3 (6ft 12kW)
+  override: https://res.garmin.com/en/products/K10-00012-27/g/cf-lg.jpg (6.3 KB raw)
+  OK 0.4 KB webp final
+
+--- gar-gmr-2534-xhd3  (010-02546-00)  GMR 2534 xHD3 (4ft 25kW)
+  CDN direto: https://res.garmin.com/en/products/010-02546-00/v/cf-lg.jpg (21.1 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-gmr-2536-xhd3  (010-02546-10)  GMR 2536 xHD3 (6ft 25kW)
+  CDN direto: https://res.garmin.com/en/products/010-02546-10/v/cf-lg.jpg (21.1 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-lvs32  (010-12968-00)  LVS32 Transducer
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-lvs62  (010-02719-10)  LVS62 Transducer
+  override: https://res.garmin.com/en/products/010-02719-10/g/cf-lg.jpg (9.8 KB raw)
+  OK 1.2 KB webp final
+
+--- gar-gcv-20  (010-02055-10)  GCV 20 Ultra HD Scanning
+  override: https://res.garmin.com/en/products/010-02055-10/g/cf-lg-ab377b80-1824-4a5c-b03c-aac0593b8535.jpg (13.4 KB raw)
+  OK 1.0 KB webp final
+
+--- gar-reactor40-mech  (010-00705-89)  Reactor 40 Mechanical Corepack
+  CDN direto: https://res.garmin.com/en/products/010-00705-89/g/cf-lg.jpg (32.6 KB raw)
+  OK 3.1 KB webp final
+
+--- gar-reactor40-compact  (010-00705-06)  Reactor 40 Compact
+  override: https://res.garmin.com/en/products/010-00705-06/g/cf-lg.jpg (29.7 KB raw)
+  OK 2.6 KB webp final
+
+--- gar-reactor40-kicker  (010-00705-95)  Reactor 40 Kicker
+  override: https://res.garmin.com/en/products/010-00705-95/g/cf-lg-eb611e37-a89a-4eb7-8c6c-1b7110454493.jpg (14.0 KB raw)
+  OK 1.7 KB webp final
+
+--- gar-ccu  (010-11052-67)  CCU Course Computer
+  CDN direto: https://res.garmin.com/en/products/010-11052-67/g/cf-lg.jpg (20.2 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-ecu10  (010-11053-02)  ECU 10
+  CDN direto: https://res.garmin.com/en/products/010-11053-00/g/cf-lg.jpg (24.9 KB raw)
+  OK 2.2 KB webp final
+
+--- gar-ghc20  (010-01141-00)  GHC 20 Pilot Display
+  CDN direto: https://res.garmin.com/en/products/010-01141-00/g/cf-lg.jpg (12.0 KB raw)
+  OK 3.3 KB webp final
+
+--- gar-force-kraken-48  (010-02573-30)  Force Kraken 48" Black
+  override: https://res.garmin.com/en/products/010-02573-30/v/cf-lg.jpg (10.5 KB raw)
+  OK 0.9 KB webp final
+
+--- gar-force-kraken-63  (010-02573-00)  Force Kraken 63" Black
+  CDN direto: https://res.garmin.com/en/products/010-02573-00/v/cf-lg.jpg (8.9 KB raw)
+  OK 0.8 KB webp final
+
+--- gar-force-kraken-75  (010-02573-10)  Force Kraken 75" Black
+  override: https://res.garmin.com/en/products/010-02573-10/v/cf-lg.jpg (8.2 KB raw)
+  OK 0.6 KB webp final
+
+--- gar-vhf-215  (010-01959-00)  VHF 215
+  CDN direto: https://res.garmin.com/en/products/010-01959-00/g/cf-lg.jpg (26.4 KB raw)
+  OK 2.4 KB webp final
+
+--- gar-vhf-315  (010-02047-00)  VHF 315
+  override: https://res.garmin.com/en/products/010-02047-00/g/cf-lg-b162fe5f-e60f-4622-bfbf-2e953a36c75a.jpg (26.5 KB raw)
+  OK 2.1 KB webp final
+
+--- gar-vhf-315i  (010-01958-10)  VHF 315i (intercom)
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-gmi-20  (010-01140-00)  GMI 20 Marine Instrument
+  override: https://res.garmin.com/en/products/010-01140-00/g/cf-lg-73f528b6-6904-4979-b80f-e69d73cf336b.jpg (29.8 KB raw)
+  OK 3.6 KB webp final
+
+--- gar-gnx-20  (010-01211-00)  GNX 20
+  CDN direto: https://res.garmin.com/en/products/010-01211-00/g/cf-lg.jpg (16.5 KB raw)
+  OK 3.2 KB webp final
+
+--- gar-gnx-120  (010-01211-10)  GNX 120 (7")
+  CDN direto: https://res.garmin.com/en/products/010-01211-00/g/cf-lg.jpg (16.5 KB raw)
+  OK 3.2 KB webp final
+
+--- gar-gnx-130  (010-01211-20)  GNX 130 (10")
+  CDN direto: https://res.garmin.com/en/products/010-01211-00/g/cf-lg.jpg (16.5 KB raw)
+  OK 3.2 KB webp final
+
+--- gar-bluenet-20  (010-12345-00)  BlueNet 20 Switch
+  CDN direto: https://res.garmin.com/en/products/010-12345-00/g/cf-lg.jpg (6.7 KB raw)
+  OK 2.3 KB webp final
+
+--- gar-gtb-10  (010-02134-00)  GTB 10 OnDeck Hub
+  override: https://res.garmin.com/en/products/010-02134-00/g/cf-lg-eda24afc-c3d8-40a3-872e-fbd265a586db.jpg (15.2 KB raw)
+  OK 1.4 KB webp final
+
+--- gar-poe-coupler  (010-10580-10)  PoE Isolation Coupler
+  CDN direto: https://res.garmin.com/en/products/010-10580-10/g/cf-lg.jpg (6.6 KB raw)
+  OK 2.7 KB webp final
+
+--- gar-gps-24xd-hvs  (010-02316-10)  GPS 24xd HVS (heading)
+  override: https://res.garmin.com/en/products/010-02316-10/g/cf-lg-60259973-6220-4e4f-930a-a7b3f17600ed.jpg (13.8 KB raw)
+  OK 1.7 KB webp final
+
+--- gar-ga-38  (010-12017-00)  GA 38 GPS/GLONASS
+  CDN direto: https://res.garmin.com/en/products/010-12017-00/g/cf-lg.jpg (4.0 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-gxm-54  (010-02277-00)  GXM 54 SiriusXM Receiver
+  override: https://res.garmin.com/en/products/010-02277-00/010-02277-00/g/cf-lg-54ed3d3c-bfdd-415c-85e8-19658d4e4fb1.jpg (12.0 KB raw)
+  OK 1.1 KB webp final
+
+--- gar-gsv-10  (010-02482-00)  GSV 10 Surround View
+  override: https://media.hudsonmarine.co.uk/uploads/Garmin/Cameras/010-02482-00.jpg (61.0 KB raw)
+  OK 2.3 KB webp final
+
+--- gar-gwind-wireless  (010-01616-30)  gWind Wireless Transducer
+  CDN direto: https://res.garmin.com/en/products/010-01616-00/g/cf-lg.jpg (16.5 KB raw)
+  OK 1.6 KB webp final
+
+--- gar-gst-43  (010-04284-00)  GST 43 Speed/Temp Thru-Hull 43mm
+  override: https://res.garmin.com/en/products/010-04284-00/v/cf-lg.jpg (5.3 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-gdt-43  (010-01749-00)  GDT 43 Depth Thru-Hull 43mm
+  override: https://res.garmin.com/en/products/010-01749-00/v/cf-lg-47f2ddfd-6ad2-46ac-a4ed-556e24ab0a3d.jpg (12.4 KB raw)
+  OK 1.1 KB webp final
+
+--- gar-dst-810  (010-11051-20)  DST 810 Smart Triducer
+  override: https://res.garmin.com/en/products/010-11051-20/g/cf-lg-a283a7c2-6a4d-4580-b03e-4c0cdbae46c7.png (61.2 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-grf-10  (010-11399-00)  GRF 10 Rudder Angle
+  CDN direto: https://res.garmin.com/en/products/010-11399-00/g/cf-lg.jpg (3.3 KB raw)
+  OK 0.9 KB webp final
+
+--- gar-fusion-ra670  (010-02138-00)  Fusion Apollo MS-RA670
+  override: https://res.garmin.com/en/products/010-02138-00/g/cf-lg-3cff2f4f-ac28-41c0-9045-5a6baa1f5749.jpg (11.6 KB raw)
+  OK 1.2 KB webp final
+
+--- adp-n2k-term-m  (010-11080-00)  Terminador N2K Macho 120Ω
+  override: https://res.garmin.com/en/products/010-11080-00/g/cf-lg-1.jpg (6.9 KB raw)
+  OK 1.1 KB webp final
+
+--- adp-n2k-term-f  (010-11081-00)  Terminador N2K Fêmea 120Ω
+  override: https://res.garmin.com/en/products/010-11081-00/v/cf-lg-d9b34000-6112-4b30-ad5e-8b4a29aa62a5.jpg (13.1 KB raw)
+  OK 1.2 KB webp final
+
+--- adp-n2k-tee  (010-11078-00)  Tee Conector N2K
+  override: https://res.garmin.com/en/products/010-11078-00/g/cf-lg-038723a4-fc16-4ea8-805e-70648c01c6a3.jpg (13.7 KB raw)
+  OK 1.1 KB webp final
+
+--- adp-n2k-power  (010-11079-00)  Cabo Alimentação N2K (fusível 3A)
+  override: https://res.garmin.com/en/products/010-11079-00/g/cf-lg-ce518711-11f1-4d58-a833-4a397e515b10.jpg (9.6 KB raw)
+  OK 0.8 KB webp final
+
+--- cab-n2k-2m  (010-11076-00)  Cabo N2K Backbone 2m
+  override: https://res.garmin.com/en/products/010-11076-00/v/cf-lg-25e9fd6b-edc5-46c2-b269-e38aff3664f3.jpg (7.3 KB raw)
+  OK 0.5 KB webp final
+
+--- cab-n2k-6m  (010-11076-01)  Cabo N2K Backbone 6m
+  override: https://res.garmin.com/en/products/010-11076-01/v/cf-lg-452651e1-00a7-4df1-97ad-e44692c6b781.jpg (7.3 KB raw)
+  OK 0.5 KB webp final
+
+--- cab-n2k-10m  (010-11076-02)  Cabo N2K Backbone 10m
+  override: https://res.garmin.com/en/products/010-11076-02/v/cf-lg-61da0303-4580-4614-a0d1-02aa4659fb4c.jpg (7.3 KB raw)
+  OK 0.5 KB webp final
+
+--- cab-gmn-2m  (010-10550-00)  Cabo Marine Network 1.8m (6ft)
+  override: https://res.garmin.com/en/products/010-10550-00/g/cf-lg-306f3706-1803-4fb3-b8c9-1dffdc9d923f.jpg (11.0 KB raw)
+  OK 0.9 KB webp final
+
+--- cab-gmn-6m  (010-10551-00)  Cabo Marine Network 6m (20ft)
+  override: https://res.garmin.com/en/products/010-10550-00/g/cf-lg-306f3706-1803-4fb3-b8c9-1dffdc9d923f.jpg (11.0 KB raw)
+  OK 0.9 KB webp final
+
+--- cab-gmn-12m  (010-10552-00)  Cabo Marine Network 12m (40ft)
+  override: https://res.garmin.com/en/products/010-10550-00/g/cf-lg-306f3706-1803-4fb3-b8c9-1dffdc9d923f.jpg (11.0 KB raw)
+  OK 0.9 KB webp final
+
+--- cab-gmn-15m  (010-10553-00)  Cabo Marine Network 15m (50ft)
+  CDN direto: https://res.garmin.com/en/products/010-10553-00/g/cf-lg.jpg (14.1 KB raw)
+  OK 1.2 KB webp final
+
+--- cab-bn-2m  (010-12528-30)  Cabo BlueNet 2m (6ft)
+  override: https://res.garmin.com/en/products/010-12528-30/v/cf-lg.jpg (11.6 KB raw)
+  OK 0.8 KB webp final
+
+--- cab-bn-6m  (010-12528-31)  Cabo BlueNet 6m
+  override: https://res.garmin.com/en/products/010-12528-31/v/cf-lg.jpg (11.6 KB raw)
+  OK 0.8 KB webp final
+
+--- cab-bn-15m  (010-12528-03)  Cabo BlueNet 15m
+  override: https://res.garmin.com/en/products/010-12528-03/v/cf-lg.jpg (11.6 KB raw)
+  OK 0.8 KB webp final
+
+--- adp-ngw-1  (NGW-1-USB)  NGW-1 NMEA 0183 ↔ N2K
+  override: https://actisense.com/wp-content/uploads/2020/05/NGW-1-ISO-Web-Version-transparent-1.png (53.8 KB raw)
+  OK 1.8 KB webp final
+
+--- adp-j2k100  (J2K100)  J2K100 J1939 → N2K
+  override: https://www.maretron.com/wp-content/uploads/2022/08/J2K100-hi-res.png (946.0 KB raw)
+  OK 4.4 KB webp final
+
+--- adp-ydem-01  (YDEM-01N)  YDEM-01 J1939/N2K Engine Gateway
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-gpsmap-9017xsv  (010-02697-10)  GPSMAP 9017xsv
+  override: https://res.garmin.com/en/products/010-03177-02/v/cf-lg.jpg (34.4 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gpsmap-943  (010-02366-60)  GPSMAP 943
+  CDN direto: https://res.garmin.com/en/products/010-02366-60/g/cf-lg.jpg (33.8 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gpsmap-943xsv  (010-02366-50)  GPSMAP 943xsv
+  CDN direto: https://res.garmin.com/en/products/010-02366-50/v/cf-lg.jpg (15.0 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-gpsmap-1253xsv  (010-02367-50)  GPSMAP 1253xsv
+  CDN direto: https://res.garmin.com/en/products/010-02367-50/v/cf-lg.jpg (11.7 KB raw)
+  OK 1.4 KB webp final
+
+--- gar-gpsmap-1042xsv  (010-01740-02)  GPSMAP 1042xsv
+  CDN direto: https://res.garmin.com/en/products/010-01740-02/g/cf-lg.jpg (50.2 KB raw)
+  OK 2.8 KB webp final
+
+--- gar-gpsmap-1623xsv  (010-02368-00)  GPSMAP 1623xsv
+  CDN direto: https://res.garmin.com/en/products/010-02368-00/v/cf-lg.jpg (15.6 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-gpsmap-1643xsv  (010-02368-50)  GPSMAP 1643xsv
+  CDN direto: https://res.garmin.com/en/products/010-02368-00/v/cf-lg.jpg (15.6 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-gpsmap-15x3  (010-02697-50)  GPSMAP 15x3 Ultrawide
+  override: https://s34181.pcdn.co/en-US/newsroom/wp-content/uploads/2025/06/MCJT-75201-GPSMAP-15x3xsv-PR-Hero-Image-v3-1.jpg (1877.8 KB raw)
+  OK 5.7 KB webp final
+
+--- gar-echomap-uhd2-64cv  (010-02692-00)  ECHOMAP UHD2 64cv
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-echomap-uhd2-74cv  (010-02595-00)  ECHOMAP UHD2 74cv
+  override: https://res.garmin.com/en/products/010-02595-51/v/cf-lg.jpg (35.9 KB raw)
+  OK 2.2 KB webp final
+
+--- gar-echomap-uhd2-74sv  (010-02685-01)  ECHOMAP UHD2 74sv
+  override: https://res.garmin.com/en/products/010-02685-01/v/cf-lg.jpg (29.8 KB raw)
+  OK 1.9 KB webp final
+
+--- gar-echomap-uhd2-94sv  (010-02689-00)  ECHOMAP UHD2 94sv
+  override: https://res.garmin.com/en/products/010-02689-00/v/cf-lg.jpg (32.3 KB raw)
+  OK 1.9 KB webp final
+
+--- gar-striker-vivid-7sv  (010-02553-01)  STRIKER Vivid 7sv
+  override: https://res.garmin.com/en/products/010-02553-00/g/cf-lg-012103f4-ce4b-4503-a2da-7c5feb51b633.jpg (26.0 KB raw)
+  OK 2.6 KB webp final
+
+--- gar-striker-vivid-9sv  (010-02554-01)  STRIKER Vivid 9sv
+  override: https://res.garmin.com/en/products/010-02554-00/g/cf-lg-28d5098f-dec7-4f22-b418-ff729640f7a1.jpg (23.0 KB raw)
+  OK 2.2 KB webp final
+
+--- gar-fantom-18  (010-01706-00)  GMR Fantom 18 (40W)
+  CDN direto: https://res.garmin.com/en/products/010-01706-00/g/cf-lg.jpg (13.4 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-fantom-24  (010-01707-00)  GMR Fantom 24 (40W)
+  CDN direto: https://res.garmin.com/en/products/010-01707-00/g/cf-lg.jpg (14.1 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-lvs32-th  (010-12928-01)  LVS32-TH Transducer (Thru-Hull)
+  override: https://res.garmin.com/en/products/010-12928-01/v/cf-lg-54140cda-0274-4a84-8213-853a3ed9aaa5.jpg (15.7 KB raw)
+  OK 1.2 KB webp final
+
+--- gar-ps21-tr  (010-01749-30)  PS21-TR Transducer
+  CDN direto: https://res.garmin.com/en/products/010-01749-00/g/cf-lg.jpg (12.6 KB raw)
+  OK 1.1 KB webp final
+
+--- gar-ps22-tr  (010-01750-30)  PS22-TR Transducer
+  CDN direto: https://res.garmin.com/en/products/010-01750-00/g/cf-lg.jpg (25.7 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-ps22-th  (010-01750-21)  PS22-TH Transducer (Thru-Hull)
+  CDN direto: https://res.garmin.com/en/products/010-01750-00/g/cf-lg.jpg (25.7 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-ps31  (010-01284-01)  PS31 Forward Transducer
+  override: https://res.garmin.com/en/products/010-01284-01/g/cf-lg.jpg (5.5 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-ps51-th  (010-01753-00)  PS51-TH FrontVü Thru-Hull
+  override: https://res.garmin.com/en/products/010-01753-00/g/cf-lg.jpg (13.4 KB raw)
+  OK 1.1 KB webp final
+
+--- gar-ps60  (010-01749-50)  PS60 RealVü 3D Historical
+  CDN direto: https://res.garmin.com/en/products/010-01749-00/g/cf-lg.jpg (12.6 KB raw)
+  OK 1.1 KB webp final
+
+--- gar-gsd-25  (010-01159-00)  GSD 25 Premium Sonar
+  CDN direto: https://res.garmin.com/en/products/010-01159-00/g/cf-lg.jpg (4.6 KB raw)
+  OK 1.7 KB webp final
+
+--- gar-gcv-10  (010-01087-00)  GCV 10 SideVü/ClearVü Module
+  override: https://www.garmin.com.my/m/my/g/products/cf-lg_294.jpg (7.4 KB raw)
+  OK 1.9 KB webp final
+
+--- gar-gt20-tm  (010-01960-01)  GT20-TM Transom
+  override: https://res.garmin.com/en/products/010-01960-01/g/cf-lg-cae6ef00-e063-4acb-b002-c39017978cad.jpg (11.1 KB raw)
+  OK 1.2 KB webp final
+
+--- gar-gt54uhd-tm  (010-12909-00)  GT54UHD-TM Ultra HD Transom
+  override: https://res.garmin.com/en/products/010-12909-00/g/cf-lg-5cf8741f-8f5c-4fcb-82ef-ac5837d66c53.jpg (16.0 KB raw)
+  OK 1.4 KB webp final
+
+--- gar-gt56uhd-tm  (010-13073-00)  GT56UHD-TM Ultra HD Transom
+  override: https://res.garmin.com/en/products/010-13073-00/v/cf-lg-1f438e67-d9be-4142-951f-a7a6c9744479.jpg (9.6 KB raw)
+  OK 1.2 KB webp final
+
+--- gar-gt56uhd-tr  (010-13066-10)  GT56UHD-TR Trolling Motor
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-gt56uhd-ih  (010-13066-20)  GT56UHD-IH In-Hull
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-gt51m-thp  (010-01966-11)  GT51M-THP Thru-Hull Pair Mid CHIRP
+  override: https://res.garmin.com/en/products/010-01966-11/g/cf-lg.jpg (4.4 KB raw)
+  OK 1.5 KB webp final
+
+--- gar-b265lh  (010-11635-21)  B-265LH Thru-Hull CHIRP
+  CDN direto: https://res.garmin.com/en/products/010-11635-21/g/cf-lg.jpg (6.8 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-b275lh  (010-11635-22)  B-275LH-W Thru-Hull CHIRP
+  override: https://www.thegpsstore.com/Assets/ProductImages/Airmar-B275C-LH-W-Tranducer-with-Fairing-Block.webp (6.0 KB raw)
+  OK 1.7 KB webp final
+
+--- gar-b60  (010-10182-21)  B60 Thru-Hull 12°
+  CDN direto: https://res.garmin.com/en/products/010-10182-21/g/cf-lg.jpg (7.3 KB raw)
+  OK 2.3 KB webp final
+
+--- gar-reactor40-sbw  (010-02794-03)  Reactor 40 Steer-by-Wire + GHC 50
+  CDN direto: https://res.garmin.com/en/products/010-02794-00/v/cf-lg.jpg (23.0 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-reactor40-smartpump-v2  (010-00705-62)  Reactor 40 SmartPump v2 (componente)
+  CDN direto: https://res.garmin.com/en/products/010-00705-62/g/cf-lg.jpg (16.3 KB raw)
+  OK 1.4 KB webp final
+
+--- gar-reactor40-trim-tab  (010-02064-00)  Reactor 40 for Trim Tabs
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-reactor-wireless-remote  (010-12833-10)  Reactor Wireless Remote
+  override: https://res.garmin.com/en/products/010-12833-10/g/cf-lg.jpg (16.0 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-shadow-drive  (010-11052-08)  Shadow Drive Sensor
+  CDN direto: https://res.garmin.com/en/products/010-11052-00/g/cf-lg.jpg (6.4 KB raw)
+  OK 1.3 KB webp final
+
+--- gar-force-kraken-white-48  (010-02574-30)  Force Kraken 48" White (Saltwater)
+  override: https://res.garmin.com/en/products/010-02574-30/v/cf-lg.jpg (9.5 KB raw)
+  OK 0.8 KB webp final
+
+--- gar-force-kraken-87  (010-02835-30)  Force Kraken 87" Black
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-vhf-110  (010-01653-00)  VHF 110
+  override: https://res.garmin.com/en/products/010-01653-00/v/cf-lg.jpg (19.9 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-vhf-115i  (010-02096-01)  VHF 115i (Intercom)
+  override: https://res.garmin.com/en/products/010-02096-00/g/cf-lg-22ac0eda-0054-4f84-b18b-ac0ba3da43fc.jpg (21.9 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-vhf-215i  (010-02097-01)  VHF 215i (Intercom)
+  override: https://res.garmin.com/en/products/010-02097-00/g/cf-lg-7d6bb409-3620-45bd-9069-19fc95c8f258.jpg (23.3 KB raw)
+  OK 1.8 KB webp final
+
+--- gar-ghs-11  (010-01759-00)  GHS 11 Wired Handset
+  CDN direto: https://res.garmin.com/en/products/010-01759-00/v/cf-lg.jpg (22.9 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-ghs-11i  (010-01759-10)  GHS 11i Intercom Handset
+  CDN direto: https://res.garmin.com/en/products/010-01759-00/v/cf-lg.jpg (22.9 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gnx-21  (010-01211-30)  GNX 21
+  CDN direto: https://res.garmin.com/en/products/010-01211-00/g/cf-lg.jpg (16.5 KB raw)
+  OK 3.2 KB webp final
+
+--- gar-gnx-wind  (010-01142-00)  GNX Wind Display
+  CDN direto: https://res.garmin.com/en/products/010-01142-00/g/cf-lg.jpg (11.3 KB raw)
+  OK 2.5 KB webp final
+
+--- gar-gnx-sail-pack-43  (010-01248-60)  GNX Wired Sail Pack 43
+  override: https://res.garmin.com/en/products/010-01248-60/g/cf-lg-b69bb004-70a7-4bbb-968f-88c3176ea5ff.jpg (14.5 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gnx-sail-pack-43-wireless  (010-01536-31)  GNX Wireless Sail Pack 43
+  ! NAO ACHOU foto em nenhum lugar
+
+--- gar-gst-10  (010-11328-00)  GST 10 Speed/Temp Wired (legacy)
+  override: https://res.garmin.com/en/products/010-11328-00/g/cf-lg.jpg (6.7 KB raw)
+  OK 2.7 KB webp final
+
+--- gar-gfl-10  (010-11197-00)  GFL 10 Fluid Level Adapter
+  CDN direto: https://res.garmin.com/en/products/010-11197-00/g/cf-lg.jpg (4.1 KB raw)
+  OK 1.0 KB webp final
+
+--- gar-gfs-10  (010-11196-00)  GFS 10 Fuel Sensor
+  CDN direto: https://res.garmin.com/en/products/010-11196-00/g/cf-lg.jpg (4.9 KB raw)
+  OK 1.6 KB webp final
+
+--- gar-gtu-10  (010-11401-00)  GTU 10 Tank Monitor
+  CDN direto: https://res.garmin.com/en/products/010-11401-00/g/cf-lg.jpg (5.3 KB raw)
+  OK 2.0 KB webp final
+
+--- gar-gra-10  (010-11324-00)  GRA 10 Rudder Angle Adapter
+  override: https://res.garmin.com/en/products/010-11324-00/g/cf-lg.jpg (7.9 KB raw)
+  OK 2.8 KB webp final
+
+--- gar-dst-800  (010-11051-00)  DST 800 Smart Triducer (Wired)
+  override: https://res.garmin.com/en/products/010-11051-00/g/cf-lg.jpg (11.8 KB raw)
+  OK 2.9 KB webp final
+
+--- gar-gwind-race  (010-01616-40)  gWind Race Transducer
+  CDN direto: https://res.garmin.com/en/products/010-01616-00/g/cf-lg.jpg (16.5 KB raw)
+  OK 1.6 KB webp final
+
+--- gar-gps-19x-hvs  (010-01010-20)  GPS 19x HVS (Heading)
+  CDN direto: https://res.garmin.com/en/products/010-01010-00/g/cf-lg.jpg (6.2 KB raw)
+  OK 1.9 KB webp final
+
+--- gar-gps-19x  (010-01010-00)  GPS 19x NMEA 2000
+  CDN direto: https://res.garmin.com/en/products/010-01010-00/g/cf-lg.jpg (6.2 KB raw)
+  OK 1.9 KB webp final
+
+--- gar-fusion-ra210  (010-02250-00)  Fusion Apollo MS-RA210 Marine Stereo
+  override: https://res.garmin.com/en/products/010-02250-00/g/cf-lg-fa40a450-758d-4097-9944-92d709230152.jpg (10.4 KB raw)
+  OK 1.0 KB webp final
+
+--- gar-fusion-wb670  (010-02163-00)  Fusion Apollo MS-WB670 Black-box
+  override: https://res.garmin.com/en/products/010-02346-00/g/cf-lg-5e402966-29f7-4971-abe3-e769baff9da3.jpg (9.7 KB raw)
+  OK 0.9 KB webp final
+
+--- gar-fusion-amp-ap61800  (010-02307-00)  Fusion Apollo MS-AP61800 (6ch 1800W)
+  override: https://res.garmin.com/en/products/010-02284-65/v/cf-lg.jpg (8.7 KB raw)
+  OK 0.6 KB webp final
+
+--- cab-bn-rj45-adapter  (010-12531-01)  BlueNet → RJ45 Adapter
+  CDN direto: https://res.garmin.com/en/products/010-12531-01/g/cf-lg.jpg (12.7 KB raw)
+  OK 1.2 KB webp final
+
+--- cab-bn-cam-adapter  (010-12531-02)  BlueNet → RJ45 Camera Adapter
+  CDN direto: https://res.garmin.com/en/products/010-12531-02/g/cf-lg.jpg (32.9 KB raw)
+  OK 1.4 KB webp final
+
+--- cab-gmn-30m  (010-10553-10)  Cabo Marine Network 30m
+  CDN direto: https://res.garmin.com/en/products/010-10553-00/g/cf-lg.jpg (14.1 KB raw)
+  OK 1.2 KB webp final
+
+--- cab-gmn-27m  (010-10553-20)  Cabo Marine Network 27m (90ft)
+  CDN direto: https://res.garmin.com/en/products/010-10553-00/g/cf-lg.jpg (14.1 KB raw)
+  OK 1.2 KB webp final
+
+--- cab-bn-30m  (010-13500-10)  Cabo BlueNet 30m
+  ! NAO ACHOU foto em nenhum lugar
