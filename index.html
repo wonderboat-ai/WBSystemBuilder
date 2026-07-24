@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garmin System Builder · Wonder BOAT</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app-root">
+  <header>
+    <div class="brand">
+      <div class="b1">WONDER BOAT</div>
+      <div class="b2">SYSTEM BUILDER</div>
+      <div class="b3">▸ GARMIN</div>
+    </div>
+    <div class="meta">
+      <input id="project-name" placeholder="Nome do projeto (ex: AZIMUT 51 LUNA)" />
+      <div class="meta-row">
+        <input id="project-vessel" placeholder="Embarcação / Modelo" />
+        <input id="project-client" placeholder="Cliente" />
+        <input id="project-date" type="date" />
+      </div>
+    </div>
+    <div class="actions">
+      <button id="btn-new">Novo</button>
+      <button id="btn-wizard" title="Wizard pré-popular projeto">⚡ Wizard</button>
+      <button id="btn-save">Salvar</button>
+      <button id="btn-load">Carregar</button>
+      <button id="btn-export">Exportar JSON</button>
+      <button id="btn-import">Importar JSON</button>
+      <button id="btn-search" title="Busca global (Ctrl+K)">🔍 Buscar</button>
+      <button id="btn-thumb-style" title="Alternar estilo da imagem dos cards (Foto Garmin oficial / Silhueta Wonder BOAT)">🖼️ <span id="thumb-style-label">Silhueta</span></button>
+      <button id="btn-theme" title="Alternar tema claro/escuro">🌙 Tema</button>
+      <div class="dropdown" id="print-dd">
+        <button class="primary" id="btn-print-toggle">Imprimir / PDF ▾</button>
+        <div class="dropdown-content">
+          <button data-print="cliente">Cliente (A4 paisagem)</button>
+          <button data-print="a3">A3 Técnico (Instalador)</button>
+          <button data-print="cabos">Lista de Cabos (A4)</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <aside class="col col-library">
+      <div class="tabs">
+        <button data-tab="devices" class="active">Equipamentos</button>
+        <button data-tab="adapters">Adaptadores</button>
+        <button data-tab="zones">Zonas</button>
+        <button data-tab="free">+ Livre</button>
+        <button data-tab="history">Histórico</button>
+      </div>
+      <div class="filters" id="filters-panel">
+        <input id="lib-search" placeholder="Buscar..." />
+        <select id="lib-category"><option value="">Todas as categorias</option></select>
+      </div>
+      <div class="col-scroll" id="library-list"></div>
+    </aside>
+
+    <section class="col-canvas">
+      <div class="canvas-filter-bar" id="canvas-filter-bar">
+        <button data-filter="all" class="active">Tudo</button>
+        <button data-filter="ethernet">Ethernet</button>
+        <button data-filter="n2k">N2K Backbone</button>
+        <button data-filter="power">Energia</button>
+      </div>
+      <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--grid-line)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" id="canvas-bg"/>
+        <g id="canvas-content"></g>
+      </svg>
+      <div class="canvas-empty" id="canvas-empty">
+        <h2>Canvas Vazio</h2>
+        <p>Arraste equipamentos da biblioteca · crie zonas em "Zonas" · ou usa o <a href="#" onclick="openWizard();return false" style="color:var(--accent);text-decoration:underline;pointer-events:auto">⚡ Wizard</a> pra começar com um projeto base.</p>
+      </div>
+      <div class="canvas-legend" id="canvas-legend"></div>
+      <div class="canvas-controls">
+        <button id="zoom-out">−</button>
+        <button id="zoom-reset">⟲</button>
+        <button id="zoom-in">+</button>
+      </div>
+    </section>
+
+    <aside class="col col-inspector">
+      <div class="col-scroll" id="inspector"></div>
+    </aside>
+  </main>
+</div>
+
+<div id="wizard-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9100;align-items:center;justify-content:center">
+  <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:8px;width:540px;max-width:90vw;padding:24px 28px;box-shadow:0 12px 40px var(--shadow)">
+    <h2 style="margin:0 0 8px;color:var(--accent);letter-spacing:.18em;font-size:13px;text-transform:uppercase;font-weight:700">Wizard · Novo Projeto Garmin</h2>
+    <p style="color:var(--text-dim);font-size:12px;margin:0 0 18px">3 perguntas pra pré-popular uma configuração base. Você ajusta tudo depois.</p>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px">1. Tipo de embarcação</label>
+      <select id="wz-type" style="width:100%">
+        <option value="sportfishing">Sport Fishing / Pesca Esportiva</option>
+        <option value="cruiser">Lancha de Cruzeiro</option>
+        <option value="sail">Veleiro</option>
+        <option value="commercial">Comercial / Trabalho</option>
+        <option value="dayboat">Day-Boat / Lazer</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px">2. Comprimento aproximado</label>
+      <select id="wz-length" style="width:100%">
+        <option value="small">Até 25 ft (8m) — barco pequeno</option>
+        <option value="mid" selected>25 a 40 ft (8–12m) — médio</option>
+        <option value="large">40 a 60 ft (12–18m) — grande</option>
+        <option value="megayacht">60+ ft — superyacht</option>
+      </select>
+    </div>
+    <div style="margin-bottom:18px">
+      <label style="font-size:11px;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;display:block;margin-bottom:6px">3. Foco do projeto</label>
+      <select id="wz-focus" style="width:100%">
+        <option value="basic">Navegação básica (plotter + VHF)</option>
+        <option value="full" selected>Navegação completa (plotter + radar + AIS + VHF)</option>
+        <option value="fishing">Pesca avançada (sondador + LiveScope)</option>
+        <option value="offshore">Oceanográfico (autopilot + radar grande + redundância)</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button id="wz-cancel">Cancelar</button>
+      <button id="wz-blank">Em branco</button>
+      <button class="primary" id="wz-confirm">Pré-popular projeto</button>
+    </div>
+  </div>
+</div>
+
+<div id="search-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9000;align-items:flex-start;justify-content:center;padding-top:80px">
+  <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:6px;width:600px;max-width:90vw;max-height:70vh;display:flex;flex-direction:column;box-shadow:0 8px 32px var(--shadow)">
+    <input id="search-input" type="text" placeholder="Buscar SKU, modelo, família, descrição... (ESC fecha)" style="border:none;border-bottom:1px solid var(--line);padding:14px 18px;background:transparent;color:var(--text);font-size:14px;outline:none"/>
+    <div id="search-results" style="overflow-y:auto;max-height:60vh"></div>
+  </div>
+</div>
+
+<div class="print-page print-cliente" id="print-cliente"></div>
+<div class="print-page print-a3" id="print-a3"></div>
+<div class="print-page print-cabos" id="print-cabos"></div>
+
+<input type="file" id="file-input" accept=".json" style="display:none"/>
+
+<script src="src/data.js"></script>
+<script src="src/data-extension.js"></script>
+<script src="src/images.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

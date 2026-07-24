@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (caso futuramente seja adicionado)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build (caso futuramente)
+dist/
+build/
+*.tgz
+
+# Backups locais
+*.bak
+*.bak[0-9]*
+_comparacao_temp/
+
+# Claude Code logs/cache
+.claude/

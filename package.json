@@ -1,0 +1,19 @@
+{
+  "name": "garmin-system-builder",
+  "version": "0.1.0",
+  "description": "Garmin System Builder · Wonder BOAT — planejador de instalações eletrônicas marítimas Garmin com validação NMEA 2000 oficial",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "start:node": "npx --yes serve@latest -p 8080 .",
+    "open": "open index.html || xdg-open index.html || start index.html"
+  },
+  "author": "Lucas Araújo Souza · IN07169 · Wonder BOAT",
+  "license": "UNLICENSED",
+  "browserslist": [
+    "last 2 chrome versions",
+    "last 2 firefox versions",
+    "last 2 safari versions",
+    "last 2 edge versions"
+  ]
+}
