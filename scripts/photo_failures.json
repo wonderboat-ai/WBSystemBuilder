@@ -1,57 +1,57 @@
 [
  {
   "id": "gar-fantom-124",
-  "sku": "010-01365-00",
+  "sku": "K10-00012-19",
   "model": "GMR Fantom 124"
  },
  {
   "id": "gar-lvs32",
-  "sku": "010-12968-00",
+  "sku": "010-12784-03",
   "model": "LVS32 Transducer"
  },
  {
-  "id": "gar-vhf-315i",
-  "sku": "010-01958-10",
-  "model": "VHF 315i (intercom)"
- },
- {
   "id": "adp-ydem-01",
-  "sku": "YDEM-01N",
-  "model": "YDEM-01 J1939/N2K Engine Gateway"
+  "sku": "YDEG-04N",
+  "model": "YDEG-04N J1939/N2K Engine Gateway"
  },
  {
-  "id": "gar-echomap-uhd2-64cv",
-  "sku": "010-02692-00",
-  "model": "ECHOMAP UHD2 64cv"
+  "id": "gar-echomap-uhd-64cv",
+  "sku": "010-02331-00",
+  "model": "ECHOMAP UHD 64cv"
  },
  {
   "id": "gar-gt56uhd-tr",
-  "sku": "010-13066-10",
-  "model": "GT56UHD-TR Trolling Motor"
+  "sku": "010-02732-01",
+  "model": "GT56UHD-TR Trolling Motor 63\""
  },
  {
-  "id": "gar-gt56uhd-ih",
-  "sku": "010-13066-20",
-  "model": "GT56UHD-IH In-Hull"
+  "id": "gar-gt56uhd-tr-48",
+  "sku": "010-02732-03",
+  "model": "GT56UHD-TR Trolling Motor 48\""
  },
  {
-  "id": "gar-reactor40-trim-tab",
-  "sku": "010-02064-00",
-  "model": "Reactor 40 for Trim Tabs"
+  "id": "gar-gt56uhd-tr-75",
+  "sku": "010-02732-02",
+  "model": "GT56UHD-TR Trolling Motor 75\""
  },
  {
-  "id": "gar-force-kraken-87",
-  "sku": "010-02835-30",
-  "model": "Force Kraken 87\" Black"
+  "id": "gar-gt56uhd-th",
+  "sku": "010-02732-10",
+  "model": "GT56UHD-TH Thru-Hull"
+ },
+ {
+  "id": "gar-force-kraken-90",
+  "sku": "010-02573-20",
+  "model": "Force Kraken 90\" Black"
  },
  {
   "id": "gar-gnx-sail-pack-43-wireless",
-  "sku": "010-01536-31",
+  "sku": "010-01616-30",
   "model": "GNX Wireless Sail Pack 43"
  },
  {
-  "id": "cab-bn-30m",
-  "sku": "010-13500-10",
-  "model": "Cabo BlueNet 30m"
+  "id": "cab-bn-12m",
+  "sku": "010-12528-02",
+  "model": "Cabo BlueNet 12m (40ft)"
  }
 ]

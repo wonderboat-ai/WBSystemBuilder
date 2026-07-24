@@ -176,7 +176,7 @@ const CATALOG = [
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Radar — Fantom open-array (solid-state) ============== */
-{id:'gar-fantom-124',sku:'010-01365-00',family:'Fantom Open Array',model:'GMR Fantom 124',category:'Radar',
+{id:'gar-fantom-124',sku:'K10-00012-19',family:'Fantom Open Array',model:'GMR Fantom 124',category:'Radar',
  description:'Radar open-array solid-state 4kW, antena 4 pés.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-fantom-126',sku:'010-01366-00',family:'Fantom Open Array',model:'GMR Fantom 126',category:'Radar',
@@ -204,7 +204,7 @@ const CATALOG = [
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Sonar — Panoptix LiveScope ============== */
-{id:'gar-lvs32',sku:'010-12968-00',family:'Panoptix LiveScope',model:'LVS32 Transducer',category:'Sonar',
+{id:'gar-lvs32',sku:'010-12784-03',family:'Panoptix LiveScope',model:'LVS32 Transducer',category:'Sonar',
  description:'Transdutor LiveScope original (1ª geração) — exige GLS 10.',
  power:{voltage:'-'},ports:[{type:'SonarConn',qty:1}],_verify:true,
  notes:'Conecta no GLS 10 via cabo proprietário.'},
@@ -281,7 +281,7 @@ const CATALOG = [
 {id:'gar-vhf-315',sku:'010-02047-00',family:'VHF',model:'VHF 315',category:'VHF',
  description:'VHF DSC modular 25W com intercom e GPS.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-vhf-315i',sku:'010-01958-10',family:'VHF',model:'VHF 315i (intercom)',category:'VHF',
+{id:'gar-vhf-315i',sku:'010-02047-01',family:'VHF',model:'VHF 315i (intercom)',category:'VHF',
  description:'VHF 315 com intercom adicional.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
@@ -349,7 +349,7 @@ const CATALOG = [
 {id:'gar-gwind-wired',sku:'010-01616-20',family:'gWind',model:'gWind Wired Transducer',category:'Sensor',
  description:'Transdutor de vento twin-fin com 3 pás — TWS/TWA. NMEA 2000.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
-{id:'gar-gwind-wireless',sku:'010-01616-30',family:'gWind',model:'gWind Wireless Transducer',category:'Sensor',
+{id:'gar-gwind-wireless',sku:'010-01616-00',family:'gWind',model:'gWind Wireless Transducer',category:'Sensor',
  description:'Versão wireless do gWind.',
  ports:[{type:'WiFi',qty:1}],_verify:true},
 {id:'gar-gst-43',sku:'010-04284-00',family:'GST',model:'GST 43 Speed/Temp Thru-Hull 43mm',category:'Sensor',
@@ -404,7 +404,7 @@ const ADAPTERS = [
 /* 0183 / J1939 gateways */
 {id:'adp-ngw-1',sku:'NGW-1-USB',brand:'Actisense',family:'Gateway',model:'NGW-1 NMEA 0183 ↔ N2K',category:'Adapter',description:'Gateway bidirecional 0183 ↔ NMEA 2000.',power:{voltage:'12VDC'},ports:[{type:'NMEA0183',qty:2},{type:'N2K-Micro',qty:1},{type:'USB',qty:1}],_verify:true},
 {id:'adp-j2k100',sku:'J2K100',brand:'Maretron',family:'Gateway',model:'J2K100 J1939 → N2K',category:'Adapter',description:'Gateway motor J1939 → NMEA 2000.',power:{voltage:'12VDC'},ports:[{type:'J1939',qty:1},{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'adp-ydem-01',sku:'YDEM-01N',brand:'Yacht Devices',family:'Gateway',model:'YDEM-01 J1939/N2K Engine Gateway',category:'Adapter',description:'Gateway compacto J1939 → N2K.',power:{voltage:'12VDC'},ports:[{type:'J1939',qty:1},{type:'N2K-Micro',qty:1}],_verify:true}
+{id:'adp-ydem-01',sku:'YDEG-04N',brand:'Yacht Devices',family:'Gateway',model:'YDEG-04N J1939/N2K Engine Gateway',category:'Adapter',description:'Gateway compacto J1939 → N2K (conector DeviceNet Micro).',power:{voltage:'12VDC'},ports:[{type:'J1939',qty:1},{type:'N2K-Micro',qty:1}],_verify:true}
 ];
 
 /* =========================================================================
@@ -614,7 +614,7 @@ const RULES = [
        const od=api.getDeviceById(o.deviceId);
        return od&&(od.ports||[]).some(p=>p.type==='J1939')&&(od.ports||[]).some(p=>p.type==='N2K-Micro');
      });
-     if(!ok) issues.push({title:`Motor J1939 sem gateway: ${d.model}`,msg:'Conexão J1939↔N2K direta não é permitida.',fix:'Adicionar Maretron J2K100 ou Yacht Devices YDEM-01.'});
+     if(!ok) issues.push({title:`Motor J1939 sem gateway: ${d.model}`,msg:'Conexão J1939↔N2K direta não é permitida.',fix:'Adicionar Maretron J2K100 ou Yacht Devices YDEG-04N.'});
    });
    return issues;
  }},

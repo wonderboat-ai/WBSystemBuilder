@@ -29,17 +29,17 @@ const PN_FIXES = {
   'gar-vhf-215':       '010-02097-00',  // era 010-01959-00
   'gar-vhf-215-ais':   '010-02098-00',  // era 010-01959-01
   // gar-vhf-315 removido daqui 2026-07-24: SKU 010-02047-00 corrigido direto na fonte (data.js).
-  'gar-vhf-315i':      '010-02047-10',  // era 010-01958-10 — PN INFERIDO (sem confirmação Garmin).
-                                        // ATENÇÃO: pesquisa em 2026-07-24 sugere que 010-02047-01 (hoje
-                                        // atribuído a gar-vhf-315-ais) pode na verdade ser o 315i —
-                                        // conflito não resolvido, ver scripts/sku_corrections_log.json.
+  // gar-vhf-315i removido daqui 2026-07-24: era PN inferido (010-02047-10, nunca confirmado).
+  //   Pesquisa confirmou SKU real = 010-02047-01 (garmin.com/en-US/p/615464/ + retailers) —
+  //   corrigido direto na fonte (data.js). O item 'gar-vhf-315-ais' que também disputava esse
+  //   SKU foi removido do catálogo por não existir como produto real (ver nota em NEW_VHF).
   'gar-gls10':         '010-12954-00',  // era 010-02610-00
   'gar-lvs34':         '010-02706-10',  // era 010-12516-00
   'gar-gsd-26':        '010-00958-00',  // era 010-01112-00
   'gar-fantom-24x':    '010-02585-00',  // era 010-02463-00 (white). 010-02463-00 é 18x.
   'gar-fantom-18x':    '010-02584-00',  // era 010-02462-00. 010-02462-00 é Fantom 18 (legacy).
 };
-const PN_INFERRED = ['gar-vhf-315i'];   // sem confirmação direta — flagar pra auditoria
+const PN_INFERRED = [];   // (vazio — gar-vhf-315i confirmado 2026-07-24, ver PN_FIXES)
 Object.entries(PN_FIXES).forEach(([id, sku])=>{
   const item = (CATALOG.find(d=>d.id===id) || ADAPTERS.find(d=>d.id===id));
   if(item){
@@ -121,9 +121,10 @@ const NEW_MFDS = [
   {type:'Power-12',qty:1}], _verify:true, n2kLen:4},
 
 /* ECHOMAP UHD2 que faltavam */
-{id:'gar-echomap-uhd2-64cv', sku:'010-02692-00', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 64cv', category:'MFD',
- description:'MFD 6" ClearVü.', power:{voltage:'12VDC',watts:9},
- ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
+{id:'gar-echomap-uhd-64cv', sku:'010-02331-00', family:'ECHOMAP UHD', model:'ECHOMAP UHD 64cv', category:'MFD',
+ description:'MFD 6" ClearVü — 1ª geração (sem transdutor). Linha UHD2 não tem variante "cv" 6"; só "sv".', power:{voltage:'12VDC',watts:9},
+ ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2,
+ notes:'Corrigido 2026-07-24: entry original ("ECHOMAP UHD2 64cv", SKU 010-02692-00) não existe — 6" UHD2 só vem em "sv". Confirmado via garmin.com/en-US/p/690703/ que 64cv é modelo UHD (1ª geração), não UHD2.'},
 // REMOVIDO 2026-05-03: gar-echomap-uhd2-64sv (SKU 010-02692-01 já em uso pelo gar-echomap-uhd2-93sv em data.js).
 //   Pesquisa errou na série UHD2 — confirmar o SKU correto do 64sv no garmin.com antes de re-adicionar.
 {id:'gar-echomap-uhd2-74cv', sku:'010-02595-00', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 74cv', category:'MFD',
@@ -162,8 +163,10 @@ const NEW_RADARS = [
    4) PANOPTIX — vários modelos que faltavam
    ======================================================================== */
 const NEW_PANOPTIX = [
-// REMOVIDO 2026-05-03: gar-lvs32 (ID já existe em data.js:207 com SKU 010-12968-00).
-//   Extension trazia 010-12784-03 — divergência. Confirmar qual é o SKU oficial do LVS32 transom antes de mexer.
+// REMOVIDO 2026-05-03: gar-lvs32 (ID já existe em data.js:207).
+//   Extension trazia 010-12784-03 — divergência com o 010-12968-00 que estava em data.js na época.
+//   RESOLVIDO 2026-07-24: 010-12784-03 confirmado como correto (5 fontes independentes) — já
+//   corrigido direto em data.js:207.
 {id:'gar-lvs32-th', sku:'010-12928-01', family:'Panoptix LiveScope', model:'LVS32-TH Transducer (Thru-Hull)', category:'Sonar',
  description:'LiveScope thru-hull mount.', power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true},
 {id:'gar-ps21-tr', sku:'010-01749-30', family:'Panoptix', model:'PS21-TR Transducer', category:'Sonar',
@@ -207,12 +210,20 @@ const NEW_TRANSDUCERS = [
 {id:'gar-gt56uhd-tm', sku:'010-13073-00', family:'GT UHD', model:'GT56UHD-TM Ultra HD Transom', category:'Sensor',
  description:'Sucessor do GT54UHD com mais alcance e clarity.',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
-{id:'gar-gt56uhd-tr', sku:'010-13066-10', family:'GT UHD', model:'GT56UHD-TR Trolling Motor', category:'Sensor',
- description:'GT56UHD para mount em trolling motor (Force).',
+{id:'gar-gt56uhd-tr', sku:'010-02732-01', family:'GT UHD', model:'GT56UHD-TR Trolling Motor 63"', category:'Sensor',
+ description:'GT56UHD para mount em trolling motor Force Kraken 63".',
+ ports:[{type:'SonarConn',qty:1}], _verify:true,
+ notes:'Corrigido 2026-07-24: SKU 010-13066-10 não existe — GT56UHD-TR é vendido por comprimento de eixo do Force Kraken (48"/63"/75"), sem SKU único genérico.'},
+{id:'gar-gt56uhd-tr-48', sku:'010-02732-03', family:'GT UHD', model:'GT56UHD-TR Trolling Motor 48"', category:'Sensor',
+ description:'GT56UHD para mount em trolling motor Force Kraken 48".',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
-{id:'gar-gt56uhd-ih', sku:'010-13066-20', family:'GT UHD', model:'GT56UHD-IH In-Hull', category:'Sensor',
- description:'GT56UHD in-hull (sem furar casco).',
+{id:'gar-gt56uhd-tr-75', sku:'010-02732-02', family:'GT UHD', model:'GT56UHD-TR Trolling Motor 75"', category:'Sensor',
+ description:'GT56UHD para mount em trolling motor Force Kraken 75".',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
+{id:'gar-gt56uhd-th', sku:'010-02732-10', family:'GT UHD', model:'GT56UHD-TH Thru-Hull', category:'Sensor',
+ description:'GT56UHD thru-hull single (furação no casco).',
+ ports:[{type:'SonarConn',qty:1}], _verify:true,
+ notes:'Corrigido 2026-07-24: variante "IH" (in-hull, SKU 010-13066-20) não existe na linha GT56UHD — só existe thru-hull (TH).'},
 {id:'gar-gt51m-thp', sku:'010-01966-11', family:'GT THP', model:'GT51M-THP Thru-Hull Pair Mid CHIRP', category:'Sensor',
  description:'Par 12-pin thru-hull · Mid CHIRP 80-160kHz 600W + ClearVü/SideVü 260/455kHz 500W.',
  ports:[{type:'SonarConn',qty:1}], _verify:true},
@@ -237,9 +248,9 @@ const NEW_AUTOPILOT = [
 {id:'gar-reactor40-smartpump-v2', sku:'010-00705-62', family:'Reactor 40', model:'Reactor 40 SmartPump v2 (componente)', category:'Autopilot',
  description:'Bomba inteligente vazão variável 0-2.4 L/min — substitui CCU+ECU+pump separados.',
  power:{voltage:'12VDC',watts:20}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-reactor40-trim-tab', sku:'010-02064-00', family:'Reactor 40', model:'Reactor 40 for Trim Tabs', category:'Autopilot',
- description:'Pacote autopilot integrado a sistema de flaps Garmin/Lenco.',
- power:{voltage:'12VDC',watts:18}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}], _verify:true},
+// REMOVIDO 2026-07-24: 'gar-reactor40-trim-tab' (SKU 010-02064-00) — produto não existe na linha
+// oficial Reactor 40 (só Compact/Kicker/Hydraulic/Steer-By-Wire/Mechanical). O SKU cadastrado
+// pertence na verdade a um relógio GPS Garmin Instinct (Graphite) — erro grave de cadastro.
 {id:'gar-reactor-wireless-remote', sku:'010-12833-10', family:'Reactor', model:'Reactor Wireless Remote', category:'Autopilot',
  description:'Controle remoto wireless ANT+ para autopilot Reactor 40.',
  power:{voltage:'-'}, ports:[], _verify:true, notes:'Bateria interna · pareamento ANT+.'},
@@ -258,9 +269,10 @@ const NEW_TROLLING = [
 {id:'gar-force-kraken-white-63', sku:'010-02574-00', family:'Force Kraken', model:'Force Kraken 63" White (Saltwater)', category:'TrollingMotor',
  description:'Versão saltwater 63".', power:{voltage:'24-36VDC',watts:240},
  ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _skuConfirmedByLucas:true},
-{id:'gar-force-kraken-87', sku:'010-02835-30', family:'Force Kraken', model:'Force Kraken 87" Black', category:'TrollingMotor',
- description:'Versão 87" eixo (águas profundas/grandes barcos). 100lb thrust.',
- power:{voltage:'24-36VDC',watts:240}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _verify:true},
+{id:'gar-force-kraken-90', sku:'010-02573-20', family:'Force Kraken', model:'Force Kraken 90" Black', category:'TrollingMotor',
+ description:'Versão 90" eixo (águas profundas/grandes barcos). 100lb thrust.',
+ power:{voltage:'24-36VDC',watts:240}, ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}], _verify:true,
+ notes:'Corrigido 2026-07-24: "87\\" Black" (010-02835-30) não existe na linha oficial — shaft lengths reais são 48/63/75/90/110". Substituído pela variante 90" real.'},
 ];
 
 /* ========================================================================
@@ -276,9 +288,11 @@ const NEW_VHF = [
 {id:'gar-vhf-215i', sku:'010-02097-01', family:'VHF', model:'VHF 215i (Intercom)', category:'VHF',
  description:'VHF 215 com intercom + N2K + GPS interno.', power:{voltage:'12VDC',watts:8},
  ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-vhf-315-ais', sku:'010-02047-01', family:'VHF', model:'VHF 315 AIS', category:'VHF',
- description:'VHF 315 modular 25W com receptor AIS Classe B integrado.', power:{voltage:'12VDC',watts:10},
- ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
+// REMOVIDO 2026-07-24: 'gar-vhf-315-ais' (SKU 010-02047-01) — "VHF 315 AIS" não existe na linha
+// oficial Garmin. O sufixo "i" da série 315 denota programação de canais internacional + intercom
+// (GHS 11i), não AIS. O SKU 010-02047-01 pertence de fato ao VHF 315i (ver 'gar-vhf-315i' em
+// data.js, corrigido pra usar este SKU). Único VHF AIS real da linha é o VHF 215 AIS (010-02098-00,
+// já cadastrado como 'gar-vhf-215-ais').
 {id:'gar-ghs-11', sku:'010-01759-00', family:'VHF Accessory', model:'GHS 11 Wired Handset', category:'VHF',
  description:'Microfone wired remoto para 2ª/3ª estação dos VHF 215/315.',
  ports:[], _verify:true, notes:'Conecta na porta acessório do rádio.'},
@@ -301,9 +315,10 @@ const NEW_INSTRUMENTS = [
  description:'Kit completo veleiro: GNX Wind + GNX 20 + gWind Wired + GST 43 + GDT 43 (ambos thru-hull 43mm).',
  power:{voltage:'12VDC',watts:5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:3,
  notes:'Kit substitui Nexus completo.'},
-{id:'gar-gnx-sail-pack-43-wireless', sku:'010-01536-31', family:'GNX', model:'GNX Wireless Sail Pack 43', category:'Instrument',
+{id:'gar-gnx-sail-pack-43-wireless', sku:'010-01616-30', family:'GNX', model:'GNX Wireless Sail Pack 43', category:'Instrument',
  description:'Versão wireless do Sail Pack — gWind Wireless + ANT+.',
- power:{voltage:'12VDC',watts:5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:3},
+ power:{voltage:'12VDC',watts:5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:3,
+ notes:'Corrigido 2026-07-24: SKU antigo (010-01536-31) não existia. Real SKU do bundle (010-01616-30) confirmado via garmin.com/en-US/p/567298/ + Defender/Hodges/West Marine — distinto do gWind Wireless individual (010-01616-00, corrigido em data.js).'},
 ];
 
 /* ========================================================================
@@ -376,9 +391,10 @@ const NEW_CABLES = [
 {id:'cab-gmn-27m', sku:'010-10553-20', brand:'Garmin', family:'Marine Network', model:'Cabo Marine Network 27m (90ft)', category:'Cable',
  description:'Cabo Marine Network RJ45 — 27m (run de mastro alto).',
  ports:[{type:'GarminMarineNet',qty:2}], length:27, _verify:true},
-{id:'cab-bn-30m', sku:'010-13500-10', brand:'Garmin', family:'BlueNet', model:'Cabo BlueNet 30m', category:'Cable',
- description:'Cabo BlueNet 30m — runs longos.',
- ports:[{type:'BlueNet',qty:2}], length:30, _verify:true},
+{id:'cab-bn-12m', sku:'010-12528-02', brand:'Garmin', family:'BlueNet', model:'Cabo BlueNet 12m (40ft)', category:'Cable',
+ description:'Cabo BlueNet 12m — runs longos.',
+ ports:[{type:'BlueNet',qty:2}], length:12, _verify:true,
+ notes:'Corrigido 2026-07-24: "30m" (SKU 010-13500-10) não existe — família BlueNet oficial (010-12528-XX) só vai até 15m. Substituído pela variante 12m real, mais longa disponível além da 15m já cadastrada (cab-bn-15m).'},
 ];
 
 /* ========================================================================

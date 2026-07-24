@@ -287,54 +287,112 @@
   }
  ],
  "errors": [],
- "skipped_deliberately": [
+ "skipped_deliberately": [],
+ "revised_2026_07_24": [
   {
    "id": "gar-echomap-uhd2-64cv",
-   "reason": "Produto/SKU não localizado em nenhuma fonte — pode não existir como cadastrado (linha 6\" só tem variantes \"sv\", não \"cv\")."
+   "status": "RECLASSIFICADO",
+   "file": "data-extension.js",
+   "old_sku": "010-02692-00",
+   "new_id": "gar-echomap-uhd-64cv",
+   "new_sku": "010-02331-00",
+   "note": "\"ECHOMAP UHD2 64cv\" não existe (linha UHD2 6\" só tem \"sv\"). Reclassificado como ECHOMAP UHD 64cv (1ª geração, sem transdutor) — confirmado via garmin.com/en-US/p/690703/."
   },
   {
    "id": "gar-fantom-124",
-   "reason": "CONFLITO: pesquisa atribui a imagem K10-00012-19 ao Fantom 124, mas essa mesma imagem já está em uso pro Fantom 126 (gar-fantom-126) desde a pesquisa anterior. Duas fontes discordam — não decidido automaticamente, precisa revisão manual."
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-01365-00",
+   "new_sku": "K10-00012-19",
+   "note": "SKU antigo era peça avulsa (\"GMR Fantom 4' Antenna Array Only\"). PN real do radar completo (branco) confirmado via Hudson Marine, GPS Nation, eBay. Fantom 126 usa K10-00012-20/-33 — imagens distintas, conflito anterior resolvido."
   },
   {
    "id": "gar-lvs32",
-   "reason": "Ambiguidade recorrente (2ª vez): SKU 010-12968-00 cadastrado vs 010-12784-03 sugerido pela pesquisa — já tinha sido sinalizado antes e mantido como estava. Mantendo o padrão de não alterar sem confirmação direta."
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-12968-00",
+   "new_sku": "010-12784-03",
+   "note": "010-12968-00 não corresponde a nenhum produto Panoptix identificável. 010-12784-03 confirmado via Trionics, Amazon, TackleDirect, Vessel Outfitters, Northern Marine Electronics (unânime)."
   },
   {
    "id": "gar-gt56uhd-tr",
-   "reason": "Existem 2 PNs reais dependendo do motor (Force Kraken=010-02732-03 vs Force/Pro=010-02732-04) — catálogo tem só 1 entrada genérica. Precisa decisão de qual variante representar."
+   "status": "SPLIT EM 3 (por comprimento de eixo)",
+   "file": "data-extension.js",
+   "old_sku": "010-13066-10",
+   "note": "SKU único genérico não existe — GT56UHD-TR varia por shaft length do Force Kraken. gar-gt56uhd-tr agora = 63\" (010-02732-01); novos gar-gt56uhd-tr-48 (010-02732-03) e gar-gt56uhd-tr-75 (010-02732-02) adicionados. Fontes: Russell Marine, eBay, garmin.com/en-US/p/1161529/."
   },
   {
    "id": "gar-gt56uhd-ih",
-   "reason": "GRAVE: produto provavelmente NÃO EXISTE — GT56UHD não tem variante \"in-hull\" confirmada em nenhuma fonte. Candidato a remoção ou correção pra GT56UHD-TH (thru-hull single)."
+   "status": "RECLASSIFICADO",
+   "file": "data-extension.js",
+   "old_sku": "010-13066-20",
+   "new_id": "gar-gt56uhd-th",
+   "new_sku": "010-02732-10",
+   "note": "Variante \"in-hull\" (IH) não existe na linha GT56UHD. Reclassificado como GT56UHD-TH (thru-hull) — confirmado via Russell Marine, Defender Marine, Hodges Marine."
   },
   {
    "id": "gar-reactor40-trim-tab",
-   "reason": "GRAVÍSSIMO: SKU cadastrado (010-02064-00) é na verdade um relógio GPS Garmin Instinct. Além disso, \"Reactor 40 for Trim Tabs\" NÃO EXISTE na linha oficial Reactor (só existem: Compact/Kicker/Hydraulic/Steer-By-Wire/Mechanical). Candidato forte a remoção."
+   "status": "REMOVIDO",
+   "file": "data-extension.js",
+   "old_sku": "010-02064-00",
+   "note": "\"Reactor 40 for Trim Tabs\" não existe na linha oficial Reactor 40. SKU cadastrado pertencia a um relógio GPS Garmin Instinct (Graphite) — confirmado via B&H, Walmart, Newegg. Entrada removida do catálogo, sem substituto válido."
   },
   {
    "id": "gar-force-kraken-87",
-   "reason": "Força Kraken de 87\" NÃO EXISTE — a linha só vai até 48/63/75/90/110\". SKU cadastrado é inválido. Candidato mais próximo real seria 90\" Black (010-02573-20)."
+   "status": "RECLASSIFICADO",
+   "file": "data-extension.js",
+   "old_sku": "010-02835-30",
+   "new_id": "gar-force-kraken-90",
+   "new_sku": "010-02573-20",
+   "note": "Force Kraken 87\" não existe (linha vai 48/63/75/90/110\"). Reclassificado como 90\" Black — confirmado via garmin.com/en-US/p/743446/, GPS Nation, Hodges Marine, Wholesale Marine, BOEMarine."
   },
   {
    "id": "gar-vhf-315i",
-   "reason": "CONFLITO DE SKU: pesquisa sugere 010-02047-01 pro 315i, mas esse SKU já está em uso por gar-vhf-315-ais no catálogo. Há inclusive uma 3ª candidata (010-02047-10, já usada via PN_FIXES/_pnInferred). Precisa decisão manual de qual VHF usa qual PN."
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "010-01958-10 (depois inferido 010-02047-10 via PN_FIXES)",
+   "new_sku": "010-02047-01",
+   "note": "SKU real confirmado via garmin.com/en-US/p/615464/ + TheGPSStore/Defender/Hodges/TackleDirect. Esse SKU estava indevidamente atribuído a 'gar-vhf-315-ais', que foi removido (ver abaixo) por não existir como produto. Foto do 315-ais realocada pro 315i em images.js (mesmo item físico)."
+  },
+  {
+   "id": "gar-vhf-315-ais",
+   "status": "REMOVIDO",
+   "file": "data-extension.js",
+   "old_sku": "010-02047-01",
+   "note": "\"VHF 315 AIS\" não existe na linha oficial Garmin — o sufixo \"i\" da série 315 denota programação internacional + intercom (GHS 11i), não AIS. O único VHF AIS real da linha é o VHF 215 AIS (010-02098-00, já cadastrado como gar-vhf-215-ais). SKU 010-02047-01 pertence de fato ao VHF 315i (ver acima)."
   },
   {
    "id": "gar-gnx-sail-pack-43-wireless",
-   "reason": "CONFLITO DE SKU: pesquisa sugere 010-01616-30 pro Sail Pack Wireless, mas esse SKU já está em uso por gar-gwind-wireless (transdutor individual) no catálogo — provável confusão entre SKU do componente e do kit/bundle."
+   "status": "OK",
+   "file": "data-extension.js",
+   "old_sku": "010-01536-31",
+   "new_sku": "010-01616-30",
+   "note": "SKU real do bundle confirmado via garmin.com/en-US/p/567298/ + Defender/Hodges/West Marine/Russell Marine — distinto do gWind Wireless individual (010-01616-00, corrigido em gar-gwind-wireless em data.js, que estava com o SKU do bundle por engano)."
+  },
+  {
+   "id": "gar-gwind-wireless",
+   "status": "OK (fix relacionado, não estava na lista original)",
+   "file": "data.js",
+   "old_sku": "010-01616-30",
+   "new_sku": "010-01616-00",
+   "note": "Estava cadastrado com o SKU do bundle GNX Wireless Sail Pack (010-01616-30) em vez do SKU do transdutor individual. Corrigido junto com gar-gnx-sail-pack-43-wireless para resolver o conflito."
   },
   {
    "id": "adp-ydem-01",
-   "reason": "SKU cadastrado (YDEM-01N) não existe na linha real da Yacht Devices (produtos reais: YDEG-04, YDES-04, YDOG-01). Candidato mais próximo seria YDEG-04N, mas não confirmado — não alterado."
+   "status": "OK",
+   "file": "data.js",
+   "old_sku": "YDEM-01N",
+   "new_sku": "YDEG-04N",
+   "note": "\"YDEM-01\" não existe na linha Yacht Devices. Produto real é o YDEG-04 (gateway J1939→N2K), variante N2K/DeviceNet Micro = YDEG-04N — confirmado via yachtd.com/products/ + yachtd.com/downloads/ydeg04.pdf. Mensagem da regra R-J1939-01 também atualizada."
   },
   {
    "id": "cab-bn-30m",
-   "reason": "Cabo BlueNet de 30m NÃO EXISTE pronto na linha oficial (comprimentos reais: 0.3/2/6/12/15m). SKU cadastrado é inválido."
-  },
-  {
-   "id": "gar-vhf-315-ais (existente)",
-   "reason": "ATENÇÃO INDIRETA: a pesquisa do 315i encontrou evidência de que o SKU 010-02047-01 (atualmente atribuído a VHF 315 AIS) pode na verdade pertencer ao VHF 315i (intercom), não ao 315 AIS. Precisa confirmação cruzada — ver gar-vhf-315i acima."
+   "status": "RECLASSIFICADO",
+   "file": "data-extension.js",
+   "old_sku": "010-13500-10",
+   "new_id": "cab-bn-12m",
+   "new_sku": "010-12528-02",
+   "note": "Cabo BlueNet 30m não existe (família 010-12528-XX vai até 15m). Reclassificado como 12m/40ft (variante real mais longa além dos 2/6/15m já cadastrados) — confirmado via Garmin BlueNet Technical Reference PDF + American Diving Supply/NavStore."
   }
  ]
 }
