@@ -173,13 +173,12 @@ python3 -m http.server 8080
 
 ## Frentes pendentes (próximas iterações)
 
-1. **Revisar 11 conflitos de SKU** sinalizados em `scripts/sku_corrections_log.json` (chave `skipped_deliberately`) — colisões de SKU entre entradas (ex: VHF 315i vs VHF 315 AIS ambos candidatos a `010-02047-01`; GNX Sail Pack Wireless vs gWind Wireless ambos candidatos a `010-01616-30`) e produtos que parecem não existir na linha oficial Garmin (Force Kraken 87", GT56UHD-IH, Reactor 40 for Trim Tabs — este último tinha SKU de um relógio GPS Instinct cadastrado por engano). Nenhum foi alterado automaticamente — decisão manual do Lucas.
-2. **Drag pra reordenar devices no N2K Backbone** — atualmente ordem é por categoria.
-3. **Split visual em Branch A / Branch B** quando power tap não está no extremo do backbone.
-4. **Wireless (Yacht Devices YDWG-02, iKommunicate)** como gateway IP cross-brand.
-5. **Tools** — calculadoras avulsas (voltage drop standalone, antenna range, banco de baterias).
-6. **Versionamento de catálogo** — campo `version: "AAAA.MM"` + `sourceAuthority: url` por catálogo. Rejeitar dados >12 meses.
-7. **Completar os 11 SKUs sem foto** (ver `scripts/photo_failures.json`) — depende da revisão do item 1 acima.
+1. **Drag pra reordenar devices no N2K Backbone** — atualmente ordem é por categoria.
+2. **Split visual em Branch A / Branch B** quando power tap não está no extremo do backbone.
+3. **Wireless (Yacht Devices YDWG-02, iKommunicate)** como gateway IP cross-brand.
+4. **Tools** — calculadoras avulsas (voltage drop standalone, antenna range, banco de baterias).
+5. **Versionamento de catálogo** — campo `version: "AAAA.MM"` + `sourceAuthority: url` por catálogo. Rejeitar dados >12 meses.
+6. **Completar os 11 SKUs sem foto** (ver `scripts/photo_failures.json`) — lista renovada após a revisão de conflitos de 2026-07-24 (ids/SKUs diferentes da lista original).
 
 ## Convenções gerais Wonder BOAT (do Lucas)
 
@@ -199,7 +198,8 @@ python3 -m http.server 8080
 - **2026-07-24**: Catálogo estendido de ~83 pra 153 devices + 22 adapters via `data-extension.js` (pesquisa profunda por categoria, PNs corrigidos, ~60 SKUs novos)
 - **2026-07-24**: Repositório publicado no GitHub (`wonderboat-ai/garmin-system-builder`), depois renomeado por Lucas pra `wonderboat-ai/WBSystemBuilder` + GitHub Pages ativado
 - **2026-07-24**: Vista Ethernet hub-and-spoke implementada + auto-hide/dim por vista + toggle Foto/Silhueta com banco de imagens (`src/images.js`, `scripts/fetch_photos.py`)
-- **2026-07-24**: Banco de fotos ampliado de 32 pra 164/175 SKUs (94%) via pesquisa em paralelo (23 agentes). Pesquisa revelou 36 SKUs errados no catálogo original — todos corrigidos com fonte oficial cruzada (ver `scripts/sku_corrections_log.json`). 11 itens ficaram com conflito não resolvido (ver Frentes pendentes #1) — decisão deliberada de não adivinhar, aguardando revisão do Lucas.
+- **2026-07-24**: Banco de fotos ampliado de 32 pra 164/175 SKUs (94%) via pesquisa em paralelo (23 agentes). Pesquisa revelou 36 SKUs errados no catálogo original — todos corrigidos com fonte oficial cruzada (ver `scripts/sku_corrections_log.json`). 11 itens ficaram com conflito não resolvido, aguardando revisão do Lucas.
+- **2026-07-24**: Os 11 conflitos de SKU acima foram revisados e resolvidos (8 agentes de pesquisa em paralelo, fontes cruzadas garmin.com + revendedores). Resultado: 2 itens removidos do catálogo por serem produtos fantasma ("Reactor 40 for Trim Tabs" tinha SKU de um relógio Garmin Instinct; "VHF 315 AIS" não existe — o SKU real é do VHF 315i), 1 item split em 3 variantes por comprimento de eixo (GT56UHD-TR 48"/63"/75"), demais tiveram SKU corrigido ou reclassificado (GMR Fantom 124, LVS32, GT56UHD-IH→TH, Force Kraken 87"→90", ECHOMAP UHD2 64cv→UHD 64cv 1ª geração, GNX Wireless Sail Pack, gWind Wireless, YDEM-01→YDEG-04N, cabo BlueNet 30m→12m). Detalhes completos em `scripts/sku_corrections_log.json` (chave `revised_2026_07_24`). `scripts/photo_failures.json` e `scripts/extra_skus.json` atualizados com os ids/SKUs corrigidos.
 
 ## Artefatos de auditoria (não deletar)
 
