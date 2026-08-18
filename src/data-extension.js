@@ -305,14 +305,15 @@ const NEW_INSTRUMENTS = [
 {id:'gar-gnx-wind', sku:'010-01142-30', family:'GNX', model:'GNX Wind Display', category:'Instrument',
  description:'Display dedicado vento + true/apparent direction analog dial.',
  power:{voltage:'12VDC',watts:1.5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:1},
-{id:'gar-gnx-sail-pack-43', sku:'010-01248-60', family:'GNX', model:'GNX Wired Sail Pack 43', category:'Instrument',
- description:'Kit completo veleiro: GNX Wind + GNX 20 + gWind Wired + GST 43 + GDT 43 (ambos thru-hull 43mm).',
- power:{voltage:'12VDC',watts:5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:3,
- notes:'Kit substitui Nexus completo.'},
-{id:'gar-gnx-sail-pack-43-wireless', sku:'010-01616-30', family:'GNX', model:'GNX Wireless Sail Pack 43', category:'Instrument',
- description:'Versão wireless do Sail Pack — gWind Wireless + ANT+.',
- power:{voltage:'12VDC',watts:5}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:3,
- notes:'Corrigido 2026-07-24: SKU antigo (010-01536-31) não existia. Real SKU do bundle (010-01616-30) confirmado via garmin.com/en-US/p/567298/ + Defender/Hodges/West Marine — distinto do gWind Wireless individual (010-01616-00, corrigido em data.js).'},
+// REMOVIDOS 2026-08-18: 'gar-gnx-sail-pack-43' (010-01248-60) e 'gar-gnx-sail-pack-43-wireless'
+// (010-01616-30) — SKUs reais de kit/bundle Garmin, mas modelar como 1 nó único com N2K-Micro x1
+// subestima os pontos de conexão reais (o kit com fio tem GNX Wind + GNX 20 + gWind Wired + GST 43
+// + GDT 43 = 5 drops N2K, não 1; o wireless tem 4 T-connectors + 2 drops + cabo de força inclusos
+// de fábrica, mais o gWind Wireless que nem usa N2K). Isso fazia o cálculo automático de LEN/voltage
+// drop do backbone ficar errado pra qualquer projeto que usasse o kit agregado. Todos os componentes
+// já existem cadastrados individualmente e corretamente (gar-gnx-wind, gar-gnx-20, gar-gwind-wired,
+// gar-gwind-wireless, gar-gst-43, gar-gdt-43) — o instalador monta o kit arrastando as peças
+// separadas, o que dá o cálculo certo de backbone. Ver CLAUDE.md, histórico 2026-08-18.
 ];
 
 /* ========================================================================

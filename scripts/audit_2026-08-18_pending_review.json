@@ -1,7 +1,7 @@
 {
  "gerado_em": "2026-08-18",
- "contexto": "Auditoria completa dos 175 SKUs do catalogo cruzando com garmin.com/en-US. 131 itens tinham divergencia; 78 foram corrigidos nesta sessao (ver audit_2026-08-18_corrections_log.json). Os itens abaixo NAO foram alterados por falta de confirmacao suficiente, ambiguidade de modelagem, ou por serem de baixa prioridade — precisam de revisao do Lucas antes de aplicar. [2026-08-18 rodada 2: 22 desses itens ja resolvidos sem necessidade de pesquisa adicional (respostas ja estavam no relatorio original); os restantes estao sob pesquisa aprofundada.] [2026-08-18 rodada 3: 14 itens resolvidos via pesquisa aprofundada (Workflow paralelo, 8 frentes contra garmin.com/en-US); gar-dst-800 mantido no catalogo mas marcado descontinuado (decisao de manter/remover fica com o Lucas).]",
- "total_pendente": 18,
+ "contexto": "Auditoria completa dos 175 SKUs do catalogo cruzando com garmin.com/en-US. 131 itens tinham divergencia; 78 foram corrigidos nesta sessao (ver audit_2026-08-18_corrections_log.json). Os itens abaixo NAO foram alterados por falta de confirmacao suficiente, ambiguidade de modelagem, ou por serem de baixa prioridade — precisam de revisao do Lucas antes de aplicar. [2026-08-18 rodada 2: 22 desses itens ja resolvidos sem necessidade de pesquisa adicional (respostas ja estavam no relatorio original); os restantes estao sob pesquisa aprofundada.] [2026-08-18 rodada 3: 14 itens resolvidos via pesquisa aprofundada (Workflow paralelo, 8 frentes contra garmin.com/en-US); gar-dst-800 mantido no catalogo mas marcado descontinuado (decisao de manter/remover fica com o Lucas).] [2026-08-18 rodada 4: os 2 kits GNX Sail Pack removidos do catalogo (modelagem agregada dava calculo de N2K LEN errado) — componentes individuais ja cadastrados corretamente.]",
+ "total_pendente": 16,
  "itens": [
   {
    "id": "gar-ais-800",
@@ -9,20 +9,6 @@
    "status": "mismatch",
    "confidence": "high",
    "discrepancy": "Falta o conector de antena GPS externa opcional (mapeia pra GPSAntenna no nosso vocabulário, tipo BNC) — a página oficial lista explicitamente 'External GNSS antenna connector: BNC' mesmo o AIS 800 tendo GNSS interno embutido; é um conector físico real no gabinete, deveria constar como GPSAntenna x1. Nota secundária (confiança menor): o produto também tem um segundo conector de RF rotulado 'Splitter connector: TNC' (entrada pro rádio VHF existente no splitter AUX VHF interno) que hoje também não tem porta correspondente no catálogo — mas isso é mais uma nuance de vocabulário, já que o TNC conecta ao rádio VHF (não a uma antena), então não mapeia perfeitamente pra 'VHFAntenna' como definido."
-  },
-  {
-   "id": "gar-gnx-sail-pack-43",
-   "sku": "010-01248-60",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo cadastra este item como equipamento único com N2K-Micro x1, mas o produto oficial é um KIT com pelo menos 2 instrumentos separados (GNX 20 + GNX Wind) mais 2 transdutores com interface própria (GDT 43 + GST 43/GND 10) — cada componente precisa do seu próprio drop N2K no backbone. A caixa acompanha apenas 1 T-connector + 1 drop cable de fábrica (insuficiente para todos os pontos de conexão do kit completo, então o instalador precisa de T-connectors/drops adicionais). N2K-Micro x1 subestima bastante os pontos de conexão reais deste kit — recomenda-se modelar como múltiplos nós no catálogo (2 instrumentos + 2 sensores) em vez de 1 item agregado, ou pelo menos documentar 'N2K-Micro x4+' se mantido como item único."
-  },
-  {
-   "id": "gar-gnx-sail-pack-43-wireless",
-   "sku": "010-01616-30",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo cadastra N2K-Micro x1, mas o produto oficial é um kit com 2 instrumentos (GNX Wind + GNX 20) e 2 transdutores com adaptador N2K próprio — a caixa inclui explicitamente 4 T-connectors NMEA 2000 + 2 drop cables + cabo de alimentação + terminadores, muito mais que 1 conector N2K-Micro. Também inclui um transdutor de vento sem fio (gWind Wireless 2, bateria NiMH recarregável via painel solar) que não usa porta N2K nenhuma e não está representado no vocabulário de portas do catálogo atual (nem como 'Wireless' nem como item separado). Recomenda-se modelar como múltiplos nós (2 instrumentos + 1 sensor com fio + 1 sensor wireless) em vez de item único N2K-Micro x1."
   },
   {
    "id": "gar-reactor40-hyd-1l2",
