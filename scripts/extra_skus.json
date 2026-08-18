@@ -1,8 +1,183 @@
 [
  {
+  "id": "gar-gpsmap-9012",
+  "sku": "010-02675-50",
+  "model": "GPSMAP 9012"
+ },
+ {
+  "id": "gar-gpsmap-9016",
+  "sku": "010-02675-00",
+  "model": "GPSMAP 9016"
+ },
+ {
+  "id": "gar-gpsmap-9019",
+  "sku": "010-02675-10",
+  "model": "GPSMAP 9019"
+ },
+ {
+  "id": "gar-gpsmap-9022",
+  "sku": "010-02675-20",
+  "model": "GPSMAP 9022"
+ },
+ {
+  "id": "gar-gpsmap-9024",
+  "sku": "010-02675-30",
+  "model": "GPSMAP 9024"
+ },
+ {
+  "id": "gar-gpsmap-9027",
+  "sku": "010-02675-40",
+  "model": "GPSMAP 9027"
+ },
+ {
+  "id": "gar-gpsmap-8410",
+  "sku": "010-02091-00",
+  "model": "GPSMAP 8410"
+ },
+ {
+  "id": "gar-gpsmap-8410xsv",
+  "sku": "010-02091-50",
+  "model": "GPSMAP 8410xsv"
+ },
+ {
+  "id": "gar-gpsmap-8412",
+  "sku": "010-02092-00",
+  "model": "GPSMAP 8412"
+ },
+ {
+  "id": "gar-gpsmap-8412xsv",
+  "sku": "010-02092-50",
+  "model": "GPSMAP 8412xsv"
+ },
+ {
+  "id": "gar-gpsmap-8416",
+  "sku": "010-02093-00",
+  "model": "GPSMAP 8416"
+ },
+ {
+  "id": "gar-gpsmap-8416xsv",
+  "sku": "010-02093-50",
+  "model": "GPSMAP 8416xsv"
+ },
+ {
+  "id": "gar-gpsmap-8612",
+  "sku": "010-02092-02",
+  "model": "GPSMAP 8612"
+ },
+ {
+  "id": "gar-gpsmap-8612xsv",
+  "sku": "010-02092-52",
+  "model": "GPSMAP 8612xsv"
+ },
+ {
+  "id": "gar-gpsmap-8616",
+  "sku": "010-02093-02",
+  "model": "GPSMAP 8616"
+ },
+ {
+  "id": "gar-gpsmap-8616xsv",
+  "sku": "010-02093-52",
+  "model": "GPSMAP 8616xsv"
+ },
+ {
+  "id": "gar-gpsmap-1223",
+  "sku": "010-02367-00",
+  "model": "GPSMAP 1223"
+ },
+ {
+  "id": "gar-gpsmap-1223xsv",
+  "sku": "010-02367-02",
+  "model": "GPSMAP 1223xsv"
+ },
+ {
+  "id": "gar-gpsmap-1243",
+  "sku": "010-02675-60",
+  "model": "GPSMAP 1243"
+ },
+ {
+  "id": "gar-gpsmap-1243xsv",
+  "sku": "010-02675-62",
+  "model": "GPSMAP 1243xsv"
+ },
+ {
+  "id": "gar-echomap-uhd2-54cv",
+  "sku": "010-02690-00",
+  "model": "ECHOMAP UHD2 54cv"
+ },
+ {
+  "id": "gar-echomap-uhd2-72cv",
+  "sku": "010-02691-00",
+  "model": "ECHOMAP UHD2 72cv"
+ },
+ {
+  "id": "gar-echomap-uhd2-73sv",
+  "sku": "010-02691-01",
+  "model": "ECHOMAP UHD2 73sv"
+ },
+ {
+  "id": "gar-echomap-uhd2-93sv",
+  "sku": "010-02692-01",
+  "model": "ECHOMAP UHD2 93sv"
+ },
+ {
+  "id": "gar-echomap-ultra2-106sv",
+  "sku": "010-02880-00",
+  "model": "ECHOMAP Ultra 2 106sv"
+ },
+ {
+  "id": "gar-echomap-ultra2-126sv",
+  "sku": "010-02882-00",
+  "model": "ECHOMAP Ultra 2 126sv"
+ },
+ {
+  "id": "gar-fantom-18x",
+  "sku": "010-02462-00",
+  "model": "GMR Fantom 18x"
+ },
+ {
+  "id": "gar-fantom-24x",
+  "sku": "010-02463-00",
+  "model": "GMR Fantom 24x"
+ },
+ {
   "id": "gar-fantom-124",
   "sku": "K10-00012-19",
   "model": "GMR Fantom 124"
+ },
+ {
+  "id": "gar-fantom-126",
+  "sku": "010-01366-00",
+  "model": "GMR Fantom 126"
+ },
+ {
+  "id": "gar-gmr-434-xhd3",
+  "sku": "010-02544-00",
+  "model": "GMR 434 xHD3 (4ft 4kW)"
+ },
+ {
+  "id": "gar-gmr-436-xhd3",
+  "sku": "010-02544-10",
+  "model": "GMR 436 xHD3 (6ft 4kW)"
+ },
+ {
+  "id": "gar-gmr-1234-xhd3",
+  "sku": "010-02545-00",
+  "model": "GMR 1234 xHD3 (4ft 12kW)"
+ },
+ {
+  "id": "gar-gmr-1236-xhd3",
+  "sku": "010-02545-10",
+  "model": "GMR 1236 xHD3 (6ft 12kW)"
+ },
+ {
+  "id": "gar-gmr-2534-xhd3",
+  "sku": "010-02546-00",
+  "model": "GMR 2534 xHD3 (4ft 25kW)"
+ },
+ {
+  "id": "gar-gmr-2536-xhd3",
+  "sku": "010-02546-10",
+  "model": "GMR 2536 xHD3 (6ft 25kW)"
  },
  {
   "id": "gar-lvs32",
@@ -10,14 +185,469 @@
   "model": "LVS32 Transducer"
  },
  {
+  "id": "gar-lvs34",
+  "sku": "010-12516-00",
+  "model": "LVS34 Transducer"
+ },
+ {
+  "id": "gar-lvs62",
+  "sku": "010-02719-10",
+  "model": "LVS62 Transducer"
+ },
+ {
+  "id": "gar-gls10",
+  "sku": "010-02610-00",
+  "model": "GLS 10 LiveScope Module"
+ },
+ {
+  "id": "gar-gsd-26",
+  "sku": "010-01112-00",
+  "model": "GSD 26 CHIRP Module"
+ },
+ {
+  "id": "gar-gcv-20",
+  "sku": "010-02055-10",
+  "model": "GCV 20 Ultra HD Scanning"
+ },
+ {
+  "id": "gar-reactor40-hyd-corepack",
+  "sku": "010-00705-86",
+  "model": "Reactor 40 Hydraulic Corepack + SmartPump v2"
+ },
+ {
+  "id": "gar-reactor40-hyd-1l2",
+  "sku": "010-00705-08",
+  "model": "Reactor 40 Hydraulic + 1.2L Pump"
+ },
+ {
+  "id": "gar-reactor40-mech",
+  "sku": "010-00705-89",
+  "model": "Reactor 40 Mechanical Corepack"
+ },
+ {
+  "id": "gar-reactor40-compact",
+  "sku": "010-00705-06",
+  "model": "Reactor 40 Compact"
+ },
+ {
+  "id": "gar-reactor40-kicker",
+  "sku": "010-00705-95",
+  "model": "Reactor 40 Kicker"
+ },
+ {
+  "id": "gar-ccu",
+  "sku": "010-11052-67",
+  "model": "CCU Course Computer"
+ },
+ {
+  "id": "gar-ecu10",
+  "sku": "010-11053-02",
+  "model": "ECU 10"
+ },
+ {
+  "id": "gar-ghc50",
+  "sku": "010-02496-00",
+  "model": "GHC 50 Pilot Display"
+ },
+ {
+  "id": "gar-ghc20",
+  "sku": "010-01141-00",
+  "model": "GHC 20 Pilot Display"
+ },
+ {
+  "id": "gar-force-kraken-48",
+  "sku": "010-02573-30",
+  "model": "Force Kraken 48\" Black"
+ },
+ {
+  "id": "gar-force-kraken-63",
+  "sku": "010-02573-00",
+  "model": "Force Kraken 63\" Black"
+ },
+ {
+  "id": "gar-force-kraken-75",
+  "sku": "010-02573-10",
+  "model": "Force Kraken 75\" Black"
+ },
+ {
+  "id": "gar-vhf-115",
+  "sku": "010-01957-00",
+  "model": "VHF 115"
+ },
+ {
+  "id": "gar-vhf-215",
+  "sku": "010-01959-00",
+  "model": "VHF 215"
+ },
+ {
+  "id": "gar-vhf-215-ais",
+  "sku": "010-01959-01",
+  "model": "VHF 215 AIS"
+ },
+ {
+  "id": "gar-vhf-315",
+  "sku": "010-02047-00",
+  "model": "VHF 315"
+ },
+ {
+  "id": "gar-vhf-315i",
+  "sku": "010-02047-01",
+  "model": "VHF 315i (intercom)"
+ },
+ {
+  "id": "gar-ais-800",
+  "sku": "010-02087-00",
+  "model": "AIS 800 Class B SOTDMA"
+ },
+ {
+  "id": "gar-gmi-20",
+  "sku": "010-01140-00",
+  "model": "GMI 20 Marine Instrument"
+ },
+ {
+  "id": "gar-gnx-20",
+  "sku": "010-01211-00",
+  "model": "GNX 20"
+ },
+ {
+  "id": "gar-gnx-120",
+  "sku": "010-01211-10",
+  "model": "GNX 120 (7\")"
+ },
+ {
+  "id": "gar-gnx-130",
+  "sku": "010-01211-20",
+  "model": "GNX 130 (10\")"
+ },
+ {
+  "id": "gar-bluenet-20",
+  "sku": "010-12345-00",
+  "model": "BlueNet 20 Switch"
+ },
+ {
+  "id": "gar-bluenet-30",
+  "sku": "010-12346-00",
+  "model": "BlueNet 30 Gateway"
+ },
+ {
+  "id": "gar-gms-10",
+  "sku": "010-00351-00",
+  "model": "GMS 10 Network Port Expander"
+ },
+ {
+  "id": "gar-gtb-10",
+  "sku": "010-02134-00",
+  "model": "GTB 10 OnDeck Hub"
+ },
+ {
+  "id": "gar-poe-coupler",
+  "sku": "010-10580-10",
+  "model": "PoE Isolation Coupler"
+ },
+ {
+  "id": "gar-gps-24xd",
+  "sku": "010-02315-00",
+  "model": "GPS 24xd Receiver"
+ },
+ {
+  "id": "gar-gps-24xd-hvs",
+  "sku": "010-02316-10",
+  "model": "GPS 24xd HVS (heading)"
+ },
+ {
+  "id": "gar-ga-38",
+  "sku": "010-12017-00",
+  "model": "GA 38 GPS/GLONASS"
+ },
+ {
+  "id": "gar-gxm-54",
+  "sku": "010-02277-00",
+  "model": "GXM 54 SiriusXM Receiver"
+ },
+ {
+  "id": "gar-gc-200",
+  "sku": "010-02164-00",
+  "model": "GC 200 Marine IP Camera"
+ },
+ {
+  "id": "gar-gsv-10",
+  "sku": "010-02482-00",
+  "model": "GSV 10 Surround View"
+ },
+ {
+  "id": "gar-gwind-wired",
+  "sku": "010-01616-20",
+  "model": "gWind Wired Transducer"
+ },
+ {
+  "id": "gar-gwind-wireless",
+  "sku": "010-01616-00",
+  "model": "gWind Wireless Transducer"
+ },
+ {
+  "id": "gar-gst-43",
+  "sku": "010-04284-00",
+  "model": "GST 43 Speed/Temp Thru-Hull 43mm"
+ },
+ {
+  "id": "gar-gdt-43",
+  "sku": "010-01749-00",
+  "model": "GDT 43 Depth Thru-Hull 43mm"
+ },
+ {
+  "id": "gar-dst-810",
+  "sku": "010-11051-20",
+  "model": "DST 810 Smart Triducer"
+ },
+ {
+  "id": "gar-grf-10",
+  "sku": "010-11399-00",
+  "model": "GRF 10 Rudder Angle"
+ },
+ {
+  "id": "gar-fusion-ra770",
+  "sku": "010-01905-00",
+  "model": "Fusion Apollo MS-RA770"
+ },
+ {
+  "id": "gar-fusion-ra670",
+  "sku": "010-02138-00",
+  "model": "Fusion Apollo MS-RA670"
+ },
+ {
+  "id": "adp-n2k-term-m",
+  "sku": "010-11080-00",
+  "model": "Terminador N2K Macho 120Ω"
+ },
+ {
+  "id": "adp-n2k-term-f",
+  "sku": "010-11081-00",
+  "model": "Terminador N2K Fêmea 120Ω"
+ },
+ {
+  "id": "adp-n2k-tee",
+  "sku": "010-11078-00",
+  "model": "Tee Conector N2K"
+ },
+ {
+  "id": "adp-n2k-power",
+  "sku": "010-11079-00",
+  "model": "Cabo Alimentação N2K (fusível 3A)"
+ },
+ {
+  "id": "cab-n2k-2m",
+  "sku": "010-11076-00",
+  "model": "Cabo N2K Backbone 2m"
+ },
+ {
+  "id": "cab-n2k-6m",
+  "sku": "010-11076-01",
+  "model": "Cabo N2K Backbone 6m"
+ },
+ {
+  "id": "cab-n2k-10m",
+  "sku": "010-11076-02",
+  "model": "Cabo N2K Backbone 10m"
+ },
+ {
+  "id": "cab-gmn-2m",
+  "sku": "010-10550-00",
+  "model": "Cabo Marine Network 1.8m (6ft)"
+ },
+ {
+  "id": "cab-gmn-6m",
+  "sku": "010-10551-00",
+  "model": "Cabo Marine Network 6m (20ft)"
+ },
+ {
+  "id": "cab-gmn-12m",
+  "sku": "010-10552-00",
+  "model": "Cabo Marine Network 12m (40ft)"
+ },
+ {
+  "id": "cab-gmn-15m",
+  "sku": "010-10553-00",
+  "model": "Cabo Marine Network 15m (50ft)"
+ },
+ {
+  "id": "cab-bn-2m",
+  "sku": "010-12528-30",
+  "model": "Cabo BlueNet 2m (6ft)"
+ },
+ {
+  "id": "cab-bn-6m",
+  "sku": "010-12528-31",
+  "model": "Cabo BlueNet 6m"
+ },
+ {
+  "id": "cab-bn-15m",
+  "sku": "010-12528-03",
+  "model": "Cabo BlueNet 15m"
+ },
+ {
+  "id": "adp-ngw-1",
+  "sku": "NGW-1-USB",
+  "model": "NGW-1 NMEA 0183 ↔ N2K"
+ },
+ {
+  "id": "adp-j2k100",
+  "sku": "J2K100",
+  "model": "J2K100 J1939 → N2K"
+ },
+ {
   "id": "adp-ydem-01",
   "sku": "YDEG-04N",
   "model": "YDEG-04N J1939/N2K Engine Gateway"
  },
  {
+  "id": "gar-gpsmap-9013xsv",
+  "sku": "010-02697-00",
+  "model": "GPSMAP 9013xsv"
+ },
+ {
+  "id": "gar-gpsmap-9017xsv",
+  "sku": "010-02697-10",
+  "model": "GPSMAP 9017xsv"
+ },
+ {
+  "id": "gar-gpsmap-743xsv",
+  "sku": "010-02365-50",
+  "model": "GPSMAP 743xsv"
+ },
+ {
+  "id": "gar-gpsmap-943",
+  "sku": "010-02366-60",
+  "model": "GPSMAP 943"
+ },
+ {
+  "id": "gar-gpsmap-943xsv",
+  "sku": "010-02366-50",
+  "model": "GPSMAP 943xsv"
+ },
+ {
+  "id": "gar-gpsmap-1253xsv",
+  "sku": "010-02367-50",
+  "model": "GPSMAP 1253xsv"
+ },
+ {
+  "id": "gar-gpsmap-1042xsv",
+  "sku": "010-01740-02",
+  "model": "GPSMAP 1042xsv"
+ },
+ {
+  "id": "gar-gpsmap-1623xsv",
+  "sku": "010-02368-00",
+  "model": "GPSMAP 1623xsv"
+ },
+ {
+  "id": "gar-gpsmap-1643xsv",
+  "sku": "010-02368-50",
+  "model": "GPSMAP 1643xsv"
+ },
+ {
+  "id": "gar-gpsmap-15x3",
+  "sku": "010-02697-50",
+  "model": "GPSMAP 15x3 Ultrawide"
+ },
+ {
   "id": "gar-echomap-uhd-64cv",
   "sku": "010-02331-00",
   "model": "ECHOMAP UHD 64cv"
+ },
+ {
+  "id": "gar-echomap-uhd2-74cv",
+  "sku": "010-02595-00",
+  "model": "ECHOMAP UHD2 74cv"
+ },
+ {
+  "id": "gar-echomap-uhd2-74sv",
+  "sku": "010-02685-01",
+  "model": "ECHOMAP UHD2 74sv"
+ },
+ {
+  "id": "gar-echomap-uhd2-94sv",
+  "sku": "010-02689-00",
+  "model": "ECHOMAP UHD2 94sv"
+ },
+ {
+  "id": "gar-striker-vivid-7sv",
+  "sku": "010-02553-01",
+  "model": "STRIKER Vivid 7sv"
+ },
+ {
+  "id": "gar-striker-vivid-9sv",
+  "sku": "010-02554-01",
+  "model": "STRIKER Vivid 9sv"
+ },
+ {
+  "id": "gar-fantom-18",
+  "sku": "010-01706-00",
+  "model": "GMR Fantom 18 (40W)"
+ },
+ {
+  "id": "gar-fantom-24",
+  "sku": "010-01707-00",
+  "model": "GMR Fantom 24 (40W)"
+ },
+ {
+  "id": "gar-lvs32-th",
+  "sku": "010-12928-01",
+  "model": "LVS32-TH Transducer (Thru-Hull)"
+ },
+ {
+  "id": "gar-ps21-tr",
+  "sku": "010-01749-30",
+  "model": "PS21-TR Transducer"
+ },
+ {
+  "id": "gar-ps22-tr",
+  "sku": "010-01750-30",
+  "model": "PS22-TR Transducer"
+ },
+ {
+  "id": "gar-ps22-th",
+  "sku": "010-01750-21",
+  "model": "PS22-TH Transducer (Thru-Hull)"
+ },
+ {
+  "id": "gar-ps31",
+  "sku": "010-01284-01",
+  "model": "PS31 Forward Transducer"
+ },
+ {
+  "id": "gar-ps51-th",
+  "sku": "010-01753-00",
+  "model": "PS51-TH FrontVü Thru-Hull"
+ },
+ {
+  "id": "gar-ps60",
+  "sku": "010-01749-50",
+  "model": "PS60 RealVü 3D Historical"
+ },
+ {
+  "id": "gar-gsd-25",
+  "sku": "010-01159-00",
+  "model": "GSD 25 Premium Sonar"
+ },
+ {
+  "id": "gar-gcv-10",
+  "sku": "010-01087-00",
+  "model": "GCV 10 SideVü/ClearVü Module"
+ },
+ {
+  "id": "gar-gt20-tm",
+  "sku": "010-01960-01",
+  "model": "GT20-TM Transom"
+ },
+ {
+  "id": "gar-gt54uhd-tm",
+  "sku": "010-12909-00",
+  "model": "GT54UHD-TM Ultra HD Transom"
+ },
+ {
+  "id": "gar-gt56uhd-tm",
+  "sku": "010-13073-00",
+  "model": "GT56UHD-TM Ultra HD Transom"
  },
  {
   "id": "gar-gt56uhd-tr",
@@ -40,9 +670,99 @@
   "model": "GT56UHD-TH Thru-Hull"
  },
  {
+  "id": "gar-gt51m-thp",
+  "sku": "010-01966-11",
+  "model": "GT51M-THP Thru-Hull Pair Mid CHIRP"
+ },
+ {
+  "id": "gar-b265lh",
+  "sku": "010-11635-21",
+  "model": "B-265LH Thru-Hull CHIRP"
+ },
+ {
+  "id": "gar-b275lh",
+  "sku": "010-11635-22",
+  "model": "B-275LH-W Thru-Hull CHIRP"
+ },
+ {
+  "id": "gar-b60",
+  "sku": "010-10182-21",
+  "model": "B60 Thru-Hull 12°"
+ },
+ {
+  "id": "gar-reactor40-sbw",
+  "sku": "010-02794-03",
+  "model": "Reactor 40 Steer-by-Wire + GHC 50"
+ },
+ {
+  "id": "gar-reactor40-smartpump-v2",
+  "sku": "010-00705-62",
+  "model": "Reactor 40 SmartPump v2 (componente)"
+ },
+ {
+  "id": "gar-reactor-wireless-remote",
+  "sku": "010-12833-10",
+  "model": "Reactor Wireless Remote"
+ },
+ {
+  "id": "gar-shadow-drive",
+  "sku": "010-11052-08",
+  "model": "Shadow Drive Sensor"
+ },
+ {
+  "id": "gar-force-kraken-white-48",
+  "sku": "010-02574-30",
+  "model": "Force Kraken 48\" White (Saltwater)"
+ },
+ {
+  "id": "gar-force-kraken-white-63",
+  "sku": "010-02574-00",
+  "model": "Force Kraken 63\" White (Saltwater)"
+ },
+ {
   "id": "gar-force-kraken-90",
   "sku": "010-02573-20",
   "model": "Force Kraken 90\" Black"
+ },
+ {
+  "id": "gar-vhf-110",
+  "sku": "010-01653-00",
+  "model": "VHF 110"
+ },
+ {
+  "id": "gar-vhf-115i",
+  "sku": "010-02096-01",
+  "model": "VHF 115i (Intercom)"
+ },
+ {
+  "id": "gar-vhf-215i",
+  "sku": "010-02097-01",
+  "model": "VHF 215i (Intercom)"
+ },
+ {
+  "id": "gar-ghs-11",
+  "sku": "010-01759-00",
+  "model": "GHS 11 Wired Handset"
+ },
+ {
+  "id": "gar-ghs-11i",
+  "sku": "010-01759-10",
+  "model": "GHS 11i Intercom Handset"
+ },
+ {
+  "id": "gar-gnx-21",
+  "sku": "010-01211-30",
+  "model": "GNX 21"
+ },
+ {
+  "id": "gar-gnx-wind",
+  "sku": "010-01142-00",
+  "model": "GNX Wind Display"
+ },
+ {
+  "id": "gar-gnx-sail-pack-43",
+  "sku": "010-01248-60",
+  "model": "GNX Wired Sail Pack 43"
  },
  {
   "id": "gar-gnx-sail-pack-43-wireless",
@@ -50,8 +770,108 @@
   "model": "GNX Wireless Sail Pack 43"
  },
  {
+  "id": "gar-gst-10",
+  "sku": "010-11328-00",
+  "model": "GST 10 Speed/Temp Wired (legacy)"
+ },
+ {
+  "id": "gar-gfl-10",
+  "sku": "010-11197-00",
+  "model": "GFL 10 Fluid Level Adapter"
+ },
+ {
+  "id": "gar-gfs-10",
+  "sku": "010-11196-00",
+  "model": "GFS 10 Fuel Sensor"
+ },
+ {
+  "id": "gar-gtu-10",
+  "sku": "010-11401-00",
+  "model": "GTU 10 Tank Monitor"
+ },
+ {
+  "id": "gar-gra-10",
+  "sku": "010-11324-00",
+  "model": "GRA 10 Rudder Angle Adapter"
+ },
+ {
+  "id": "gar-dst-800",
+  "sku": "010-11051-00",
+  "model": "DST 800 Smart Triducer (Wired)"
+ },
+ {
+  "id": "gar-gwind-race",
+  "sku": "010-01616-40",
+  "model": "gWind Race Transducer"
+ },
+ {
+  "id": "gar-gps-19x-hvs",
+  "sku": "010-01010-20",
+  "model": "GPS 19x HVS (Heading)"
+ },
+ {
+  "id": "gar-gps-19x",
+  "sku": "010-01010-00",
+  "model": "GPS 19x NMEA 2000"
+ },
+ {
+  "id": "gar-fusion-ra210",
+  "sku": "010-02250-00",
+  "model": "Fusion Apollo MS-RA210 Marine Stereo"
+ },
+ {
+  "id": "gar-fusion-wb670",
+  "sku": "010-02163-00",
+  "model": "Fusion Apollo MS-WB670 Black-box"
+ },
+ {
+  "id": "gar-fusion-amp-ap61800",
+  "sku": "010-02307-00",
+  "model": "Fusion Apollo MS-AP61800 (6ch 1800W)"
+ },
+ {
+  "id": "cab-bn-rj45-adapter",
+  "sku": "010-12531-01",
+  "model": "BlueNet → RJ45 Adapter"
+ },
+ {
+  "id": "cab-bn-cam-adapter",
+  "sku": "010-12531-02",
+  "model": "BlueNet → RJ45 Camera Adapter"
+ },
+ {
+  "id": "cab-gmn-30m",
+  "sku": "010-10553-10",
+  "model": "Cabo Marine Network 30m"
+ },
+ {
+  "id": "cab-gmn-27m",
+  "sku": "010-10553-20",
+  "model": "Cabo Marine Network 27m (90ft)"
+ },
+ {
   "id": "cab-bn-12m",
   "sku": "010-12528-02",
   "model": "Cabo BlueNet 12m (40ft)"
+ },
+ {
+  "id": "gar-radar-18xhd3",
+  "sku": "010-02841-00",
+  "model": "GMR 18 xHD3 Radar Dome"
+ },
+ {
+  "id": "gar-gsd-28",
+  "sku": "010-02797-00",
+  "model": "GSD 28 Sonar Module"
+ },
+ {
+  "id": "gar-ps70-th",
+  "sku": "010-02768-10",
+  "model": "PS70-TH Live Sonar Transducer (Thru-Hull)"
+ },
+ {
+  "id": "gar-msc-10",
+  "sku": "010-02407-00",
+  "model": "MSC 10 Marine Satellite Compass"
  }
 ]
