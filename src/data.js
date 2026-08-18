@@ -66,7 +66,7 @@ const CATALOG = [
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'Video-BNC',qty:1},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-8412xsv',sku:'010-02092-50',family:'GPSMAP 8400',model:'GPSMAP 8412xsv',category:'MFD',
+{id:'gar-gpsmap-8412xsv',sku:'010-02092-02',family:'GPSMAP 8400',model:'GPSMAP 8412xsv',category:'MFD',
  description:'MFD glass-helm 12" Full HD com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
@@ -84,13 +84,13 @@ const CATALOG = [
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-8612',sku:'010-02092-02',family:'GPSMAP 8600',model:'GPSMAP 8612',category:'MFD',
+{id:'gar-gpsmap-8612',sku:'010-02092-50',family:'GPSMAP 8600',model:'GPSMAP 8612',category:'MFD',
  description:'MFD 12" all-in-one (display+computador) — Marine Network legacy.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-8612xsv',sku:'010-02092-52',family:'GPSMAP 8600',model:'GPSMAP 8612xsv',category:'MFD',
+{id:'gar-gpsmap-8612xsv',sku:'010-02092-51',family:'GPSMAP 8600',model:'GPSMAP 8612xsv',category:'MFD',
  description:'MFD 12" all-in-one com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
@@ -102,7 +102,7 @@ const CATALOG = [
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-8616xsv',sku:'010-02093-52',family:'GPSMAP 8600',model:'GPSMAP 8616xsv',category:'MFD',
+{id:'gar-gpsmap-8616xsv',sku:'010-02093-51',family:'GPSMAP 8600',model:'GPSMAP 8616xsv',category:'MFD',
  description:'MFD 16" all-in-one com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
@@ -136,11 +136,11 @@ const CATALOG = [
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== MFD — ECHOMAP UHD2 (entry/mid) ============== */
-{id:'gar-echomap-uhd2-54cv',sku:'010-02690-00',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 54cv',category:'MFD',
- description:'MFD 5" ClearVü — entry. NMEA 2000.',
+{id:'gar-echomap-uhd2-54cv',sku:'010-02591-00',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 54cv',category:'MFD',
+ description:'MFD 5" ClearVü — entry, Navionics+ Coastal & Great Lakes. NMEA 2000. Sem transdutor incluso (variante com GT20-TM: 010-02591-51).',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-echomap-uhd2-72cv',sku:'010-02691-00',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 72cv',category:'MFD',
- description:'MFD 7" ClearVü.',
+{id:'gar-echomap-uhd2-72cv',sku:'010-02593-00',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 72cv',category:'MFD',
+ description:'MFD 7" ClearVü — Worldwide Basemap (distinto do 73cv Inland e 74cv Coastal). Sem transdutor incluso (variante com GT20-TM: 010-02593-01).',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-echomap-uhd2-73sv',sku:'010-02691-01',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 73sv',category:'MFD',
  description:'MFD 7" SideVü/ClearVü.',
@@ -167,8 +167,8 @@ const CATALOG = [
 {id:'gar-fantom-124',sku:'K10-00012-19',family:'Fantom Open Array',model:'GMR Fantom 124',category:'Radar',
  description:'Radar open-array solid-state 4kW, antena 4 pés.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-fantom-126',sku:'010-01366-00',family:'Fantom Open Array',model:'GMR Fantom 126',category:'Radar',
- description:'Radar open-array solid-state 4kW, antena 6 pés.',
+{id:'gar-fantom-126',sku:'K10-00012-20',family:'Fantom Open Array',model:'GMR Fantom 126',category:'Radar',
+ description:'Radar open-array solid-state 4kW, antena 6 pés. Kit completo (pedestal + antena + cabos), cor branca — mesma convenção do Fantom 124.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Radar — GMR xHD3 (magnetron open-array) ============== */
@@ -311,9 +311,6 @@ const CATALOG = [
  notes:'Obrigatório entre dispositivos PoE (FLIR, luzes UW) e switch GMS 10/MFD.'},
 
 /* ============== GPS / Antennas ============== */
-{id:'gar-gps-24xd',sku:'010-02315-00',family:'GPS Antenna',model:'GPS 24xd Receiver',category:'Antenna',
- description:'Antena GPS multi-banda (GPS, Galileo, GLONASS, BeiDou) — N2K. IPX7.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
 {id:'gar-gps-24xd-hvs',sku:'010-02316-10',family:'GPS Antenna',model:'GPS 24xd HVS (heading)',category:'Antenna',
  description:'GPS 24xd com heading sensor integrado.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
@@ -329,8 +326,8 @@ const CATALOG = [
  description:'Câmera IP 1920x1080 dome com IR, 30m night vision. Rede via Garmin Marine Network + alimentação dedicada (hardwired 10-16VDC).',
  ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true,
  notes:'Injeção de energia pela rede é opcional via Garmin Power and Audio Module (010-12527-00, vendido à parte) — não é PoE nativo da câmera.'},
-{id:'gar-gsv-10',sku:'010-02482-00',family:'GSV',model:'GSV 10 Surround View',category:'Camera',
- description:'Sistema de câmeras surround (até 6 câmeras BC30) — visão panorâmica 360°.',
+{id:'gar-gsv-10',sku:'010-02482-00',family:'GSV',model:'Surround View Six-Camera System (ex-GSV 10)',category:'Camera',
+ description:'Sistema de câmeras surround (até 6 câmeras BC30) — visão panorâmica 360°. Instalação OEM de fábrica — varia por embarcação, contatar revendedor/OEM local.',
  power:{voltage:'12VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Sensores ============== */
@@ -349,9 +346,9 @@ const CATALOG = [
 {id:'gar-dst-810',sku:'010-11051-20',family:'Airmar',model:'DST 810 Smart Triducer',category:'Sensor',
  description:'Transdutor Airmar profundidade/velocidade/temperatura wireless via NMEA 2000.',
  ports:[{type:'N2K-Micro',qty:1}],_verify:true},
-{id:'gar-grf-10',sku:'010-11399-00',family:'GRF',model:'GRF 10 Rudder Angle',category:'Sensor',
- description:'Sensor de ângulo de leme — N2K. Usado com Reactor 40.',
- ports:[{type:'N2K-Micro',qty:1}],_verify:true},
+{id:'gar-grf-10',sku:'010-11829-00',family:'GRF',model:'GRF 10 Rudder Feedback Sensor',category:'Sensor',
+ description:'Sensor de ângulo de leme. Conector proprietário Garmin de 12 pinos (corpo laranja), ponto-a-ponto direto na unidade de controle do piloto automático — não é NMEA 2000, não entra no backbone N2K.',
+ ports:[{type:'AP-RudderFeedback',qty:1}],_verify:true},
 
 /* ============== Áudio (Fusion / Garmin) ============== */
 {id:'gar-fusion-ra770',sku:'010-01905-00',family:'Apollo',model:'Fusion Apollo MS-RA770',category:'Audio',
@@ -429,7 +426,8 @@ const PORT_TYPES = {
   'Audio':             {label:'Áudio',           color:'#3aa3e0', group:'audio',     stroke:'solid'},
   'VHFAntenna':        {label:'Antena VHF',      color:'#999',    group:'vhfant',    stroke:'solid'},
   'GPSAntenna':        {label:'Antena GPS',      color:'#999',    group:'gpsant',   stroke:'solid'},
-  'ANT':               {label:'ANT (wireless Garmin)',color:'#bbb', group:'ant',      stroke:'dashed'}
+  'ANT':               {label:'ANT (wireless Garmin)',color:'#bbb', group:'ant',      stroke:'dashed'},
+  'AP-RudderFeedback': {label:'Rudder Feedback (12-pin)',color:'#e5a545',group:'apRudder', stroke:'solid'}
 };
 
 const COMPAT = {};
@@ -449,6 +447,7 @@ const COMPAT = {};
 ['VHFAntenna'].forEach(p=>{COMPAT[p]=['VHFAntenna']});
 ['GPSAntenna'].forEach(p=>{COMPAT[p]=['GPSAntenna']});
 ['ANT'].forEach(p=>{COMPAT[p]=['ANT']});
+['AP-RudderFeedback'].forEach(p=>{COMPAT[p]=['AP-RudderFeedback']});
 
 /* =========================================================================
    RULES — validação Garmin

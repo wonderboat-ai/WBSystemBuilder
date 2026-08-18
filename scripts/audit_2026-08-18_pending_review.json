@@ -1,7 +1,7 @@
 {
  "gerado_em": "2026-08-18",
- "contexto": "Auditoria completa dos 175 SKUs do catalogo cruzando com garmin.com/en-US. 131 itens tinham divergencia; 78 foram corrigidos nesta sessao (ver audit_2026-08-18_corrections_log.json). Os itens abaixo NAO foram alterados por falta de confirmacao suficiente, ambiguidade de modelagem, ou por serem de baixa prioridade — precisam de revisao do Lucas antes de aplicar. [2026-08-18 rodada 2: 22 desses itens ja resolvidos sem necessidade de pesquisa adicional (respostas ja estavam no relatorio original); os restantes estao sob pesquisa aprofundada.]",
- "total_pendente": 32,
+ "contexto": "Auditoria completa dos 175 SKUs do catalogo cruzando com garmin.com/en-US. 131 itens tinham divergencia; 78 foram corrigidos nesta sessao (ver audit_2026-08-18_corrections_log.json). Os itens abaixo NAO foram alterados por falta de confirmacao suficiente, ambiguidade de modelagem, ou por serem de baixa prioridade — precisam de revisao do Lucas antes de aplicar. [2026-08-18 rodada 2: 22 desses itens ja resolvidos sem necessidade de pesquisa adicional (respostas ja estavam no relatorio original); os restantes estao sob pesquisa aprofundada.] [2026-08-18 rodada 3: 14 itens resolvidos via pesquisa aprofundada (Workflow paralelo, 8 frentes contra garmin.com/en-US); gar-dst-800 mantido no catalogo mas marcado descontinuado (decisao de manter/remover fica com o Lucas).]",
+ "total_pendente": 18,
  "itens": [
   {
    "id": "gar-ais-800",
@@ -9,27 +9,6 @@
    "status": "mismatch",
    "confidence": "high",
    "discrepancy": "Falta o conector de antena GPS externa opcional (mapeia pra GPSAntenna no nosso vocabulário, tipo BNC) — a página oficial lista explicitamente 'External GNSS antenna connector: BNC' mesmo o AIS 800 tendo GNSS interno embutido; é um conector físico real no gabinete, deveria constar como GPSAntenna x1. Nota secundária (confiança menor): o produto também tem um segundo conector de RF rotulado 'Splitter connector: TNC' (entrada pro rádio VHF existente no splitter AUX VHF interno) que hoje também não tem porta correspondente no catálogo — mas isso é mais uma nuance de vocabulário, já que o TNC conecta ao rádio VHF (não a uma antena), então não mapeia perfeitamente pra 'VHFAntenna' como definido."
-  },
-  {
-   "id": "gar-echomap-uhd2-54cv",
-   "sku": "010-02690-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "SKU/model mismatch: PN 010-02690-00 belongs to an ECHOMAP UHD2 9\" sv chartplotter, not the 'ECHOMAP UHD2 54cv' the catalog claims. Different display size and different sonar architecture (sv vs cv), which very likely means a different SonarConn connector/pinout too. Could not determine the correct SKU for the actual 'ECHOMAP UHD2 54cv' within this session's tool budget (search engines were blocked/rate-limited); Lucas should re-source this SKU directly from garmin.com's ECHOMAP UHD2 configurator."
-  },
-  {
-   "id": "gar-echomap-uhd2-72cv",
-   "sku": "010-02691-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Severe SKU mismatch: PN 010-02691-00 does not belong to any marine chartplotter — it is the SKU for the Xero L60i laser rangefinder, an unrelated outdoor-recreation optics product. This entry needs the correct part number for 'ECHOMAP UHD2 72cv' sourced fresh from garmin.com; note also that 'ECHOMAP UHD2 72cv' is not a model name pattern this session could locate any evidence for (the ECHOMAP UHD2 cv-line naming Garmin uses elsewhere is typically things like 54cv/64cv/74cv) — Lucas should double check whether '72cv' is even the correct model name before re-sourcing the SKU."
-  },
-  {
-   "id": "gar-fantom-126",
-   "sku": "010-01366-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "SKU cadastrado (010-01366-00) é uma peça avulsa 'antena 6ft only' de uma linha legada (Fantom 4/6, pedestal 40W) — não o kit completo GMR Fantom 126 (pedestal+antena) da linha atual, cujo PN oficial é K10-00012-20 (branco)/K10-00012-33 (preto). Divergência dupla: (1) SKU aponta pra peça de reposição, não pro sistema completo vendido/instalado; (2) como consequência, as portas cadastradas (GarminMarineNet x1 + Power-12 x1) não existem no item real referenciado por esse SKU — um array isolado se conecta ao pedestal por um conector de antena giratório dedicado, sem porta de rede/energia própria."
   },
   {
    "id": "gar-gnx-sail-pack-43",
@@ -44,27 +23,6 @@
    "status": "mismatch",
    "confidence": "high",
    "discrepancy": "Catálogo cadastra N2K-Micro x1, mas o produto oficial é um kit com 2 instrumentos (GNX Wind + GNX 20) e 2 transdutores com adaptador N2K próprio — a caixa inclui explicitamente 4 T-connectors NMEA 2000 + 2 drop cables + cabo de alimentação + terminadores, muito mais que 1 conector N2K-Micro. Também inclui um transdutor de vento sem fio (gWind Wireless 2, bateria NiMH recarregável via painel solar) que não usa porta N2K nenhuma e não está representado no vocabulário de portas do catálogo atual (nem como 'Wireless' nem como item separado). Recomenda-se modelar como múltiplos nós (2 instrumentos + 1 sensor com fio + 1 sensor wireless) em vez de item único N2K-Micro x1."
-  },
-  {
-   "id": "gar-gps-24xd",
-   "sku": "010-02315-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "O SKU cadastrado não corresponde a nenhuma antena GPS marítima Garmin. 010-02315-00 é o dēzl OTR1000 (navegador GPS automotivo para caminhões, categoria totalmente diferente, descontinuado), sem qualquer porta N2K-Micro ou interface NMEA 2000. Não existe registro oficial de um 'GPS 24xd Receiver' (variante não-HVS) sob esse SKU — é um SKU fantasma, do mesmo tipo já corrigido na varredura de 2026-07-24 (ver scripts/sku_corrections_log.json). Recomenda-se remover o item ou substituir o SKU pelo correto (provavelmente deveria ser um alias/duplicata de 010-02316-10 ou 010-02316-00, variantes reais do GPS 24xd)."
-  },
-  {
-   "id": "gar-gpsmap-8612",
-   "sku": "010-02092-02",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "SKU/model mismatch: PN 010-02092-02 = GPSMAP 8412xsv (12\", basemap, built-in sonar), catalog entry claims 'GPSMAP 8612' (12\", Navionics+, no sonar). Wrong model entirely, not just a port list issue — the real product for this SKU has a sonar/transducer connector that isn't in the catalog's port list, and the catalog's claimed model (8612, no sonar) wouldn't have one."
-  },
-  {
-   "id": "gar-grf-10",
-   "sku": "010-11399-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Dois problemas simultâneos: (1) o SKU cadastrado 010-11399-00 está incorreto/não existe — o PN oficial correto é 010-11829-00; (2) mesmo corrigindo o SKU, o conector físico real do GRF 10 é um plugue proprietário de 12 pinos para o computador de piloto automático (não um N2K-Micro/NMEA 2000). Recomendo corrigir o SKU para 010-11829-00 e substituir a porta cadastrada — como o vocabulário atual do catálogo não tem um tipo específico para 'conector de piloto automático de 12 pinos', sugiro criar um novo tipo de porta em vez de manter N2K-Micro, que está errado."
   },
   {
    "id": "gar-reactor40-hyd-1l2",
@@ -109,27 +67,6 @@
    "discrepancy": "Não há fonte garmin.com pra este item — é produto de fabricante terceiro (Yacht Devices). Fonte autoritativa correta seria yachtd.com, fora do escopo desta auditoria."
   },
   {
-   "id": "cab-gmn-27m",
-   "sku": "010-10553-20",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "SKU 010-10553-20 não encontrado em nenhuma página oficial Garmin. Mesma suspeita do item anterior: o prefixo 010-10553-XX é a linha de cabo de alimentação do GMS 10, não um cabo de rede de dados — as portas cadastradas (GarminMarineNet x2) provavelmente não correspondem ao produto real desse SKU. Recomenda-se investigar/corrigir a origem deste SKU."
-  },
-  {
-   "id": "cab-gmn-30m",
-   "sku": "010-10553-10",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "SKU 010-10553-10 não é encontrada em nenhuma página oficial Garmin (garmin.com/en-US nem support.garmin.com). Evidência forte de que o prefixo 010-10553-XX é, na verdade, a linha do cabo de ALIMENTAÇÃO (Power Cable) do GMS 10 Network Port Expander, não um cabo de rede/dados — o que tornaria as portas cadastradas (GarminMarineNet x2, ou seja, dados Ethernet RJ45 nas duas pontas) incompatíveis com o produto real por trás desse SKU. Recomenda-se revisar a origem desse SKU no catálogo e possivelmente substituí-lo pelo SKU correto da família de cabo de rede 30m/98ft (que não parece existir atualmente no catálogo oficial Garmin — os cabos 'Large Connectors' vão até 50ft e depois pulam para 500ft)."
-  },
-  {
-   "id": "gar-dst-800",
-   "sku": "010-11051-00",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "O SKU 010-11051-00 (Airmar DST800, versão 0° tilt) não resolve no site/catálogo atual en-US da Garmin: support.garmin.com/en-US retorna erro (500) para esse part number, e o ID de produto que correspondia a ele em outras regiões (13578) hoje aponta, no site en-US, para um produto totalmente diferente (GA 36 GPS Antenna). O mesmo SKU/produto ainda resolve normalmente em outras lojas regionais da Garmin (ex.: support.garmin.com/en-NZ, título 'AIRMAR® DST800 (0° Tilt) | Garmin Support'), mas o site en-US atual lista em seu lugar o AIRMAR DST 810 Smart Transducer (SKU 010-11051-20, https://www.garmin.com/en-US/p/724089/) como o transdutor de depth/speed/temp vigente. Tudo indica que o DST 800 (010-11051-00) foi descontinuado do catálogo US atual e substituído pelo DST 810 — recomenda-se revisar se o item do catálogo deveria ser atualizado para DST 810 (010-11051-20) ou mantido como legado com aviso de descontinuação."
-  },
-  {
    "id": "gar-dst-810",
    "sku": "010-11051-20",
    "status": "not_found",
@@ -165,27 +102,6 @@
    "discrepancy": "Produto não localizado no site oficial US atual (garmin.com/en-US) — aparenta ter sido descontinuado/removido do catálogo US (ainda listado em suporte NZ/AU como legado). Não foi possível validar as portas cadastradas contra fonte oficial US; recomenda-se verificar se este SKU ainda é vendável antes de continuar oferecendo no catálogo, ou buscar a ficha técnica via manual de instalação oficial (ex.: GUID-3E67C80C-0812-4EEC-BC60-699751B9CF6F, 'GPSMAP Owner's Manual 16x3, 15x3, 12x3, 9x3, 7x3') como fonte alternativa."
   },
   {
-   "id": "gar-gsv-10",
-   "sku": "010-02482-00",
-   "status": "not_found",
-   "confidence": "low",
-   "discrepancy": "Não é possível confirmar mismatch/match porque não achei a página oficial garmin.com/en-US/p/ pra esse produto (pode ter sido descontinuado como venda avulsa, ou ser um item majoritariamente OEM/instalação de fábrica sem product page de varejo direto). Ponto pra revisão do Lucas: o nome oficial associado ao SKU 010-02482-00 no suporte Garmin é 'Surround View Six-Camera System', diferente do nome 'GSV 10 Surround View' usado no nosso catálogo — vale confirmar se são o mesmo item (hub GSV 10 vendido separado vs. kit completo de 6 câmeras) antes de mexer nas portas."
-  },
-  {
-   "id": "gar-gtu-10",
-   "sku": "010-11401-00",
-   "status": "not_found",
-   "confidence": "high",
-   "discrepancy": "Não foi encontrada nenhuma página oficial Garmin (garmin.com/en-US) para um produto marítimo chamado 'GTU 10 Tank Monitor', nem para o SKU 010-11401-00. A busca direta por esse part number em support.garmin.com/en-US falha (erro 500), e não há nenhum resultado na web (Bing/DuckDuckGo) associando esse SKU a um produto Garmin real. O nome 'GTU 10' na linha Garmin pertence exclusivamente ao GTU 10 GPS Pet/Asset Tracker (rastreador de coleira via satélite, produto não-marítimo, linha antiga/descontinuada) — não existe um 'monitor de tanque' Garmin com esse nome. Este item parece ser um produto fantasma no catálogo (SKU/nome inventados ou confundidos com o rastreador GTU 10), similar ao caso do 'Reactor 40 for Trim Tabs' já corrigido antes. Recomenda-se remover este item do catálogo ou substituí-lo pelo GFL 10 / GFS 10 (que são os adaptadores reais de nível de fluido/combustível da Garmin)."
-  },
-  {
-   "id": "gar-shadow-drive",
-   "sku": "010-11052-08",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "SKU do catálogo (010-11052-08) não corresponde a nenhuma página de produto ativa em garmin.com/en-US. O 'Shadow Drive' oficial mais próximo encontrado (010-11054-00) é vinculado à linha GHP10 descontinuada, não à família Reactor. Recomenda-se ao Lucas revisar se este SKU está correto/atual — pode ser um número de peça de acessório interno (Shadow Drive é hoje tipicamente tecnologia embutida na CCU do Reactor, não um sensor avulso vendável) ou uma variante regional/descontinuada sem página US."
-  },
-  {
    "id": "cab-bn-cam-adapter",
    "sku": "010-12531-02",
    "status": "uncertain",
@@ -205,20 +121,6 @@
    "status": "uncertain",
    "confidence": "medium",
    "discrepancy": "Model/SKU itself matches and the port category list is plausible (adds SonarConn vs. the plain 1223, as expected). Same caveats as gar-gpsmap-1223: manual documents a Micro-USB card-reader port not listed in the catalog, and exact port quantities (GarminMarineNet x2 in particular) were not independently verifiable."
-  },
-  {
-   "id": "gar-gpsmap-8612xsv",
-   "sku": "010-02092-52",
-   "status": "uncertain",
-   "confidence": "low",
-   "discrepancy": "Model NAME plausibly matches ('8612xsv' family), but the exact suffix -52 could not be independently confirmed as a real, currently-indexed part number (support.garmin.com throws a server error looking it up, unlike -50/-51 which are documented). Port-level detail (exact GarminMarineNet/Video-BNC quantities) was not verifiable with the tools available in this session, so this cannot be certified as a full match."
-  },
-  {
-   "id": "gar-gpsmap-8616xsv",
-   "sku": "010-02093-52",
-   "status": "uncertain",
-   "confidence": "low",
-   "discrepancy": "Model NAME plausibly matches ('8616xsv' family), but the exact suffix -52 could not be independently confirmed as a real, currently-indexed part number (support.garmin.com throws a server error, unlike -51 which is documented). Port-level detail not verifiable with tools available in this session."
   },
   {
    "id": "gar-poe-coupler",

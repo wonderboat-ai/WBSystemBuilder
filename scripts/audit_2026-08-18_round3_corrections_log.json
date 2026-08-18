@@ -1,0 +1,32 @@
+{
+ "gerado_em": "2026-08-18",
+ "contexto": "Terceira rodada: pesquisa aprofundada (Workflow paralelo, 8 frentes independentes) nos itens pendentes de maior prioridade que precisavam de confirmacao adicional em garmin.com/en-US. 14 itens resolvidos com confianca alta. Nota: o classificador de seguranca automatico ficou indisponivel (rate-limited) durante a revisao da frente 'produtos-fantasma-diversos' (gtu-10/shadow-drive/gsv-10) — os achados foram verificados manualmente antes de aplicar, mas vale checagem extra do Lucas nesses 3 itens especificamente se quiser certeza total.",
+ "sku_corrigidos": [
+  {"id": "gar-echomap-uhd2-54cv", "sku_antigo": "010-02690-00", "sku_novo": "010-02591-00", "motivo": "SKU antigo pertencia a um ECHOMAP UHD2 9\" sv (produto errado). Confirmado ao vivo em garmin.com/en-US/p/762374/ + 4 revendedores cruzados."},
+  {"id": "gar-echomap-uhd2-72cv", "sku_antigo": "010-02691-00", "sku_novo": "010-02593-00", "motivo": "SKU antigo pertencia ao telemetro laser Xero L60i. 'ECHOMAP UHD2 72cv' CONFIRMADO como modelo real (Worldwide Basemap, distinto do 73cv Inland e 74cv Coastal) — nao era erro de digitacao. Confirmado ao vivo em garmin.com/en-US/p/874185/."},
+  {"id": "gar-gpsmap-8412xsv", "sku_antigo": "010-02092-50", "sku_novo": "010-02092-02", "motivo": "SKUs trocados entre gar-gpsmap-8412xsv e gar-gpsmap-8612 (mesmo padrao do swap ja aplicado ao par 16\" na rodada 1) — 010-02092-50 pertence na verdade ao 8612 US+Canada GN+."},
+  {"id": "gar-gpsmap-8612", "sku_antigo": "010-02092-02", "sku_novo": "010-02092-50", "motivo": "Swap complementar — 010-02092-02 pertence na verdade ao 8412xsv basemap."},
+  {"id": "gar-gpsmap-8612xsv", "sku_antigo": "010-02092-52", "sku_novo": "010-02092-51", "motivo": "SKU antigo inexistente (support.garmin.com retorna erro pra esse PN). Real e 010-02092-51 (US+Canada GN+ Navionics+), confirmado por 7+ revendedores cruzados."},
+  {"id": "gar-gpsmap-8616xsv", "sku_antigo": "010-02093-52", "sku_novo": "010-02093-51", "motivo": "Mesmo padrao do 8612xsv — SKU antigo inexistente, real e 010-02093-51, confirmado via garmin.com/en-US/p/799241/pn/010-02093-51/ + support.garmin.com + revendedores."},
+  {"id": "gar-fantom-126", "sku_antigo": "010-01366-00", "sku_novo": "K10-00012-20", "motivo": "SKU antigo era so a peca avulsa 'antena 6ft', nao o kit completo pedestal+antena. K10-00012-20 e o kit completo cor branca (mesma convencao ja usada no Fantom 124 = K10-00012-19)."},
+  {"id": "gar-grf-10", "sku_antigo": "010-11399-00", "sku_novo": "010-11829-00", "motivo": "SKU antigo inexistente. Confirmado via manual oficial de instalacao (static.garmin.com/pumac/GRF_10_INST_ML.pdf) + pagina de produto + 8+ revendedores."}
+ ],
+ "porta_corrigida": [
+  {"id": "gar-grf-10", "mudanca": "N2K-Micro -> AP-RudderFeedback (novo tipo de porta)", "motivo": "Manual oficial confirma texto literal: conector proprietario Garmin de 12 pinos (corpo laranja), ponto-a-ponto direto na ECU/CCU do piloto automatico — nao e NMEA 2000, nao entra no backbone N2K nem nas regras de validacao R-N2K-01/02/03."}
+ ],
+ "rotulo_corrigido": [
+  {"id": "gar-gsv-10", "mudanca": "'GSV 10 Surround View' -> 'Surround View Six-Camera System (ex-GSV 10)'", "motivo": "'GSV 10' e codinome interno de engenharia (aparece so na pagina de changelog de firmware). Nome oficial voltado ao cliente, confirmado em support.garmin.com e garmin.com/en-US/surroundview/, e 'Surround View'. SKU 010-02482-00 estava correto, so o nome precisava de ajuste."}
+ ],
+ "removidos": [
+  {"id": "gar-gps-24xd", "sku": "010-02315-00", "motivo": "Redundante — nao existe SKU real de 'GPS 24xd' sem heading sensor. Confirmado via JSON embutido na pagina oficial garmin.com/en-US/p/684247/: os 2 unicos SKUs sellable da familia (010-02316-00 NMEA0183, 010-02316-10/20 NMEA2000) ja tem o sensor de heading embutido de fabrica — 'HVS' nao e variante opcional. Entrada correta ja existe: gar-gps-24xd-hvs."},
+  {"id": "gar-gtu-10", "sku": "010-11401-00", "motivo": "Produto fantasma — SKU pertence ao GWH 20 Wireless Hub (acessorio de VHF descontinuado, confirmado via garmin.com regional nb-NO + FAQ oficial en-US + revendedor). Nao existe 'GTU 10 Tank Monitor' na Garmin em nenhuma era da marca — o unico GTU 10 real e um rastreador GPS de pets (descontinuado 2013, nao-nautico)."},
+  {"id": "gar-shadow-drive", "sku": "010-11052-08", "motivo": "SKU nao existe em nenhuma fonte. Na linha Reactor 40 atual, Shadow Drive e opcao de pacote embutida na compra do autopilot completo (confirmado via garmin.com/en-US/p/599880/), sem SKU proprio vendavel avulso. A unica SKU real 'Shadow Drive' standalone (010-11054-00) e da linha GHP10/12/20 ja descontinuada."},
+  {"id": "cab-gmn-27m", "sku": "010-10553-20", "motivo": "Produto fantasma — familia de SKU 010-10553-XX confirmada como sendo o cabo de ALIMENTACAO (nao rede) do GMS 10. Nao existe cabo de dados Marine Network de 27m/90ft na linha oficial Garmin (sequencia real: 6ft/20ft/40ft/50ft/500ft, sem intermediario)."},
+  {"id": "cab-gmn-30m", "sku": "010-10553-10", "motivo": "Mesmo motivo do cab-gmn-27m — familia de cabo de alimentacao, nao de dados. Nao existe cabo de rede de 30m/98ft na linha oficial."}
+ ],
+ "flag_descontinuado": [
+  {"id": "gar-dst-800", "acao": "Mantido no catalogo, model renomeado pra sinalizar '(DESCONTINUADO US)' + nota explicando substituto (DST 810).", "motivo": "Confirmado tecnicamente via HTTP: pagina oficial US retorna 404, versao canadense retorna 200. DST 810 tem diferencas funcionais reais (sensor de atitude, compensacao de deadrise, calibracao Bluetooth) que justificam nao fundir os 2 registros — decisao de manter/remover/fundir de vez fica com o Lucas."}
+ ],
+ "banco_de_fotos": "Removidas 5 entradas orfas de foto (gar-gps-24xd, gar-gtu-10, gar-shadow-drive, cab-gmn-27m, cab-gmn-30m) apos as remocoes acima. Cobertura permanece 100% (167/167).",
+ "resultado": "Catalogo: 172 -> 167 SKUs (147 devices + 20 adapters) apos as 5 remocoes desta rodada. Pendentes: 32 -> 18 itens."
+}
