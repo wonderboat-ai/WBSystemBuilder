@@ -2823,8 +2823,10 @@ function applyWizardPreset(){
     else addN('gar-reactor40-hyd-corepack');
   }
 
-  // GPS antena (sempre)
-  addN('gar-gps-24xd');
+  // GPS antena (sempre) — gar-gps-24xd (variante sem HVS) foi removido do catálogo em
+  // 2026-08-18 por ser produto fantasma (todo GPS 24xd real já vem com heading sensor);
+  // gar-gps-24xd-hvs é o SKU real que sobrou
+  addN('gar-gps-24xd-hvs');
 
   // Network switch se mais de 1 MFD ou radar
   if(mfd2Id || focus==='offshore'){addN('gar-gms-10')}
