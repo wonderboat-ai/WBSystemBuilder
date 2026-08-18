@@ -15,7 +15,7 @@ Inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos
 - Catálogo Garmin Marine com **165 SKUs** (145 devices + 20 adapters/cabos — MFD, Radar, Sonar, Autopilot, VHF/AIS, Network, Câmera, Sensores, Antena, Trolling Motor, Áudio), auditado item a item contra garmin.com/en-US em 2026-08-18
 - Canvas drag-and-drop livre com **4 vistas dedicadas**:
   - **Tudo** — layout geral livre
-  - **N2K Backbone** — vertical estruturada profissional (T-Joiners, drops editáveis, voltagem por nó, drag-to-reorder pra refletir a posição física real dos equipamentos a bordo)
+  - **N2K Backbone** — vertical estruturada profissional (T-Joiners, drops editáveis, voltagem por nó, drag-to-reorder pra refletir a posição física real dos equipamentos a bordo, split visual em Branch A/B quando o power tap não está no extremo)
   - **Ethernet** — hub-and-spoke estruturada (switch/gateway central + devices ao redor + cabling list + Power Use)
   - **Energia** — filtra por consumo, com auto-hide de infraestrutura irrelevante (Tees/terminadores N2K)
 - Auto-hide/dim de dispositivos irrelevantes por vista (reduz poluição visual em projetos grandes)
@@ -72,11 +72,10 @@ WBSystemBuilder/
 ## Roadmap
 
 Veja seção "Frentes pendentes" em `CLAUDE.md`:
-1. Split visual Branch A/B quando power tap não está no extremo
-2. Wireless gateway (Yacht Devices YDWG-02, iKommunicate)
-3. Tools (calculadoras avulsas — voltage drop, antenna range, banco de baterias)
-4. Versionamento de catálogo (`version: "AAAA.MM"` + `sourceAuthority`)
-5. Revisar os 16 itens pendentes da auditoria de 2026-08-18 (`scripts/audit_2026-08-18_pending_review.json`)
+1. Wireless gateway (Yacht Devices YDWG-02, iKommunicate)
+2. Tools (calculadoras avulsas — voltage drop, antenna range, banco de baterias)
+3. Versionamento de catálogo (`version: "AAAA.MM"` + `sourceAuthority`)
+4. Revisar os 16 itens pendentes da auditoria de 2026-08-18 (`scripts/audit_2026-08-18_pending_review.json`)
 
 ## Licença
 

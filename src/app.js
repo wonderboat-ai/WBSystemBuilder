@@ -603,6 +603,25 @@ function calcN2kVoltagesPerNode(){
   return result;
 }
 
+// Quando o power tap não está num extremo do backbone, o cabo físico se divide em 2 trechos
+// que saem em direções opostas a partir do ponto de inserção de energia (Branch A = nós antes
+// do power no array ordenado, Branch B = nós depois). Se o power está no extremo (ou não há
+// power/backbone tem 1 nó só), não há split — é um único trecho, como sempre foi.
+function n2kBranchSplit(nodes){
+  const pIdx = nodes.findIndex(d=>d.isPower);
+  const hasSplit = pIdx>0 && pIdx<nodes.length-1;
+  if(!hasSplit) return {pIdx, hasSplit};
+  const branchA = nodes.slice(0,pIdx);
+  const branchB = nodes.slice(pIdx+1);
+  const stat = arr=>{
+    const real = arr.filter(d=>!d.isTerm && !d.isPower);
+    return {count:real.length, sumLen:real.reduce((s,d)=>s+d.len,0), minV:Math.min(...arr.map(d=>d.V))};
+  };
+  const statsA = stat(branchA); statsA.runLen = branchA[0].distance;
+  const statsB = stat(branchB); statsB.runLen = branchB[branchB.length-1].distance;
+  return {pIdx, hasSplit, branchA, branchB, statsA, statsB};
+}
+
 function renderN2kBackboneView(){
   const svg = document.getElementById('canvas');
   const content = document.getElementById('canvas-content');
@@ -636,16 +655,38 @@ function renderN2kBackboneView(){
     }
   }
 
+  const split = n2kBranchSplit(nodes);
+  const hasSplit = split.hasSplit;
   const W=document.getElementById('canvas').clientWidth || 1200;
   const startX = 80, rowH = 64, leftCol = 280, dropEnd = 700, vCol = 820;
-  const totalH = nodes.length * rowH + 80;
+  // Com split, reserva uma faixa extra no topo/fundo pros rótulos "BRANCH A"/"BRANCH B"
+  const topPad = hasSplit ? 58 : 40, botPad = hasSplit ? 58 : 40;
+  const lineTop = topPad, lineBottom = nodes.length*rowH + topPad;
+  const totalH = lineBottom + botPad;
 
   let svgInner = `<rect width="${W}" height="${totalH}" fill="var(--bg)"/>`;
-  // Backbone vertical (linha cinza grossa à esquerda)
-  svgInner += `<line x1="${startX}" y1="40" x2="${startX}" y2="${nodes.length*rowH+40}" stroke="#888" stroke-width="3"/>`;
+  if(hasSplit){
+    // Power tap fora do extremo: o trunk físico se divide em 2 trechos que saem em direções
+    // opostas a partir do ponto de inserção — desenha como 2 segmentos com uma folga visual
+    // no meio (onde fica o ícone do power tap) e cores/rótulos distintos por ramal.
+    const yPower = topPad + split.pIdx*rowH + rowH/2;
+    const gap = 20;
+    const colA = '#5b8df6', colB = '#d4a64a';
+    svgInner += `<line x1="${startX}" y1="${lineTop}" x2="${startX}" y2="${yPower-gap}" stroke="${colA}" stroke-width="3"/>`;
+    svgInner += `<line x1="${startX}" y1="${yPower+gap}" x2="${startX}" y2="${lineBottom}" stroke="${colB}" stroke-width="3"/>`;
+    const vColorA = split.statsA.minV<10.33?'#ff5b6c':split.statsA.minV<11?'#f0b441':colA;
+    const vColorB = split.statsB.minV<10.33?'#ff5b6c':split.statsB.minV<11?'#f0b441':colB;
+    svgInner += `<text x="${leftCol+165}" y="18" text-anchor="middle" fill="${colA}" font-size="11" font-weight="700" letter-spacing="0.5">BRANCH A</text>`;
+    svgInner += `<text x="${leftCol+165}" y="32" text-anchor="middle" fill="var(--text-dim)" font-size="9">${split.statsA.count} disp. · ΣLEN ${split.statsA.sumLen} · ${split.statsA.runLen.toFixed(1)}m · <tspan fill="${vColorA}" font-weight="700">min ${split.statsA.minV.toFixed(2)}V</tspan></text>`;
+    svgInner += `<text x="${leftCol+165}" y="${totalH-22}" text-anchor="middle" fill="${colB}" font-size="11" font-weight="700" letter-spacing="0.5">BRANCH B</text>`;
+    svgInner += `<text x="${leftCol+165}" y="${totalH-8}" text-anchor="middle" fill="var(--text-dim)" font-size="9">${split.statsB.count} disp. · ΣLEN ${split.statsB.sumLen} · ${split.statsB.runLen.toFixed(1)}m · <tspan fill="${vColorB}" font-weight="700">min ${split.statsB.minV.toFixed(2)}V</tspan></text>`;
+  } else {
+    // Backbone vertical único (linha cinza grossa à esquerda) — power tap no extremo ou ausente
+    svgInner += `<line x1="${startX}" y1="${lineTop}" x2="${startX}" y2="${lineBottom}" stroke="#888" stroke-width="3"/>`;
+  }
 
   nodes.forEach((d,i)=>{
-    const y = 40 + i*rowH + rowH/2;
+    const y = topPad + i*rowH + rowH/2;
     const isDragging = drag && drag.uid===d.node.uid;
     svgInner += `<g${isDragging?' opacity="0.55"':''}>`;
 
@@ -1280,6 +1321,10 @@ function renderInspector(){
       const totalI = totalLen*0.05;
       const status = totalLen>50||vMin<10.33?'err':totalLen>40||vMin<11?'warn':'ok';
       const dot = status==='err'?'#ff5b6c':status==='warn'?'#f0b441':'#3ec78f';
+      const split = n2kBranchSplit(nodes);
+      const branchRows = split.hasSplit ? `
+        <div class="inspector-row"><label style="color:#5b8df6">● Branch A</label><span style="font-family:monospace">${split.statsA.count} disp · ${split.statsA.sumLen} LEN · ${split.statsA.minV.toFixed(2)}V min</span></div>
+        <div class="inspector-row"><label style="color:#d4a64a">● Branch B</label><span style="font-family:monospace">${split.statsB.count} disp · ${split.statsB.sumLen} LEN · ${split.statsB.minV.toFixed(2)}V min</span></div>` : '';
       html+=`<div class="inspector-section" style="border-left:3px solid ${dot}">
         <h4>N2K Summary <span style="float:right;color:${dot}">●</span></h4>
         <div class="inspector-row"><label>Units</label><span>${realDevs.length}</span></div>
@@ -1287,7 +1332,8 @@ function renderInspector(){
         <div class="inspector-row"><label>Total drop length</label><span style="font-family:monospace">${totalDropL.toFixed(1)} m / ${(totalDropL*3.28084).toFixed(1)} ft</span></div>
         <div class="inspector-row"><label>Minimum voltage</label><span style="font-family:monospace;color:${vMin<10.33?'var(--err)':vMin<11?'var(--warn)':'inherit'}">${vMin.toFixed(2)} V</span></div>
         <div class="inspector-row"><label>Current</label><span style="font-family:monospace">${totalI.toFixed(2)} A / ${(totalLen*50).toFixed(0)} mA</span></div>
-        <div style="font-size:10px;color:var(--text-muted);margin-top:8px">Fórmula Garmin oficial: V_drop = 0.053 × L × LEN × 0.1 (round trip).<br/>Limite: drop ≤ 1.67V · ΣLEN ≤ 50.</div>
+        ${branchRows}
+        <div style="font-size:10px;color:var(--text-muted);margin-top:8px">Fórmula Garmin oficial: V_drop = 0.053 × L × LEN × 0.1 (round trip).<br/>Limite: drop ≤ 1.67V · ΣLEN ≤ 50.${split.hasSplit?' Power tap fora do extremo — trunk dividido em 2 ramais (ver vista).':''}</div>
       </div>`;
     } else {
       html+=`<div class="inspector-section"><h4>N2K Summary</h4><div style="font-size:11px;color:var(--text-muted);padding:6px 0">Adicione dispositivos N2K ao projeto pra visualizar o backbone.</div></div>`;
