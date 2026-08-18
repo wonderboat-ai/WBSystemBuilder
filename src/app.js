@@ -1,5 +1,5 @@
 /* === Versão do build (bump manual a cada release relevante — sem etapa de build/CI) === */
-const APP_VERSION = '2026.07.24';
+const APP_VERSION = '2026.08.18';
 
 /* === Boot error catcher (deve rodar primeiro) === */
 /* === Captura erros antes de qualquer coisa, exibe visível na tela === */

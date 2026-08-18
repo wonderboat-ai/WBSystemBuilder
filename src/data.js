@@ -22,75 +22,63 @@ const BRAND = 'Garmin';
 const CATALOG = [
 
 /* ============== MFD / Chartplotters — GPSMAP 9000 (flagship BlueNet) ============== */
-{id:'gar-gpsmap-9012',sku:'010-02675-50',family:'GPSMAP 9000',model:'GPSMAP 9012',category:'MFD',
- description:'MFD glass-helm 12" 4K touchscreen IPS — BlueNet nativo.',
- power:{voltage:'12-24VDC'},ports:[
-  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'USB',qty:2},
-  {type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-9016',sku:'010-02675-00',family:'GPSMAP 9000',model:'GPSMAP 9016',category:'MFD',
- description:'MFD glass-helm 16" 4K touchscreen — BlueNet nativo.',
- power:{voltage:'12-24VDC'},ports:[
-  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'USB',qty:2},
-  {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-9019',sku:'010-02675-10',family:'GPSMAP 9000',model:'GPSMAP 9019',category:'MFD',
  description:'MFD glass-helm 19" 4K touchscreen — BlueNet nativo.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'USB',qty:2},
+  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:3},{type:'Video-BNC',qty:1},{type:'USB',qty:2},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-9022',sku:'010-02675-20',family:'GPSMAP 9000',model:'GPSMAP 9022',category:'MFD',
  description:'MFD glass-helm 22" 4K touchscreen — BlueNet nativo.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'USB',qty:2},
+  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:3},{type:'Video-BNC',qty:1},{type:'USB',qty:2},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-9024',sku:'010-02675-30',family:'GPSMAP 9000',model:'GPSMAP 9024',category:'MFD',
  description:'MFD glass-helm 24" 4K touchscreen — BlueNet nativo.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'USB',qty:2},
+  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:3},{type:'Video-BNC',qty:1},{type:'USB',qty:2},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-9027',sku:'010-02675-40',family:'GPSMAP 9000',model:'GPSMAP 9027',category:'MFD',
  description:'MFD glass-helm 27" 4K touchscreen — flagship — BlueNet nativo.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'USB',qty:2},
+  {type:'BlueNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:3},{type:'Video-BNC',qty:1},{type:'USB',qty:2},
   {type:'Power-12',qty:1}],_verify:true},
 
 /* ============== MFD — GPSMAP 8x00 (premium glass-helm Marine Network legacy) ============== */
 {id:'gar-gpsmap-8410',sku:'010-02091-00',family:'GPSMAP 8400',model:'GPSMAP 8410',category:'MFD',
  description:'MFD glass-helm 10" Full HD — Marine Network legacy.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'Video-BNC',qty:1},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8410xsv',sku:'010-02091-50',family:'GPSMAP 8400',model:'GPSMAP 8410xsv',category:'MFD',
  description:'MFD glass-helm 10" Full HD com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'Video-BNC',qty:1},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8412',sku:'010-02092-00',family:'GPSMAP 8400',model:'GPSMAP 8412',category:'MFD',
  description:'MFD glass-helm 12" Full HD touchscreen.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'Video-BNC',qty:1},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8412xsv',sku:'010-02092-50',family:'GPSMAP 8400',model:'GPSMAP 8412xsv',category:'MFD',
  description:'MFD glass-helm 12" Full HD com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'Video-BNC',qty:1},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8416',sku:'010-02093-00',family:'GPSMAP 8400',model:'GPSMAP 8416',category:'MFD',
  description:'MFD glass-helm 16" Full HD touchscreen.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
-  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
+  {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:2},{type:'Video-BNC',qty:1},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-8416xsv',sku:'010-02093-50',family:'GPSMAP 8400',model:'GPSMAP 8416xsv',category:'MFD',
+{id:'gar-gpsmap-8416xsv',sku:'010-02093-02',family:'GPSMAP 8400',model:'GPSMAP 8416xsv',category:'MFD',
  description:'MFD glass-helm 16" Full HD com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
@@ -108,7 +96,7 @@ const CATALOG = [
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-8616',sku:'010-02093-02',family:'GPSMAP 8600',model:'GPSMAP 8616',category:'MFD',
+{id:'gar-gpsmap-8616',sku:'010-02093-50',family:'GPSMAP 8600',model:'GPSMAP 8616',category:'MFD',
  description:'MFD 16" all-in-one — Marine Network legacy.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
@@ -134,13 +122,13 @@ const CATALOG = [
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-1243',sku:'010-02675-60',family:'GPSMAP 1200',model:'GPSMAP 1243',category:'MFD',
+{id:'gar-gpsmap-1243',sku:'010-02367-01',family:'GPSMAP 1200',model:'GPSMAP 1243',category:'MFD',
  description:'MFD 12" — sucessor do 1223 (sem sondador).',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gpsmap-1243xsv',sku:'010-02675-62',family:'GPSMAP 1200',model:'GPSMAP 1243xsv',category:'MFD',
+{id:'gar-gpsmap-1243xsv',sku:'010-02367-03',family:'GPSMAP 1200',model:'GPSMAP 1243xsv',category:'MFD',
  description:'MFD 12" com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
   {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
@@ -184,24 +172,24 @@ const CATALOG = [
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Radar — GMR xHD3 (magnetron open-array) ============== */
-{id:'gar-gmr-434-xhd3',sku:'010-02544-00',family:'GMR xHD3',model:'GMR 434 xHD3 (4ft 4kW)',category:'Radar',
+{id:'gar-gmr-434-xhd3',sku:'K10-00012-24',family:'GMR xHD3',model:'GMR 434 xHD3 (4ft 4kW)',category:'Radar',
  description:'Radar open-array 4kW, antena 4 pés — alcance 72 nm.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gmr-436-xhd3',sku:'010-02544-10',family:'GMR xHD3',model:'GMR 436 xHD3 (6ft 4kW)',category:'Radar',
+{id:'gar-gmr-436-xhd3',sku:'K10-00012-25',family:'GMR xHD3',model:'GMR 436 xHD3 (6ft 4kW)',category:'Radar',
  description:'Radar open-array 4kW, antena 6 pés.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-gmr-1234-xhd3',sku:'010-02545-00',family:'GMR xHD3',model:'GMR 1234 xHD3 (4ft 12kW)',category:'Radar',
+{id:'gar-gmr-1234-xhd3',sku:'K10-00012-26',family:'GMR xHD3',model:'GMR 1234 xHD3 (4ft 12kW)',category:'Radar',
  description:'Radar open-array 12kW, antena 4 pés.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gmr-1236-xhd3',sku:'010-02545-10',family:'GMR xHD3',model:'GMR 1236 xHD3 (6ft 12kW)',category:'Radar',
  description:'Radar open-array 12kW, antena 6 pés — alcance 72 nm.',
- power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12-24VDC'},ports:[{type:'BlueNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gmr-2534-xhd3',sku:'010-02546-00',family:'GMR xHD3',model:'GMR 2534 xHD3 (4ft 25kW)',category:'Radar',
  description:'Radar open-array 25kW, antena 4 pés — performance comercial.',
- power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12-24VDC'},ports:[{type:'BlueNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gmr-2536-xhd3',sku:'010-02546-10',family:'GMR xHD3',model:'GMR 2536 xHD3 (6ft 25kW)',category:'Radar',
  description:'Radar open-array 25kW, antena 6 pés — flagship.',
- power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12-24VDC'},ports:[{type:'BlueNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Sonar — Panoptix LiveScope ============== */
 {id:'gar-lvs32',sku:'010-12784-03',family:'Panoptix LiveScope',model:'LVS32 Transducer',category:'Sonar',
@@ -227,13 +215,13 @@ const CATALOG = [
  power:{voltage:'12VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Autopilot — Reactor 40 ============== */
-{id:'gar-reactor40-hyd-corepack',sku:'010-00705-86',family:'Reactor 40',model:'Reactor 40 Hydraulic Corepack + SmartPump v2',category:'Autopilot',
+{id:'gar-reactor40-hyd-corepack',sku:'010-00705-78',family:'Reactor 40',model:'Reactor 40 Hydraulic Corepack + SmartPump v2',category:'Autopilot',
  description:'Pacote hidráulico (CCU + SmartPump v2 + cabos). Adicionar GHC 50 separado.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-reactor40-hyd-1l2',sku:'010-00705-08',family:'Reactor 40',model:'Reactor 40 Hydraulic + 1.2L Pump',category:'Autopilot',
  description:'Pacote hidráulico para sistemas 6–14 cu.in (CCU + ECU + bomba 1.2L).',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-reactor40-mech',sku:'010-00705-89',family:'Reactor 40',model:'Reactor 40 Mechanical Corepack',category:'Autopilot',
+{id:'gar-reactor40-mech',sku:'010-00705-49',family:'Reactor 40',model:'Reactor 40 Mechanical Corepack',category:'Autopilot',
  description:'Pacote mecânico (drive direto no leme) — adicionar GHC 50 separado.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-reactor40-compact',sku:'010-00705-06',family:'Reactor 40',model:'Reactor 40 Compact',category:'Autopilot',
@@ -244,15 +232,15 @@ const CATALOG = [
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 {id:'gar-ccu',sku:'010-11052-67',family:'Reactor 40',model:'CCU Course Computer',category:'Autopilot',
- description:'Componente do Reactor 40 — sensor de heading principal.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ description:'Componente do Reactor 40 — sensor de heading principal. Alimentado pelo próprio backbone N2K (LEN 3), sem porta de energia dedicada.',
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
 {id:'gar-ecu10',sku:'010-11053-02',family:'Reactor 40',model:'ECU 10',category:'Autopilot',
  description:'Componente do Reactor 40 — comanda a bomba a partir do CCU.',
  power:{voltage:'12VDC'},ports:[{type:'Power-12',qty:1}],_verify:true},
 
-{id:'gar-ghc50',sku:'010-02496-00',family:'GHC',model:'GHC 50 Pilot Display',category:'Autopilot',
+{id:'gar-ghc50',sku:'010-02731-00',family:'GHC',model:'GHC 50 Pilot Display',category:'Autopilot',
  description:'Display de controle do autopilot (mais novo, color).',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:1}],_verify:true},
 {id:'gar-ghc20',sku:'010-01141-00',family:'GHC',model:'GHC 20 Pilot Display',category:'Autopilot',
  description:'Display de controle do autopilot (legacy).',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
@@ -260,23 +248,23 @@ const CATALOG = [
 /* ============== Trolling motor — Force ============== */
 {id:'gar-force-kraken-48',sku:'010-02573-30',family:'Force Kraken',model:'Force Kraken 48" Black',category:'TrollingMotor',
  description:'Trolling motor Kraken 48" eixo — 100 lbs thrust.',
- power:{voltage:'24-36VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}],_verify:true},
+ power:{voltage:'24-36VDC'},ports:[{type:'WiFi',qty:1},{type:'Power-24',qty:1}],_verify:true},
 {id:'gar-force-kraken-63',sku:'010-02573-00',family:'Force Kraken',model:'Force Kraken 63" Black',category:'TrollingMotor',
  description:'Trolling motor Kraken 63" — 100 lbs thrust.',
- power:{voltage:'24-36VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}],_skuConfirmedByLucas:true},
+ power:{voltage:'24-36VDC'},ports:[{type:'WiFi',qty:1},{type:'Power-24',qty:1}],_skuConfirmedByLucas:true},
 {id:'gar-force-kraken-75',sku:'010-02573-10',family:'Force Kraken',model:'Force Kraken 75" Black',category:'TrollingMotor',
  description:'Trolling motor Kraken 75".',
- power:{voltage:'24-36VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Power-24',qty:1}],_verify:true},
+ power:{voltage:'24-36VDC'},ports:[{type:'WiFi',qty:1},{type:'Power-24',qty:1}],_verify:true},
 
 /* ============== VHF / AIS ============== */
-{id:'gar-vhf-115',sku:'010-01957-00',family:'VHF',model:'VHF 115',category:'VHF',
+{id:'gar-vhf-115',sku:'010-02096-00',family:'VHF',model:'VHF 115',category:'VHF',
  description:'VHF DSC fixo entry, sem AIS, com microfone.',
- power:{voltage:'12VDC'},ports:[{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-vhf-215',sku:'010-01959-00',family:'VHF',model:'VHF 215',category:'VHF',
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
+{id:'gar-vhf-215',sku:'010-02097-00',family:'VHF',model:'VHF 215',category:'VHF',
  description:'VHF DSC fixo com GPS interno e NMEA 2000.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-vhf-215-ais',sku:'010-01959-01',family:'VHF',model:'VHF 215 AIS',category:'VHF',
- description:'VHF DSC com receptor AIS integrado.',
+{id:'gar-vhf-215-ais',sku:'010-02098-00',family:'VHF',model:'VHF 215 AIS (DISCONTINUED)',category:'VHF',
+ description:'VHF DSC com receptor AIS integrado. Descontinuado no site US atual — mantido pra projetos legados.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-vhf-315',sku:'010-02047-00',family:'VHF',model:'VHF 315',category:'VHF',
  description:'VHF DSC modular 25W com intercom e GPS.',
@@ -293,27 +281,27 @@ const CATALOG = [
 {id:'gar-gmi-20',sku:'010-01140-00',family:'GMI',model:'GMI 20 Marine Instrument',category:'Instrument',
  description:'Display de instrumentação 4" color, 100+ parâmetros NMEA 2000.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
-{id:'gar-gnx-20',sku:'010-01211-00',family:'GNX',model:'GNX 20',category:'Instrument',
+{id:'gar-gnx-20',sku:'010-01142-00',family:'GNX',model:'GNX 20',category:'Instrument',
  description:'Display monocromático 4" — 50+ parâmetros.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
-{id:'gar-gnx-120',sku:'010-01211-10',family:'GNX',model:'GNX 120 (7")',category:'Instrument',
+{id:'gar-gnx-120',sku:'010-01395-00',family:'GNX',model:'GNX 120 (7")',category:'Instrument',
  description:'Display 7" mono backlit — high precision.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
-{id:'gar-gnx-130',sku:'010-01211-20',family:'GNX',model:'GNX 130 (10")',category:'Instrument',
+{id:'gar-gnx-130',sku:'010-01396-00',family:'GNX',model:'GNX 130 (10")',category:'Instrument',
  description:'Display 10" mono — dígitos 2.75" — visível à distância.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
 
 /* ============== Network / Power ============== */
-{id:'gar-bluenet-20',sku:'010-12345-00',family:'BlueNet',model:'BlueNet 20 Switch',category:'Network',
+{id:'gar-bluenet-20',sku:'010-02612-00',family:'BlueNet',model:'BlueNet 20 Switch',category:'Network',
  description:'Switch BlueNet 5 portas — expansão de rede BlueNet.',
  power:{voltage:'12-24VDC'},ports:[{type:'BlueNet',qty:5},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-bluenet-30',sku:'010-12346-00',family:'BlueNet',model:'BlueNet 30 Gateway',category:'Network',
+{id:'gar-bluenet-30',sku:'010-02613-00',family:'BlueNet',model:'BlueNet 30 Gateway',category:'Network',
  description:'Gateway BlueNet ↔ Marine Network legacy. Permite coexistência das duas gerações.',
  power:{voltage:'12-24VDC'},ports:[{type:'BlueNet',qty:1},{type:'GarminMarineNet',qty:2},{type:'Power-12',qty:1}],_verify:true,
  notes:'Crítico para projetos híbridos com MFDs novos (9000) + equipamento legacy (radar, sondador).'},
 {id:'gar-gms-10',sku:'010-00351-00',family:'GMS',model:'GMS 10 Network Port Expander',category:'Network',
  description:'Switch Marine Network legacy 6 portas.',
- power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:6},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:5},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gtb-10',sku:'010-02134-00',family:'OnDeck',model:'GTB 10 OnDeck Hub',category:'Network',
  description:'Hub OnDeck — telemetria remota e monitoramento. Conecta direto a MFD BlueNet ou BlueNet 20 switch.',
  power:{voltage:'12VDC'},ports:[{type:'BlueNet',qty:1},{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
@@ -338,25 +326,25 @@ const CATALOG = [
 
 /* ============== Cameras ============== */
 {id:'gar-gc-200',sku:'010-02164-00',family:'GC',model:'GC 200 Marine IP Camera',category:'Camera',
- description:'Câmera IP 1920x1080 dome com IR, 30m night vision. PoE — exige PoE Coupler.',
- ports:[{type:'PoE',qty:1}],_verify:true,
- notes:'Conecta no PoE Coupler antes do switch/MFD.'},
+ description:'Câmera IP 1920x1080 dome com IR, 30m night vision. Rede via Garmin Marine Network + alimentação dedicada (hardwired 10-16VDC).',
+ ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true,
+ notes:'Injeção de energia pela rede é opcional via Garmin Power and Audio Module (010-12527-00, vendido à parte) — não é PoE nativo da câmera.'},
 {id:'gar-gsv-10',sku:'010-02482-00',family:'GSV',model:'GSV 10 Surround View',category:'Camera',
  description:'Sistema de câmeras surround (até 6 câmeras BC30) — visão panorâmica 360°.',
  power:{voltage:'12VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Sensores ============== */
-{id:'gar-gwind-wired',sku:'010-01616-20',family:'gWind',model:'gWind Wired Transducer',category:'Sensor',
+{id:'gar-gwind-wired',sku:'010-01227-00',family:'gWind',model:'gWind Wired Transducer',category:'Sensor',
  description:'Transdutor de vento twin-fin com 3 pás — TWS/TWA. NMEA 2000.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
 {id:'gar-gwind-wireless',sku:'010-01616-00',family:'gWind',model:'gWind Wireless Transducer',category:'Sensor',
- description:'Versão wireless do gWind.',
- ports:[{type:'WiFi',qty:1}],_verify:true},
+ description:'Versão wireless do gWind — protocolo proprietário Garmin ANT, não Wi-Fi doméstico.',
+ ports:[{type:'ANT',qty:1}],_verify:true},
 {id:'gar-gst-43',sku:'010-04284-00',family:'GST',model:'GST 43 Speed/Temp Thru-Hull 43mm',category:'Sensor',
  description:'Transdutor velocidade/temperatura passante 43mm — substitui Nexus TH43.',
  ports:[{type:'N2K-Micro',qty:1}],_verify:true},
-{id:'gar-gdt-43',sku:'010-01749-00',family:'GDT',model:'GDT 43 Depth Thru-Hull 43mm',category:'Sensor',
- description:'Transdutor de profundidade 43mm — adapta a NMEA 2000.',
+{id:'gar-gdt-43',sku:'010-01749-10',family:'GDT',model:'GDT 43 Depth Thru-Hull 43mm (c/ NMEA 2000 Adapter)',category:'Sensor',
+ description:'Transdutor de profundidade 43mm — inclui adaptador NMEA 2000 (variante base 010-01749-00 não tem N2K nativo).',
  ports:[{type:'N2K-Micro',qty:1}],_verify:true},
 {id:'gar-dst-810',sku:'010-11051-20',family:'Airmar',model:'DST 810 Smart Triducer',category:'Sensor',
  description:'Transdutor Airmar profundidade/velocidade/temperatura wireless via NMEA 2000.',
@@ -394,7 +382,7 @@ const ADAPTERS = [
 {id:'cab-gmn-2m',sku:'010-10550-00',brand:'Garmin',family:'Marine Network',model:'Cabo Marine Network 1.8m (6ft)',category:'Cable',description:'Cabo Marine Network RJ45 — 1.8m.',ports:[{type:'GarminMarineNet',qty:2}],length:1.8,_verify:true},
 {id:'cab-gmn-6m',sku:'010-10551-00',brand:'Garmin',family:'Marine Network',model:'Cabo Marine Network 6m (20ft)',category:'Cable',description:'Cabo Marine Network RJ45 — 6m.',ports:[{type:'GarminMarineNet',qty:2}],length:6,_verify:true},
 {id:'cab-gmn-12m',sku:'010-10552-00',brand:'Garmin',family:'Marine Network',model:'Cabo Marine Network 12m (40ft)',category:'Cable',description:'Cabo Marine Network RJ45 — 12m.',ports:[{type:'GarminMarineNet',qty:2}],length:12,_verify:true},
-{id:'cab-gmn-15m',sku:'010-10553-00',brand:'Garmin',family:'Marine Network',model:'Cabo Marine Network 15m (50ft)',category:'Cable',description:'Cabo Marine Network RJ45 — 15m.',ports:[{type:'GarminMarineNet',qty:2}],length:15,_verify:true},
+{id:'cab-gmn-15m',sku:'010-11169-00',brand:'Garmin',family:'Marine Network',model:'Cabo Marine Network 15m (50ft)',category:'Cable',description:'Cabo Marine Network RJ45 — 15m.',ports:[{type:'GarminMarineNet',qty:2}],length:15,_verify:true},
 
 /* BlueNet cables */
 {id:'cab-bn-2m',sku:'010-12528-30',brand:'Garmin',family:'BlueNet',model:'Cabo BlueNet 2m (6ft)',category:'Cable',description:'Cabo BlueNet — 2m.',ports:[{type:'BlueNet',qty:2}],length:2,_verify:true},
@@ -440,7 +428,8 @@ const PORT_TYPES = {
   'Power-24':          {label:'Energia 24V',     color:'#9b1c1c', group:'pwr24',     stroke:'dashed'},
   'Audio':             {label:'Áudio',           color:'#3aa3e0', group:'audio',     stroke:'solid'},
   'VHFAntenna':        {label:'Antena VHF',      color:'#999',    group:'vhfant',    stroke:'solid'},
-  'GPSAntenna':        {label:'Antena GPS',      color:'#999',    group:'gpsant',   stroke:'solid'}
+  'GPSAntenna':        {label:'Antena GPS',      color:'#999',    group:'gpsant',   stroke:'solid'},
+  'ANT':               {label:'ANT (wireless Garmin)',color:'#bbb', group:'ant',      stroke:'dashed'}
 };
 
 const COMPAT = {};
@@ -459,6 +448,7 @@ const COMPAT = {};
 ['Audio'].forEach(p=>{COMPAT[p]=['Audio']});
 ['VHFAntenna'].forEach(p=>{COMPAT[p]=['VHFAntenna']});
 ['GPSAntenna'].forEach(p=>{COMPAT[p]=['GPSAntenna']});
+['ANT'].forEach(p=>{COMPAT[p]=['ANT']});
 
 /* =========================================================================
    RULES — validação Garmin
