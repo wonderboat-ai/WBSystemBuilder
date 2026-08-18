@@ -19,7 +19,7 @@ Inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos
   - **Ethernet** — hub-and-spoke estruturada (switch/gateway central + devices ao redor + cabling list + Power Use)
   - **Energia** — filtra por consumo, com auto-hide de infraestrutura irrelevante (Tees/terminadores N2K)
 - Auto-hide/dim de dispositivos irrelevantes por vista (reduz poluição visual em projetos grandes)
-- Toggle **Foto oficial Garmin / Silhueta Wonder BOAT** nos cards da biblioteca (164/175 SKUs com foto real embutida em base64 — 94% de cobertura — restante com silhueta categórica desenhada à mão)
+- Toggle **Foto oficial Garmin / Silhueta Wonder BOAT** nos cards da biblioteca (166/175 SKUs com foto real embutida em base64 — 95% de cobertura — restante com silhueta categórica desenhada à mão)
 - Validação automática contra normas NMEA 2000 / ABYC E-11 / ISO 13297 com 11 regras (R-N2K-01..R-CABLE-01)
 - Cálculo de Power Use 12V/24V (Battery + Max)
 - Cálculo de Network LEN com voltage drop estimado (fórmula oficial Garmin: R = 0.053 Ω/m)

@@ -1,8 +1,8 @@
 [
  {
-  "id": "gar-fantom-124",
-  "sku": "K10-00012-19",
-  "model": "GMR Fantom 124"
+  "id": "gar-fantom-126",
+  "sku": "010-01366-00",
+  "model": "GMR Fantom 126"
  },
  {
   "id": "gar-lvs32",
@@ -38,16 +38,6 @@
   "id": "gar-gt56uhd-th",
   "sku": "010-02732-10",
   "model": "GT56UHD-TH Thru-Hull"
- },
- {
-  "id": "gar-force-kraken-90",
-  "sku": "010-02573-20",
-  "model": "Force Kraken 90\" Black"
- },
- {
-  "id": "gar-gnx-sail-pack-43-wireless",
-  "sku": "010-01616-30",
-  "model": "GNX Wireless Sail Pack 43"
  },
  {
   "id": "cab-bn-12m",
