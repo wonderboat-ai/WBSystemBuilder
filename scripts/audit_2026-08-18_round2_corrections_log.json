@@ -1,0 +1,30 @@
+{
+ "gerado_em": "2026-08-18",
+ "contexto": "Segunda rodada de correcoes sobre os 53 itens pendentes da auditoria (ver audit_2026-08-18_pending_review.json v1). Esses 21 itens ja tinham resposta de alta confianca no relatorio original — nao precisaram de pesquisa nova, so foram deixados de fora da primeira rodada de aplicacao por escopo/tempo. Os 32 itens restantes seguiram pra uma pesquisa aprofundada adicional (workflow paralelo, 8 frentes) — ver audit_2026-08-18_round3_research_findings.json quando concluido.",
+ "sku_corrigidos": [
+  {"id": "gar-fantom-18x", "sku_antigo": "010-02462-00", "sku_novo": "010-02584-00", "motivo": "SKU pertencia a bateria do Garmin Alpha 200/200i/300 (rastreador de coleira). Ja era corrigido em runtime via PN_FIXES; corrigido direto na fonte por higiene."},
+  {"id": "gar-fantom-24x", "sku_antigo": "010-02463-00", "sku_novo": "010-02585-00", "motivo": "SKU inexistente. Ja era corrigido em runtime via PN_FIXES; corrigido direto na fonte."},
+  {"id": "gar-gnx-21", "sku_antigo": "010-01211-30", "sku_novo": "010-01142-10", "motivo": "SKU inexistente no site oficial (mesma familia GNX ja corrigida na rodada 1, esse item ficou de fora por estar em bloco separado do data-extension.js)."}
+ ],
+ "porta_corrigida": [
+  {"id": "gar-radar-18xhd3", "mudanca": "GarminMarineNet -> BlueNet", "motivo": "Mesmo achado sistemico ja aplicado aos outros radares xHD3 — porta nativa e BlueNet."},
+  {"id": "gar-gsd-28", "mudanca": "GarminMarineNet -> BlueNet", "motivo": "Mesmo achado sistemico da geracao 2024 — porta nativa e BlueNet. Nota adicionada sobre o conector de transdutor real ser terminal block de fio nu, nao plugavel (sem tipo melhor no vocabulario atual)."},
+  {"id": "gar-ps70-th", "mudanca": "SonarConn -> GarminMarineNet + Power-12", "motivo": "Mesmo achado sistemico ja aplicado ao PS31/PS51-TH — conecta direto na rede, sem black-box."},
+  {"id": "gar-echomap-uhd2-73sv/93sv", "mudanca": "removida NMEA0183, +GarminMarineNet x1 (2 itens)", "motivo": "Spec oficial confirma ausencia de NMEA 0183 e presenca de porta Marine Network nao cadastrada."},
+  {"id": "gar-echomap-uhd2-74sv/94sv", "mudanca": "removida NMEA0183, +GarminMarineNet x1, +Bluetooth x1 (2 itens)", "motivo": "Mesmo padrao dos siblings 73sv/93sv, mais Bluetooth confirmado na spec oficial."},
+  {"id": "gar-echomap-ultra2-106sv/126sv", "mudanca": "removida NMEA0183, +GarminMarineNet x2 (2 itens)", "motivo": "Spec oficial lista 2 portas Marine Network 'large connector', nao 0."},
+  {"id": "gar-ghc20", "mudanca": "+NMEA0183", "motivo": "Ficha oficial lista NMEA output: NMEA 0183 + NMEA 2000, so o N2K estava cadastrado."},
+  {"id": "gar-gtb-10", "mudanca": "BlueNet -> GarminMarineNet, +GPSAntenna", "motivo": "Tabela oficial 'Connector View' rotula a porta como Garmin Marine Network (nao BlueNet nativo — precisa de adaptador). Tambem tem conector BNC pra antena GPS externa, nao cadastrado."},
+  {"id": "gar-gxm-54", "mudanca": "+Audio x1", "motivo": "Instrucoes de instalacao oficiais confirmam saida RCA de audio (2m) pro estereo, ausente do catalogo."},
+  {"id": "gar-fusion-ra670/ra770", "mudanca": "+USB x1, +GarminMarineNet x1 (Ethernet PartyBus) (2 itens)", "motivo": "Manual de instalacao oficial confirma porta USB dedicada e porta Ethernet/RJ45 pra PartyBus wired, ausentes do catalogo mesmo USB ja sendo tipo padrao do vocabulario."},
+  {"id": "gar-gpsmap-1042xsv", "mudanca": "GarminMarineNet x1 -> x2", "motivo": "Spec oficial confirmada por 2 fontes independentes mostra 2 portas Marine Network."}
+ ],
+ "rotulo_corrigido": [
+  {"id": "gar-vhf-115i", "mudanca": "'VHF 115i (Intercom)' -> 'VHF 115i International (ATIS)'", "motivo": "O sufixo 'i' na linha VHF Garmin (110i/115i/210i/215i/315i) significa International/ATIS, nao intercom. SKU real, mas vendido so em garmin.com/en-GB (fora do site US)."},
+  {"id": "gar-vhf-215i", "mudanca": "'VHF 215i (Intercom)' -> 'VHF 215i International (ATIS)'", "motivo": "Mesmo motivo do 115i."},
+  {"id": "gar-vhf-315i", "mudanca": "'VHF 315i (intercom)' -> 'VHF 315i International (ATIS)'", "motivo": "Mesmo motivo — capacidade de intercom via handset GHS e comum a toda a linha 315, nao exclusiva da variante 'i'."}
+ ],
+ "outras_mudancas": [
+  {"tipo": "hygiene", "descricao": "PN_FIXES em data-extension.js: removidas as entradas fantom-18x/24x (SKU corrigido direto na fonte em data.js, mesmo padrao usado pro VHF). Nenhuma mudanca de comportamento em runtime."}
+ ]
+}

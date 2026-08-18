@@ -35,8 +35,8 @@ const PN_FIXES = {
   'gar-gls10':         '010-12954-00',  // era 010-02610-00
   'gar-lvs34':         '010-02706-10',  // era 010-12516-00
   'gar-gsd-26':        '010-00958-00',  // era 010-01112-00
-  'gar-fantom-24x':    '010-02585-00',  // era 010-02463-00 (white). 010-02463-00 é 18x.
-  'gar-fantom-18x':    '010-02584-00',  // era 010-02462-00. 010-02462-00 é Fantom 18 (legacy).
+  // gar-fantom-18x/24x removidos daqui 2026-08-18: SKUs corrigidos direto na fonte (data.js),
+  // mesmo padrao usado pro gar-vhf-315/115/215/215-ais.
 };
 const PN_INFERRED = [];   // (vazio — gar-vhf-315i confirmado 2026-07-24, ver PN_FIXES)
 Object.entries(PN_FIXES).forEach(([id, sku])=>{
@@ -94,7 +94,7 @@ const NEW_MFDS = [
 {id:'gar-gpsmap-1042xsv', sku:'010-01740-02', family:'GPSMAP 1000', model:'GPSMAP 1042xsv', category:'MFD',
  description:'MFD 10" multifunção com sondador integrado · NMEA 2000 · Marine Network.',
  power:{voltage:'12-24VDC',watts:26}, ports:[
-  {type:'GarminMarineNet',qty:1},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
   {type:'WiFi',qty:1},{type:'Video-BNC',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:3},
 
 /* GPSMAP 16x3 — séries 16" novas */
@@ -131,10 +131,10 @@ const NEW_MFDS = [
  ports:[{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:0},
 {id:'gar-echomap-uhd2-74sv', sku:'010-02685-01', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 74sv', category:'MFD',
  description:'MFD 7" SideVü+ — sucessor do 73sv.', power:{voltage:'12VDC',watts:16},
- ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
+ ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:1},{type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
 {id:'gar-echomap-uhd2-94sv', sku:'010-02689-00', family:'ECHOMAP UHD2', model:'ECHOMAP UHD2 94sv', category:'MFD',
  description:'MFD 9" SideVü+ — sucessor do 93sv.', power:{voltage:'12VDC',watts:20},
- ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
+ ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:1},{type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}], _verify:true, n2kLen:2},
 
 /* STRIKER Vivid (pesca água doce — sem charts, mas é Garmin marine) */
 {id:'gar-striker-vivid-7sv', sku:'010-02553-00', family:'STRIKER Vivid', model:'STRIKER Vivid 7sv', category:'MFD',
@@ -279,11 +279,11 @@ const NEW_VHF = [
 {id:'gar-vhf-110', sku:'010-01653-00', family:'VHF', model:'VHF 110', category:'VHF',
  description:'VHF DSC fixo entry — sem AIS, sem GPS interno. Microfone fist incluso.',
  power:{voltage:'12VDC',watts:5}, ports:[{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-vhf-115i', sku:'010-02096-01', family:'VHF', model:'VHF 115i (Intercom)', category:'VHF',
- description:'VHF 115 com intercom 2-way (segunda estação).', power:{voltage:'12VDC',watts:7},
+{id:'gar-vhf-115i', sku:'010-02096-01', family:'VHF', model:'VHF 115i International (ATIS)', category:'VHF',
+ description:'Variante International/ATIS do VHF 115 — vendida em garmin.com/en-GB e mercados europeus, não no site US. O sufixo "i" na linha VHF Garmin significa International/ATIS, não intercom.', power:{voltage:'12VDC',watts:7},
  ports:[{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
-{id:'gar-vhf-215i', sku:'010-02097-01', family:'VHF', model:'VHF 215i (Intercom)', category:'VHF',
- description:'VHF 215 com intercom + N2K + GPS interno.', power:{voltage:'12VDC',watts:8},
+{id:'gar-vhf-215i', sku:'010-02097-01', family:'VHF', model:'VHF 215i International (ATIS)', category:'VHF',
+ description:'Variante International/ATIS do VHF 215 (N2K + GPS interno) — vendida em garmin.com/en-GB, não no site US. O sufixo "i" significa International/ATIS, não intercom.', power:{voltage:'12VDC',watts:8},
  ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}], _verify:true},
 // REMOVIDO 2026-07-24: 'gar-vhf-315-ais' (SKU 010-02047-01) — "VHF 315 AIS" não existe na linha
 // oficial Garmin. O sufixo "i" da série 315 denota programação de canais internacional + intercom
@@ -302,7 +302,7 @@ const NEW_VHF = [
    10) INSTRUMENTOS adicionais
    ======================================================================== */
 const NEW_INSTRUMENTS = [
-{id:'gar-gnx-21', sku:'010-01211-30', family:'GNX', model:'GNX 21', category:'Instrument',
+{id:'gar-gnx-21', sku:'010-01142-10', family:'GNX', model:'GNX 21', category:'Instrument',
  description:'Display 4" mono — perfil reduzido, leitura solar superior.',
  power:{voltage:'12VDC',watts:1.2}, ports:[{type:'N2K-Micro',qty:1}], _verify:true, n2kLen:1},
 {id:'gar-gnx-wind', sku:'010-01142-30', family:'GNX', model:'GNX Wind Display', category:'Instrument',
@@ -404,19 +404,19 @@ const NEW_TOP30 = [
   // com Fantom 18x (que é solid-state). Lucas pediu "Fantom 18xHD3" (que não
   // existe) — entendido como xHD3 magnetron novo. Confirmar antes de orçar.
   {id:'gar-radar-18xhd3', sku:'010-02841-00', family:'GMR xHD3', model:'GMR 18 xHD3 Radar Dome', category:'Radar',
-   description:'Radome magnetron 18" 4 kW HD3 (geração 2024) · alcance 48 NM · 60 RPM · scan averaging.',
-   power:{voltage:'12-24VDC',watts:55}, ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}], _verify:true,
+   description:'Radome magnetron 18" 4 kW HD3 (geração 2024) · alcance 48 NM · 60 RPM · scan averaging. Porta de rede nativa e BlueNet (cabo incluso de fabrica).',
+   power:{voltage:'12-24VDC',watts:55}, ports:[{type:'BlueNet',qty:1},{type:'Power-12',qty:1}], _verify:true,
    notes:'Magnetron — preço/peso/consumo maiores que o Fantom 18x solid-state. Considerar Fantom se cliente quer eficiência.'},
 
   // GSD 28 — sondador black-box xCHIRP, sucessor do GSD 26
   {id:'gar-gsd-28', sku:'010-02797-00', family:'GSD', model:'GSD 28 Sonar Module', category:'Sonar',
-   description:'Sondador black-box dual-channel xCHIRP 1-3 kW (25-250 kHz) · 300W-3kW output · sucessor do GSD 26.',
-   power:{voltage:'12-24VDC',watts:120}, ports:[{type:'GarminMarineNet',qty:1},{type:'SonarConn',qty:2},{type:'Power-12',qty:1}], _verify:true},
+   description:'Sondador black-box dual-channel xCHIRP 1-3 kW (25-250 kHz) · 300W-3kW output · sucessor do GSD 26. Porta de rede nativa e BlueNet (produto 2024); conector de transdutor real e terminal block de fio nu (LOW/HIGH), nao plugavel — modelado como SonarConn por falta de tipo melhor no vocabulario.',
+   power:{voltage:'12-24VDC',watts:120}, ports:[{type:'BlueNet',qty:1},{type:'SonarConn',qty:2},{type:'Power-12',qty:1}], _verify:true},
 
   // Panoptix PS70 — transducer Live Sonar 800W, thru-hull only (não LiveScope)
   {id:'gar-ps70-th', sku:'010-02768-10', family:'Panoptix', model:'PS70-TH Live Sonar Transducer (Thru-Hull)', category:'Sonar',
-   description:'Transducer Panoptix Live Sonar thru-hull, 800 W · RapidReturn · até 1000 ft profundidade · 10+ FPS.',
-   power:{voltage:'-'}, ports:[{type:'SonarConn',qty:1}], _verify:true,
+   description:'Transducer Panoptix Live Sonar thru-hull, 800 W · RapidReturn · até 1000 ft profundidade · 10+ FPS. Conecta direto na Garmin Marine Network (sem black-box).',
+   power:{voltage:'12VDC'}, ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}], _verify:true,
    notes:'Variante 010-02768-00 inclui fairing block (recomendado pra casco com deadrise). PS70 NÃO é LiveScope — não exige GLS 10. Conecta direto em GSD 28 ou MFD com SonarConn.'},
 
   // MSC 10 — Marine Satellite Compass, sucessor do SteadyCast

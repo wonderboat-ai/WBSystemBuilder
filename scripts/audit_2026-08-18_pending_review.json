@@ -1,7 +1,7 @@
 {
  "gerado_em": "2026-08-18",
- "contexto": "Auditoria completa dos 175 SKUs do catalogo cruzando com garmin.com/en-US. 131 itens tinham divergencia; 78 foram corrigidos nesta sessao (ver audit_2026-08-18_corrections_log.json). Os itens abaixo NAO foram alterados por falta de confirmacao suficiente, ambiguidade de modelagem, ou por serem de baixa prioridade — precisam de revisao do Lucas antes de aplicar.",
- "total_pendente": 53,
+ "contexto": "Auditoria completa dos 175 SKUs do catalogo cruzando com garmin.com/en-US. 131 itens tinham divergencia; 78 foram corrigidos nesta sessao (ver audit_2026-08-18_corrections_log.json). Os itens abaixo NAO foram alterados por falta de confirmacao suficiente, ambiguidade de modelagem, ou por serem de baixa prioridade — precisam de revisao do Lucas antes de aplicar. [2026-08-18 rodada 2: 22 desses itens ja resolvidos sem necessidade de pesquisa adicional (respostas ja estavam no relatorio original); os restantes estao sob pesquisa aprofundada.]",
+ "total_pendente": 32,
  "itens": [
   {
    "id": "gar-ais-800",
@@ -25,95 +25,11 @@
    "discrepancy": "Severe SKU mismatch: PN 010-02691-00 does not belong to any marine chartplotter — it is the SKU for the Xero L60i laser rangefinder, an unrelated outdoor-recreation optics product. This entry needs the correct part number for 'ECHOMAP UHD2 72cv' sourced fresh from garmin.com; note also that 'ECHOMAP UHD2 72cv' is not a model name pattern this session could locate any evidence for (the ECHOMAP UHD2 cv-line naming Garmin uses elsewhere is typically things like 54cv/64cv/74cv) — Lucas should double check whether '72cv' is even the correct model name before re-sourcing the SKU."
   },
   {
-   "id": "gar-echomap-uhd2-73sv",
-   "sku": "010-02691-01",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo tem NMEA0183 x1 que NÃO existe no produto (Garmin/Scheels confirmam 'NMEA 0183 Compatible: No'). Catálogo está faltando GarminMarineNet x1 (porta Garmin Marine Network confirmada na spec oficial, ausente do nosso catálogo)."
-  },
-  {
-   "id": "gar-echomap-uhd2-74sv",
-   "sku": "010-02685-01",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "SKU is correct. But the port list is off: catalog is missing a Garmin Marine Network port entirely (official lists 1, catalog lists none/wrong vocabulary bucket) and is missing Bluetooth entirely (official confirms Bluetooth pairing support, catalog omits it). Catalog also claims NMEA0183 x1, but the official spec sheet lists no NMEA 0183 port at all for this unit. N2K-Micro x1, WiFi x1, SonarConn x1 (12-pin) and Power-12 check out."
-  },
-  {
-   "id": "gar-echomap-uhd2-93sv",
-   "sku": "010-02692-01",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo tem NMEA0183 x1 que não consta na spec oficial (mesmo padrão da 73sv). Catálogo está faltando GarminMarineNet x1."
-  },
-  {
-   "id": "gar-echomap-uhd2-94sv",
-   "sku": "010-02689-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "SKU is correct. Same pattern as the 74sv sibling: catalog is missing a Garmin Marine Network port entirely (official lists 1) and is missing Bluetooth entirely (official confirms support). Catalog claims NMEA0183 x1 but the official spec sheet lists no NMEA 0183 port for this unit. N2K-Micro x1, WiFi x1, SonarConn x1 (12-pin) and Power-12 check out."
-  },
-  {
-   "id": "gar-echomap-ultra2-106sv",
-   "sku": "010-02880-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo tem NMEA0183 x1 que não consta na spec oficial. Catálogo está faltando GarminMarineNet x2 (Garmin lista 2 portas Marine Network 'large connector'; catálogo tem 0)."
-  },
-  {
-   "id": "gar-echomap-ultra2-126sv",
-   "sku": "010-02882-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo tem NMEA0183 x1 que não consta na spec oficial da garmin.com. Catálogo está faltando GarminMarineNet x2."
-  },
-  {
    "id": "gar-fantom-126",
    "sku": "010-01366-00",
    "status": "mismatch",
    "confidence": "high",
    "discrepancy": "SKU cadastrado (010-01366-00) é uma peça avulsa 'antena 6ft only' de uma linha legada (Fantom 4/6, pedestal 40W) — não o kit completo GMR Fantom 126 (pedestal+antena) da linha atual, cujo PN oficial é K10-00012-20 (branco)/K10-00012-33 (preto). Divergência dupla: (1) SKU aponta pra peça de reposição, não pro sistema completo vendido/instalado; (2) como consequência, as portas cadastradas (GarminMarineNet x1 + Power-12 x1) não existem no item real referenciado por esse SKU — um array isolado se conecta ao pedestal por um conector de antena giratório dedicado, sem porta de rede/energia própria."
-  },
-  {
-   "id": "gar-fantom-18x",
-   "sku": "010-02462-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "O SKU cadastrado 010-02462-00 NÃO é do radar GMR Fantom 18x — busca confirmou que esse PN pertence à bateria do Garmin Alpha 200/200i/300 (handheld de rastreamento de cães), produto completamente diferente. O SKU oficial atual do GMR Fantom 18x é 010-02584-00 (branco) ou 010-02584-10 (preto). Quanto à config de portas do produto real, ela bate com o cadastrado (Network cable = GarminMarineNet x1, Power cable = Power-12 x1) — mas o campo SKU está errado e precisa ser corrigido antes de mais nada."
-  },
-  {
-   "id": "gar-fantom-24x",
-   "sku": "010-02463-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "O SKU cadastrado 010-02463-00 não corresponde a nenhum produto Garmin encontrável (nenhum resultado de busca — indício de SKU fabricado/inexistente). O SKU oficial atual do GMR Fantom 24x é 010-02585-00 (branco) ou 010-02585-10 (preto). A configuração de portas do produto real bate com o catálogo (GarminMarineNet x1 + Power-12 x1), mas o campo SKU precisa ser corrigido."
-  },
-  {
-   "id": "gar-fusion-ra670",
-   "sku": "010-02138-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catalog omits two real physical ports present in the official install guide: a dedicated USB port, and an ETHERNET/RJ45 port for Fusion PartyBus wired networking (the RA670 needs this port for any Wi-Fi-dependent feature since it has no built-in Wi-Fi radio). Correctly excludes WiFi. N2K-Micro x1, Bluetooth x1, Power-12 x1, and Audio x6 (3 zones x L/R) all match."
-  },
-  {
-   "id": "gar-fusion-ra770",
-   "sku": "010-01905-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catalog is missing two real physical ports confirmed in the official install guide: a dedicated USB port (USB media source) and an ETHERNET/RJ45 port (Fusion PartyBus wired networking) - both absent from the catalog's port list even though 'USB' is a standard type in the catalog's own vocabulary. N2K-Micro x1, WiFi x1, Bluetooth x1, Power-12 x1, and Audio x8 (4 zones x L/R) all check out correctly."
-  },
-  {
-   "id": "gar-ghc20",
-   "sku": "010-01141-00",
-   "status": "mismatch",
-   "confidence": "medium",
-   "discrepancy": "A ficha oficial lista explicitamente 'NMEA output: NMEA 0183, NMEA 2000' como especificação de conexões — ou seja, além do NMEA 2000 (que bate com N2K-Micro x1 cadastrado), o GHC 20 também tem saída NMEA 0183, que não está cadastrada no catálogo."
-  },
-  {
-   "id": "gar-gnx-21",
-   "sku": "010-01211-30",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "SKU cadastrado (010-01211-30) não existe no site oficial. O SKU correto do GNX 21 é 010-01142-10. Contagem de porta bate (N2K-Micro x1), mas o SKU do catálogo está errado."
   },
   {
    "id": "gar-gnx-sail-pack-43",
@@ -137,13 +53,6 @@
    "discrepancy": "O SKU cadastrado não corresponde a nenhuma antena GPS marítima Garmin. 010-02315-00 é o dēzl OTR1000 (navegador GPS automotivo para caminhões, categoria totalmente diferente, descontinuado), sem qualquer porta N2K-Micro ou interface NMEA 2000. Não existe registro oficial de um 'GPS 24xd Receiver' (variante não-HVS) sob esse SKU — é um SKU fantasma, do mesmo tipo já corrigido na varredura de 2026-07-24 (ver scripts/sku_corrections_log.json). Recomenda-se remover o item ou substituir o SKU pelo correto (provavelmente deveria ser um alias/duplicata de 010-02316-10 ou 010-02316-00, variantes reais do GPS 24xd)."
   },
   {
-   "id": "gar-gpsmap-1042xsv",
-   "sku": "010-01740-02",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "GarminMarineNet está subcontado no catálogo: tem x1, spec oficial (confirmada por 2 fontes independentes) mostra 2 portas Garmin Marine Network. Demais portas batem, incluindo Video-BNC x1, N2K-Micro x1, NMEA0183 x1, WiFi x1, SonarConn x1."
-  },
-  {
    "id": "gar-gpsmap-8612",
    "sku": "010-02092-02",
    "status": "mismatch",
@@ -156,41 +65,6 @@
    "status": "mismatch",
    "confidence": "high",
    "discrepancy": "Dois problemas simultâneos: (1) o SKU cadastrado 010-11399-00 está incorreto/não existe — o PN oficial correto é 010-11829-00; (2) mesmo corrigindo o SKU, o conector físico real do GRF 10 é um plugue proprietário de 12 pinos para o computador de piloto automático (não um N2K-Micro/NMEA 2000). Recomendo corrigir o SKU para 010-11829-00 e substituir a porta cadastrada — como o vocabulário atual do catálogo não tem um tipo específico para 'conector de piloto automático de 12 pinos', sugiro criar um novo tipo de porta em vez de manter N2K-Micro, que está errado."
-  },
-  {
-   "id": "gar-gsd-28",
-   "sku": "010-02797-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Dois problemas: (1) Tipo de rede errado — catálogo diz GarminMarineNet x1, mas a porta nativa do GSD 28 é Garmin BlueNet (produto de 2024, tecnologia mais nova); conexão a Marine Network exige cabo adaptador à parte. Isso é relevante porque o app tem uma regra específica (R-BN-01) sobre BlueNet vs Marine Network legado. (2) Tipo de conector de transdutor errado — não é um \"SonarConn\" plugável, é um terminal block de fio nu (2 posições LOW/HIGH); a contagem \"x2\" até é funcionalmente razoável (suporta até 2 elementos/transdutores), mas o TIPO de interface modelado como SonarConn (conector proprietário tipo 12-pin/8-pin) não reflete a conexão real a fio."
-  },
-  {
-   "id": "gar-gtb-10",
-   "sku": "010-02134-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "1) A porta de rede cadastrada como 'BlueNet x1' está incorreta - a tabela oficial 'Connector View' rotula essa porta explicitamente como 'NETWORK: Garmin Marine Network' (rede legacy), não BlueNet. Isso é reforçado pelo próprio manual do BlueNet 30 Gateway, que exige um cabo adaptador Garmin BlueNet-para-RJ45 (010-12531-01) justamente para o GTB 10 conseguir se conectar a uma rede BlueNet - ou seja, a porta nativa do GTB 10 NÃO é BlueNet, é GarminMarineNet. Deveria ser 'GarminMarineNet x1' em vez de 'BlueNet x1'. 2) Falta uma porta GPSAntenna x1 no catálogo - o GTB 10 real tem um conector BNC dedicado para antena GPS externa opcional, ausente do cadastro. (Existe também um conector IN/OUT de 19 pinos para relés/sensores sem equivalente no vocabulário de portas fornecido - não contabilizado como discrepância de tipo, mas vale registro.)"
-  },
-  {
-   "id": "gar-gxm-54",
-   "sku": "010-02277-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Falta a porta de saída de áudio (Audio x1 — cabo RCA de 2 m para entrada de linha/aux em um som estéreo, usada para ouvir rádio SiriusXM), presente nas instruções de instalação oficiais mas ausente do catálogo. As portas já cadastradas (GarminMarineNet x1, Power-12 x1) estão corretas — a fonte é 9-32 Vdc genérica, compatível com o rótulo Power-12 usado no catálogo."
-  },
-  {
-   "id": "gar-ps70-th",
-   "sku": "010-02768-10",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Mesmo padrão sistêmico do PS31/PS51-TH: \"SonarConn x1\" é o tipo de porta errado. O PS70-TH é um transdutor Panoptix com RapidReturn sonar embutido que se conecta direto à Garmin Marine Network (Ethernet) + alimentação independente — não existe caixa preta/conector proprietário intermediário. Deveria ser GarminMarineNet x1 + Power-12 x1 (ou Power-24, já que RapidReturn de 1kW costuma recomendar 24V)."
-  },
-  {
-   "id": "gar-radar-18xhd3",
-   "sku": "010-02841-00",
-   "status": "mismatch",
-   "confidence": "high",
-   "discrepancy": "Catálogo cadastra GarminMarineNet x1, mas a porta de rede nativa deste radome xHD3 é Garmin BlueNet (cabo incluso de fábrica); Garmin Marine Network só via adaptador vendido separadamente (010-12531-01) — não é porta nativa. Tipo de porta deveria ser BlueNet, não GarminMarineNet (qty 1 mantida)."
   },
   {
    "id": "gar-reactor40-hyd-1l2",
@@ -310,27 +184,6 @@
    "status": "not_found",
    "confidence": "medium",
    "discrepancy": "SKU do catálogo (010-11052-08) não corresponde a nenhuma página de produto ativa em garmin.com/en-US. O 'Shadow Drive' oficial mais próximo encontrado (010-11054-00) é vinculado à linha GHP10 descontinuada, não à família Reactor. Recomenda-se ao Lucas revisar se este SKU está correto/atual — pode ser um número de peça de acessório interno (Shadow Drive é hoje tipicamente tecnologia embutida na CCU do Reactor, não um sensor avulso vendável) ou uma variante regional/descontinuada sem página US."
-  },
-  {
-   "id": "gar-vhf-115i",
-   "sku": "010-02096-01",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "O SKU 010-02096-01 é real, mas é a variante 'International' (ATIS) vendida apenas em garmin.com/en-GB e mercados europeus — não aparece em garmin.com/en-US, escopo desta auditoria. O rótulo '(Intercom)' no catálogo também está equivocado: 'i' = International/ATIS, não intercom."
-  },
-  {
-   "id": "gar-vhf-215i",
-   "sku": "010-02097-01",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "O SKU 010-02097-01 é real, mas pertence à variante 'International' (ATIS) vendida só em garmin.com/en-GB — não em garmin.com/en-US. Mesmo problema de rótulo '(Intercom)' que na verdade significa 'International'."
-  },
-  {
-   "id": "gar-vhf-315i",
-   "sku": "010-02047-01",
-   "status": "not_found",
-   "confidence": "medium",
-   "discrepancy": "O SKU 010-02047-01 é real, mas pertence a um produto vendido apenas em mercados internacionais/europeus (garmin.com/en-GB), NÃO em garmin.com/en-US, que é o escopo desta auditoria — por isso not_found nesse site específico. Adicionalmente, o rótulo do catálogo 'VHF 315i (intercom)' está equivocado: o sufixo 'i' em toda a linha Garmin VHF (110i/115i/210i/215i/315i) designa a versão 'International' com suporte ATIS — não 'intercom'. A capacidade de intercomunicação entre estações via handset GHS é um recurso da série VHF 315 inteira (315 e 315i igualmente), não exclusivo da variante 'i'."
   },
   {
    "id": "cab-bn-cam-adapter",

@@ -144,22 +144,22 @@ const CATALOG = [
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-echomap-uhd2-73sv',sku:'010-02691-01',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 73sv',category:'MFD',
  description:'MFD 7" SideVü/ClearVü.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-echomap-uhd2-93sv',sku:'010-02692-01',family:'ECHOMAP UHD2',model:'ECHOMAP UHD2 93sv',category:'MFD',
  description:'MFD 9" SideVü/ClearVü.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-echomap-ultra2-106sv',sku:'010-02880-00',family:'ECHOMAP Ultra 2',model:'ECHOMAP Ultra 2 106sv',category:'MFD',
  description:'MFD 10" SideVü/ClearVü/Panoptix-ready.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:2},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-echomap-ultra2-126sv',sku:'010-02882-00',family:'ECHOMAP Ultra 2',model:'ECHOMAP Ultra 2 126sv',category:'MFD',
  description:'MFD 12" Ultra 2 com sondador.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:2},{type:'WiFi',qty:1},{type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Radar — Fantom dome (solid-state) ============== */
-{id:'gar-fantom-18x',sku:'010-02462-00',family:'Fantom Dome',model:'GMR Fantom 18x',category:'Radar',
+{id:'gar-fantom-18x',sku:'010-02584-00',family:'Fantom Dome',model:'GMR Fantom 18x',category:'Radar',
  description:'Radar dome solid-state 50W, alcance 48 nm — antena 18".',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-fantom-24x',sku:'010-02463-00',family:'Fantom Dome',model:'GMR Fantom 24x',category:'Radar',
+{id:'gar-fantom-24x',sku:'010-02585-00',family:'Fantom Dome',model:'GMR Fantom 24x',category:'Radar',
  description:'Radar dome solid-state 50W, alcance 96 nm — antena 24".',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
@@ -243,7 +243,7 @@ const CATALOG = [
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'GarminMarineNet',qty:1}],_verify:true},
 {id:'gar-ghc20',sku:'010-01141-00',family:'GHC',model:'GHC 20 Pilot Display',category:'Autopilot',
  description:'Display de controle do autopilot (legacy).',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1}],_verify:true},
 
 /* ============== Trolling motor — Force ============== */
 {id:'gar-force-kraken-48',sku:'010-02573-30',family:'Force Kraken',model:'Force Kraken 48" Black',category:'TrollingMotor',
@@ -269,8 +269,8 @@ const CATALOG = [
 {id:'gar-vhf-315',sku:'010-02047-00',family:'VHF',model:'VHF 315',category:'VHF',
  description:'VHF DSC modular 25W com intercom e GPS.',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
-{id:'gar-vhf-315i',sku:'010-02047-01',family:'VHF',model:'VHF 315i (intercom)',category:'VHF',
- description:'VHF 315 com intercom adicional.',
+{id:'gar-vhf-315i',sku:'010-02047-01',family:'VHF',model:'VHF 315i International (ATIS)',category:'VHF',
+ description:'Variante International/ATIS do VHF 315 — vendida em garmin.com/en-GB, não no site US. O sufixo "i" significa International/ATIS, não intercom (recurso de intercom via handset GHS é comum a toda a linha 315).',
  power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 {id:'gar-ais-800',sku:'010-02087-00',family:'AIS',model:'AIS 800 Class B SOTDMA',category:'AIS',
@@ -303,8 +303,8 @@ const CATALOG = [
  description:'Switch Marine Network legacy 6 portas.',
  power:{voltage:'12-24VDC'},ports:[{type:'GarminMarineNet',qty:5},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gtb-10',sku:'010-02134-00',family:'OnDeck',model:'GTB 10 OnDeck Hub',category:'Network',
- description:'Hub OnDeck — telemetria remota e monitoramento. Conecta direto a MFD BlueNet ou BlueNet 20 switch.',
- power:{voltage:'12VDC'},ports:[{type:'BlueNet',qty:1},{type:'N2K-Micro',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ description:'Hub OnDeck — telemetria remota e monitoramento. Porta de rede nativa e Garmin Marine Network (RJ45) — conexao a BlueNet exige cabo adaptador 010-12531-01.',
+ power:{voltage:'12VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'N2K-Micro',qty:1},{type:'GPSAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-poe-coupler',sku:'010-10580-10',family:'Marine Net',model:'PoE Isolation Coupler',category:'Network',
  description:'Acoplador PoE para conectar câmeras térmicas/luzes UW à rede sem danificar.',
  ports:[{type:'GarminMarineNet',qty:1},{type:'PoE',qty:1}],_verify:true,
@@ -321,8 +321,8 @@ const CATALOG = [
  description:'Antena GPS/GLONASS para uso em VHF e MFD que precisam de GPS externo.',
  ports:[{type:'GPSAntenna',qty:1}],_verify:true},
 {id:'gar-gxm-54',sku:'010-02277-00',family:'GXM',model:'GXM 54 SiriusXM Receiver',category:'Antenna',
- description:'Receptor de tempo SiriusXM (USA) — overlay de clima no MFD.',
- power:{voltage:'12VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ description:'Receptor de tempo/audio SiriusXM (USA) — overlay de clima no MFD + saida de audio RCA 2m pro som estereo.',
+ power:{voltage:'12VDC'},ports:[{type:'GarminMarineNet',qty:1},{type:'Audio',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Cameras ============== */
 {id:'gar-gc-200',sku:'010-02164-00',family:'GC',model:'GC 200 Marine IP Camera',category:'Camera',
@@ -355,11 +355,11 @@ const CATALOG = [
 
 /* ============== Áudio (Fusion / Garmin) ============== */
 {id:'gar-fusion-ra770',sku:'010-01905-00',family:'Apollo',model:'Fusion Apollo MS-RA770',category:'Audio',
- description:'Stereo marine touchscreen com WiFi/AirPlay 2/PartyBus. 4 zonas. NMEA 2000.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'Audio',qty:8},{type:'Power-12',qty:1}],_verify:true},
+ description:'Stereo marine touchscreen com WiFi/AirPlay 2/PartyBus. 4 zonas. NMEA 2000 + Ethernet (PartyBus wired) + USB.',
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'GarminMarineNet',qty:1},{type:'USB',qty:1},{type:'Audio',qty:8},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-fusion-ra670',sku:'010-02138-00',family:'Apollo',model:'Fusion Apollo MS-RA670',category:'Audio',
- description:'Stereo marine compacto com DSP. 3 zonas. NMEA 2000.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Bluetooth',qty:1},{type:'Audio',qty:6},{type:'Power-12',qty:1}],_verify:true}
+ description:'Stereo marine compacto com DSP. 3 zonas. NMEA 2000 + Ethernet (PartyBus wired, sem WiFi proprio) + USB.',
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'Bluetooth',qty:1},{type:'GarminMarineNet',qty:1},{type:'USB',qty:1},{type:'Audio',qty:6},{type:'Power-12',qty:1}],_verify:true}
 
 ];
 
