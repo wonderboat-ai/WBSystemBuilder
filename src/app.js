@@ -59,7 +59,7 @@ const state={
       mousePos:{x:0,y:0},
       canvasFilter:'all',
       thumbStyle:'silhouette',
-      resizing:null}
+      resizing:null,n2kDragging:null}
 };
 function emptyProject(){
   return{
@@ -541,7 +541,7 @@ function buildN2kBackbone(){
   all.sort((a,b)=>(a.node.n2kOrder||0)-(b.node.n2kOrder||0));
 
   // ordem inicial padrão: term(top), devices, power, devices, term(bottom)
-  if(!all.some(d=>d.node.n2kOrder)){
+  if(!all.some(d=>d.node.n2kOrder!==undefined)){
     const terms = all.filter(d=>d.isTerm);
     const power = all.filter(d=>d.isPower);
     const devs = all.filter(d=>!d.isTerm && !d.isPower);
@@ -609,7 +609,7 @@ function renderN2kBackboneView(){
   document.getElementById('canvas-empty').style.display = 'none';
   content.setAttribute('transform','');
 
-  const nodes = calcN2kVoltagesPerNode();
+  let nodes = calcN2kVoltagesPerNode();
   if(!nodes.length){
     content.innerHTML = `<text x="50%" y="200" text-anchor="middle" fill="var(--text-dim)" font-size="14">
       Nenhum dispositivo N2K no projeto.
@@ -618,6 +618,22 @@ function renderN2kBackboneView(){
       Adicione MFDs, VHF/AIS, instrumentos pra montar o backbone.
       </text>`;
     return;
+  }
+
+  // Preview de reordenação em tempo real durante o arrasto (não mexe no state.project
+  // até soltar — soltar acontece no mouseup global, ver bindGlobal()).
+  const drag = state.ui.n2kDragging;
+  if(drag){
+    const fromIdx = nodes.findIndex(d=>d.node.uid===drag.uid);
+    if(fromIdx>=0){
+      const toIdx = Math.max(0, Math.min(nodes.length-1, drag.overIndex));
+      if(toIdx!==fromIdx){
+        const arr = nodes.slice();
+        const [moved] = arr.splice(fromIdx,1);
+        arr.splice(toIdx,0,moved);
+        nodes = arr;
+      }
+    }
   }
 
   const W=document.getElementById('canvas').clientWidth || 1200;
@@ -630,6 +646,15 @@ function renderN2kBackboneView(){
 
   nodes.forEach((d,i)=>{
     const y = 40 + i*rowH + rowH/2;
+    const isDragging = drag && drag.uid===d.node.uid;
+    svgInner += `<g${isDragging?' opacity="0.55"':''}>`;
+
+    // Handle de arrasto — reordena o nó no backbone (reflete a posição física real a bordo)
+    svgInner += `<g data-n2k-drag="${d.node.uid}" style="cursor:${isDragging?'grabbing':'grab'}">
+      <rect x="2" y="${y-rowH/2+2}" width="26" height="${rowH-4}" fill="transparent"/>
+      <text x="15" y="${y+5}" text-anchor="middle" fill="var(--text-dim)" font-size="15" style="user-select:none">⠿</text>
+    </g>`;
+
     const status = d.isPower?'pwr': d.isTerm?'term':
       d.V<10.33 ? 'err' : d.V<11 ? 'warn' : 'ok';
     const color = status==='err' ? '#ff5b6c' : status==='warn' ? '#f0b441' : status==='pwr' ? '#5fa8ff' : status==='term' ? '#ff5b6c' : '#3ec78f';
@@ -683,6 +708,7 @@ function renderN2kBackboneView(){
     } else if(d.isTerm){
       // termination only — already rendered the terminator badge
     }
+    svgInner += `</g>`;
   });
 
   // SVG size
@@ -707,6 +733,18 @@ function renderN2kBackboneView(){
       state.ui.selectedEdge = null;
       state.ui.selectedZone = null;
       render();
+    });
+  });
+  // Bind: mousedown no handle ⠿ inicia o arrasto pra reordenar o nó no backbone
+  // (posição física real a bordo) — mousemove/mouseup globais em bindGlobal() cuidam do resto.
+  content.querySelectorAll('[data-n2k-drag]').forEach(el=>{
+    el.addEventListener('mousedown',e=>{
+      e.stopPropagation();
+      e.preventDefault();
+      const uid = el.dataset.n2kDrag;
+      const idx = nodes.findIndex(d=>d.node.uid===uid);
+      if(idx<0) return;
+      state.ui.n2kDragging = {uid, overIndex:idx, count:nodes.length};
     });
   });
 }
@@ -1434,6 +1472,19 @@ function svgPoint(evt){
   return{x:(evt.clientX-r.left-state.ui.pan.x)/state.ui.zoom,y:(evt.clientY-r.top-state.ui.pan.y)/state.ui.zoom};
 }
 
+// Converte coordenada de tela pra espaço interno do viewBox do SVG — usa a CTM real
+// em vez de pan/zoom do state, porque vistas estruturadas (N2K Backbone) têm viewBox
+// próprio (altura = totalH, não bate com pan/zoom da vista "Tudo").
+function svgViewBoxPoint(evt){
+  const svg=document.getElementById('canvas');
+  const ctm=svg.getScreenCTM();
+  if(!ctm) return {x:evt.clientX,y:evt.clientY};
+  const pt=svg.createSVGPoint();
+  pt.x=evt.clientX;pt.y=evt.clientY;
+  const loc=pt.matrixTransform(ctm.inverse());
+  return {x:loc.x,y:loc.y};
+}
+
 function bindGlobal(){
   const svg=document.getElementById('canvas');
   svg.addEventListener('dragover',e=>e.preventDefault());
@@ -1460,6 +1511,17 @@ function bindGlobal(){
   });
   svg.addEventListener('mousemove',e=>{
     state.ui.mousePos={x:e.clientX-svg.getBoundingClientRect().left,y:e.clientY-svg.getBoundingClientRect().top};
+    if(state.ui.n2kDragging){
+      const rowH=64, topY=40;
+      const pt=svgViewBoxPoint(e);
+      let idx=Math.floor((pt.y-topY)/rowH);
+      idx=Math.max(0,Math.min(state.ui.n2kDragging.count-1,idx));
+      if(state.ui.n2kDragging.overIndex!==idx){
+        state.ui.n2kDragging.overIndex=idx;
+        renderN2kBackboneView();
+      }
+      return;
+    }
     if(state.ui.resizing){
       const r=state.ui.resizing;
       const pt=svgPoint(e);
@@ -1506,7 +1568,25 @@ function bindGlobal(){
       renderCanvas();
     }else if(state.ui.pendingConnection){renderCanvas()}
   });
-  window.addEventListener('mouseup',()=>{state.ui.dragging=null;state.ui.panning=false;state.ui.resizing=null;svg.classList.remove('panning')});
+  window.addEventListener('mouseup',()=>{
+    if(state.ui.n2kDragging){
+      const drag=state.ui.n2kDragging;
+      const nodes=calcN2kVoltagesPerNode();
+      const fromIdx=nodes.findIndex(d=>d.node.uid===drag.uid);
+      if(fromIdx>=0){
+        const toIdx=Math.max(0,Math.min(nodes.length-1,drag.overIndex));
+        if(toIdx!==fromIdx){
+          const arr=nodes.slice();
+          const [moved]=arr.splice(fromIdx,1);
+          arr.splice(toIdx,0,moved);
+          arr.forEach((d,i)=>{d.node.n2kOrder=i});
+        }
+      }
+      state.ui.n2kDragging=null;
+      render();
+    }
+    state.ui.dragging=null;state.ui.panning=false;state.ui.resizing=null;svg.classList.remove('panning');
+  });
   svg.addEventListener('wheel',e=>{
     e.preventDefault();
     const d=e.deltaY>0?0.9:1.1;
