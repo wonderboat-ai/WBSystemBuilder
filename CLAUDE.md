@@ -11,7 +11,7 @@ Ferramenta web standalone (single-user, offline) inspirada na experiência em de
 - Validação automática contra normas NMEA 2000 (R-N2K-01..03), Garmin BlueNet (R-BN-01), Panoptix (R-PANO-01), PoE (R-POE-01), Radar (R-RADAR-01), Autopilot (R-AP-01), VHF DSC (R-VHF-01), J1939 (R-J1939-01), porta sobrecarregada (R-DUP-01) e cabo sem comprimento (R-CABLE-01)
 - Cálculo de **Power Use** (12V/24V Battery+Max)
 - Cálculo de **N2K Network LEN** com voltage drop usando fórmula oficial Garmin (R = 0.053 Ω/m, drop ≤ 1.67V)
-- Vista N2K Backbone vertical estruturada profissional (T-Joiners, drops com comprimento editável, voltage por nó com cor semafórica)
+- Vista N2K Backbone vertical estruturada profissional (T-Joiners, drops com comprimento editável, voltage por nó com cor semafórica, drag-to-reorder pra refletir posição física real)
 - 3 modos de impressão: Slide Cliente (A4 paisagem), A3 Técnico (instalador), Lista de Cabos (A4)
 - Item Livre (equipamentos não-Garmin de outras marcas)
 - Wizard inicial 3 perguntas (tipo / comprimento / foco)
@@ -227,7 +227,7 @@ python3 -m http.server 8080
 - `scripts/audit_2026-08-18_corrections_log.json` — as 78 correções de SKU/porta aplicadas na primeira rodada da auditoria de 2026-08-18 (SKU antigo→novo, mudança de porta, motivo/fonte) + os 3 itens removidos por serem produtos fantasma.
 - `scripts/audit_2026-08-18_round2_corrections_log.json` — 21 correções adicionais que já tinham resposta pronta no relatório original mas ficaram de fora da 1ª aplicação (SKU hygiene, achados sistêmicos que se estendiam a mais itens, rótulos "(Intercom)"→"International/ATIS" errados).
 - `scripts/audit_2026-08-18_round3_corrections_log.json` — 14 correções aplicadas após pesquisa aprofundada adicional (Workflow paralelo, 8 frentes) nos itens de maior prioridade que ainda precisavam de confirmação — inclui 5 remoções de produtos fantasma (GPS 24xd redundante, GTU 10, Shadow Drive, 2 cabos de rede fantasma) e o swap de SKU do par GPSMAP 8412xsv/8612 (mesmo padrão do par 16" já corrigido na 1ª rodada).
-- `scripts/audit_2026-08-18_pending_review.json` — os 18 itens restantes da auditoria (de um total original de 131 divergências) que ainda não foram corrigidos — em geral portas menores, itens de fabricante terceiro fora do escopo garmin.com, ou decisões de modelagem de catálogo que dependem do Lucas.
+- `scripts/audit_2026-08-18_pending_review.json` — os 16 itens restantes da auditoria (de um total original de 131 divergências) que ainda não foram corrigidos — em geral portas menores ou itens de fabricante terceiro fora do escopo garmin.com.
 - `scripts/photo_failures.json` — SKUs sem foto (hoje vazio — cobertura 100%).
 - `scripts/research_overrides.json` — URLs de imagem descobertas pela pesquisa, consumidas por `fetch_photos.py` via `URL_OVERRIDES`.
 - `scripts/extra_skus.json` — lista de trabalho de SKUs sem foto que o `fetch_photos.py` tenta buscar via CDN direto (hoje vazio; regenerar via extração do catálogo antes de rodar de novo, se o catálogo mudou).
