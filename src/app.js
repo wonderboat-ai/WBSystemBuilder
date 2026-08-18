@@ -50,6 +50,66 @@ function getDeviceById(id){
   return CATALOG.find(d=>d.id===id)||ADAPTERS.find(d=>d.id===id);
 }
 
+// Ponto central de "adicionar device ao projeto" — usado pelo drop no canvas e pela busca global.
+// Detecta zona automaticamente e, se for o 1º device N2K do projeto, auto-insere o Cabo
+// Alimentação N2K (ver maybeAutoInsertN2kPower).
+function addDeviceNode(deviceId, x, y, extra, zonePt){
+  const node = Object.assign({uid:uid(), deviceId, x, y}, extra||{});
+  // Teste de zona usa o ponto real do cursor (zonePt) quando informado — x/y do node já vêm
+  // com o offset de centralização aplicado pelo chamador (ex: drop na vista Tudo), então testar
+  // a zona com esse offset em vez do ponto onde o usuário soltou dava falso negativo/positivo.
+  const zx = zonePt ? zonePt.x : x, zy = zonePt ? zonePt.y : y;
+  state.project.zones.forEach(z=>{
+    if(zx>=z.x && zx<=z.x+z.w && zy>=z.y && zy<=z.y+z.h) node.zoneUid = z.uid;
+  });
+  state.project.nodes.push(node);
+  assignSensibleN2kOrder(node);
+  maybeAutoInsertN2kPower(deviceId);
+  return node;
+}
+
+// Atribui um n2kOrder sensato a um node N2K recém-adicionado fora do drop posicional da
+// própria vista N2K Backbone (ex: auto-insert do power cable, FIX_HANDLERS) — sem isso, o
+// fallback ORD_END em buildN2kBackbone() joga o node pro fim absoluto da lista, inclusive
+// depois de um terminador que já tenha ordem explícita (quebra a convenção das 2 pontas).
+// Se ninguém no projeto tem ordem ainda, não faz nada — o layout padrão automático
+// (terminador/devices/power/devices/terminador) de buildN2kBackbone() cuida disso sozinho.
+function assignSensibleN2kOrder(node){
+  const dev = getDeviceById(node.deviceId);
+  if(!dev) return;
+  const hasN2K = (dev.ports||[]).some(p=>p.type==='N2K-Micro'||p.type==='N2K-Mini');
+  if(!hasN2K) return;
+  const others = state.project.nodes.filter(n=>n!==node && typeof n.n2kOrder==='number');
+  if(!others.length) return;
+  const lastTerm = others.filter(n=>{const d=getDeviceById(n.deviceId);return d&&/Terminador/i.test(d.model)})
+    .sort((a,b)=>b.n2kOrder-a.n2kOrder)[0];
+  node.n2kOrder = lastTerm ? lastTerm.n2kOrder-0.5 : Math.max(...others.map(n=>n.n2kOrder))+1;
+}
+
+// Se o device recém-adicionado tem porta N2K e é o 1º device N2K do projeto (nenhum outro node
+// N2K existia antes dele, e o cabo de alimentação ainda não está no projeto), auto-insere o Cabo
+// Alimentação N2K (adp-n2k-power) desconectado, perto do device — poupa a ida manual à aba Adapters.
+function maybeAutoInsertN2kPower(justAddedId){
+  const dev = getDeviceById(justAddedId);
+  if(!dev || dev.id==='adp-n2k-power') return;
+  const hasN2K = (dev.ports||[]).some(p=>p.type==='N2K-Micro'||p.type==='N2K-Mini');
+  if(!hasN2K) return;
+  const n2kNodes = state.project.nodes.filter(n=>{
+    const d=getDeviceById(n.deviceId);
+    return d && (d.ports||[]).some(p=>p.type==='N2K-Micro'||p.type==='N2K-Mini');
+  });
+  const alreadyHasPower = n2kNodes.some(n=>n.deviceId==='adp-n2k-power');
+  if(n2kNodes.length<=1 && !alreadyHasPower){
+    const pwr = ADAPTERS.find(a=>a.id==='adp-n2k-power');
+    if(!pwr) return;
+    const last = state.project.nodes[state.project.nodes.length-1];
+    const pwrNode = {uid:uid(), deviceId:pwr.id, x:(last?last.x:100)+260, y:(last?last.y:100)};
+    state.project.nodes.push(pwrNode);
+    assignSensibleN2kOrder(pwrNode);
+    toast('Cabo Alimentação N2K adicionado automaticamente (1º device N2K do projeto)');
+  }
+}
+
 const state={
   project:emptyProject(),
   ui:{selectedNode:null,selectedEdge:null,selectedZone:null,
@@ -59,7 +119,7 @@ const state={
       mousePos:{x:0,y:0},
       canvasFilter:'all',
       thumbStyle:'silhouette',
-      resizing:null,n2kDragging:null}
+      resizing:null,n2kDragging:null,editingFreeId:null,edgeWaypointDragging:null}
 };
 function emptyProject(){
   return{
@@ -134,6 +194,7 @@ function loadProjectByName(name){
   // garante campos novos
   state.project.freeItems=state.project.freeItems||[];
   state.project.zones=state.project.zones||[];
+  state.ui.editingFreeId=null;
   resetSelection();render();
 }
 function deleteProject(name){
@@ -170,13 +231,13 @@ document.getElementById('file-input').addEventListener('change',e=>{
   r.onload=()=>{try{
     const p=JSON.parse(r.result);
     p.nodes=p.nodes||[];p.edges=p.edges||[];p.zones=p.zones||[];p.freeItems=p.freeItems||[];
-    state.project=p;resetSelection();render();
+    state.project=p;state.ui.editingFreeId=null;resetSelection();render();
   }catch(err){alert('Inválido.')}};
   r.readAsText(f);e.target.value='';
 });
 function newProject(){
   if(state.project.nodes.length>0 && !confirm('Descartar projeto atual?'))return;
-  state.project=emptyProject();resetSelection();render();
+  state.project=emptyProject();state.ui.editingFreeId=null;resetSelection();render();
   // abre wizard automaticamente
   setTimeout(openWizard,100);
 }
@@ -371,30 +432,40 @@ function renderZonesPanel(list){
 
 
 function renderFreeItemsPanel(list){
+  const editing = state.ui.editingFreeId && (state.project.freeItems||[]).find(f=>f.id===state.ui.editingFreeId);
   let html='<div class="zone-list">';
   html+='<div style="font-size:11px;color:var(--text-dim);margin-bottom:8px;padding:4px">Itens livres = equipamentos de outras marcas (AIS Icom, antena Shakespeare, motor Volvo, etc.). Escolha as portas e arraste pro canvas.</div>';
   // lista os já criados
   (state.project.freeItems||[]).forEach(fi=>{
     html+=`<div class="zone-item" data-free="${fi.id}">
       <div><span style="display:inline-block;width:10px;height:10px;background:#888;border-radius:2px;margin-right:6px;vertical-align:middle"></span><strong>${fi.model}</strong><br><span style="font-size:10px;color:var(--text-muted)">${(fi.ports||[]).map(p=>(PORT_TYPES[p.type]?.label||p.type)+'×'+(p.qty||1)).join(' · ')||'sem portas'}</span></div>
-      <button class="small danger" data-del-free="${fi.id}">×</button>
+      <div style="display:flex;gap:4px">
+        <button class="small" data-edit-free="${fi.id}">✎</button>
+        <button class="small danger" data-del-free="${fi.id}">×</button>
+      </div>
     </div>`;
   });
-  // formulario
+  // formulario — modo criação ou edição (editingFreeId)
   const portTypeOpts = Object.keys(PORT_TYPES).map(t=>`<option value="${t}">${PORT_TYPES[t].label}</option>`).join('');
-  html+=`<div class="zone-item add-form">
-    <input id="fi-model" placeholder="Modelo (ex: Icom IC-M510 EVO)" style="width:100%;margin-bottom:6px"/>
-    <input id="fi-brand" placeholder="Marca (ex: ICOM, Volvo Penta)" style="width:100%;margin-bottom:6px"/>
-    <div style="font-size:10px;color:var(--text-muted);margin:4px 0 2px">Portas:</div>
-    <div id="fi-ports">
-      <div class="fi-port-row" style="display:flex;gap:4px;margin-bottom:4px">
-        <select class="fi-pt" style="flex:1;font-size:10px">${portTypeOpts}</select>
-        <input type="number" class="fi-pq" min="1" value="1" style="width:50px;font-size:10px"/>
+  const portRow = (type,qty) => `<div class="fi-port-row" style="display:flex;gap:4px;margin-bottom:4px">
+        <select class="fi-pt" style="flex:1;font-size:10px">${Object.keys(PORT_TYPES).map(t=>`<option value="${t}" ${t===type?'selected':''}>${PORT_TYPES[t].label}</option>`).join('')}</select>
+        <input type="number" class="fi-pq" min="1" value="${qty||1}" style="width:50px;font-size:10px"/>
         <button class="small danger fi-rm">×</button>
-      </div>
-    </div>
+      </div>`;
+  const initialPortRows = editing && editing.ports && editing.ports.length
+    ? editing.ports.map(p=>portRow(p.type,p.qty)).join('')
+    : portRow(Object.keys(PORT_TYPES)[0],1);
+  html+=`<div class="zone-item add-form">
+    ${editing?`<div style="font-size:10px;color:var(--accent);margin-bottom:6px;letter-spacing:.1em;text-transform:uppercase">Editando item livre</div>`:''}
+    <input id="fi-model" placeholder="Modelo (ex: Icom IC-M510 EVO)" value="${esc(editing?editing.model:'')}" style="width:100%;margin-bottom:6px"/>
+    <input id="fi-brand" placeholder="Marca (ex: ICOM, Volvo Penta)" value="${esc(editing?editing.brand:'')}" style="width:100%;margin-bottom:6px"/>
+    <div style="font-size:10px;color:var(--text-muted);margin:4px 0 2px">Portas:</div>
+    <div id="fi-ports">${initialPortRows}</div>
     <button class="small" id="fi-add-port" style="margin-bottom:6px">+ porta</button>
-    <button class="primary zone-add-btn" id="btn-add-free">+ Criar Item Livre</button>
+    <div style="display:flex;gap:6px">
+      <button class="primary zone-add-btn" id="btn-add-free" style="flex:1">${editing?'Salvar alterações':'+ Criar Item Livre'}</button>
+      ${editing?`<button class="small" id="btn-cancel-edit-free">Cancelar</button>`:''}
+    </div>
   </div></div>`;
   list.innerHTML=html;
 
@@ -411,6 +482,14 @@ function renderFreeItemsPanel(list){
       });
       state.project.nodes=state.project.nodes.filter(n=>n.deviceId!==fid);
       clearPendingConnection();
+      if(state.ui.editingFreeId===fid) state.ui.editingFreeId=null;
+      render();
+    });
+  });
+  list.querySelectorAll('[data-edit-free]').forEach(b=>{
+    b.addEventListener('click',e=>{
+      e.stopPropagation();
+      state.ui.editingFreeId=b.dataset.editFree;
       render();
     });
   });
@@ -434,6 +513,8 @@ function renderFreeItemsPanel(list){
     div.querySelector('.fi-rm').addEventListener('click',()=>div.remove());
   });
   list.querySelectorAll('.fi-rm').forEach(b=>b.addEventListener('click',e=>{e.target.closest('.fi-port-row').remove()}));
+  const btnCancel=document.getElementById('btn-cancel-edit-free');
+  if(btnCancel) btnCancel.addEventListener('click',()=>{state.ui.editingFreeId=null;render()});
   const btnAdd=document.getElementById('btn-add-free');
   if(btnAdd) btnAdd.addEventListener('click',()=>{
     const model=document.getElementById('fi-model').value.trim();
@@ -445,14 +526,53 @@ function renderFreeItemsPanel(list){
       const pq=parseInt(row.querySelector('.fi-pq').value)||1;
       ports.push({type:pt,qty:pq});
     });
-    const fi={
-      id:'free:'+Math.random().toString(36).slice(2,9),
-      sku:'(item livre)',brand,family:brand,model,
-      category:'Item Livre',description:'Item livre adicionado pelo instalador.',
-      ports, _verify:false, _free:true
-    };
-    state.project.freeItems=state.project.freeItems||[];
-    state.project.freeItems.push(fi);
+    if(state.ui.editingFreeId){
+      // atualiza in-place — id nunca muda, então nodes/edges que apontam pro deviceId
+      // continuam resolvendo o mesmo objeto sem migração
+      const fi=state.project.freeItems.find(f=>f.id===state.ui.editingFreeId);
+      if(fi){
+        // Se a composição de portas mudou (tipo/ordem/qty), o ÍNDICE que edges já
+        // conectadas guardam (edge.fromPort/toPort) pode passar a apontar pra uma porta
+        // diferente ou deixar de existir — não dá pra migrar automaticamente sem um id
+        // estável por porta, então remove essas edges explicitamente e avisa o
+        // instalador em vez de deixar a conexão errada/silenciosamente sumida.
+        const oldFlat=(fi.ports||[]).flatMap(p=>Array.from({length:p.qty||1},()=>p.type));
+        const newFlat=ports.flatMap(p=>Array.from({length:p.qty||1},()=>p.type));
+        const portsChanged=oldFlat.length!==newFlat.length||oldFlat.some((t,i)=>t!==newFlat[i]);
+        fi.model=model; fi.brand=brand; fi.family=brand; fi.ports=ports;
+        let removed=0;
+        if(portsChanged){
+          const affected=new Set(state.project.nodes.filter(n=>n.deviceId===fi.id).map(n=>n.uid));
+          const before=state.project.edges.length;
+          state.project.edges=state.project.edges.filter(ed=>!(affected.has(ed.fromNode)||affected.has(ed.toNode)));
+          removed=before-state.project.edges.length;
+        }
+        state.ui.editingFreeId=null;
+        toast(removed?`Item Livre atualizado — ${removed} cabo(s) desconectado(s) porque as portas mudaram, reconecte manualmente.`:'Item Livre atualizado.');
+      }else{
+        // editingFreeId ficou órfão (ex: projeto trocado sem cancelar a edição) — não
+        // finge sucesso: preserva o que o instalador digitou criando como item novo
+        state.ui.editingFreeId=null;
+        const fiNew={
+          id:'free:'+Math.random().toString(36).slice(2,9),
+          sku:'(item livre)',brand,family:brand,model,
+          category:'Item Livre',description:'Item livre adicionado pelo instalador.',
+          ports, _verify:false, _free:true
+        };
+        state.project.freeItems=state.project.freeItems||[];
+        state.project.freeItems.push(fiNew);
+        toast('Item Livre criado (o item que estava sendo editado não existe mais neste projeto).');
+      }
+    }else{
+      const fi={
+        id:'free:'+Math.random().toString(36).slice(2,9),
+        sku:'(item livre)',brand,family:brand,model,
+        category:'Item Livre',description:'Item livre adicionado pelo instalador.',
+        ports, _verify:false, _free:true
+      };
+      state.project.freeItems=state.project.freeItems||[];
+      state.project.freeItems.push(fi);
+    }
     render();
   });
 }
@@ -518,6 +638,27 @@ function getNodePortPositions(node){
     result.push({...p,side,x,y,idx:i});
   });
   return result;
+}// Roteamento de edges na vista "Tudo" — desvia automaticamente de blocos de dispositivo no
+// caminho e permite ajuste manual (waypoint arrastável, ver bindCanvas()/bindGlobal()).
+function segsIntersect(ax1,ay1,ax2,ay2,bx1,by1,bx2,by2){
+  const d=(ax2-ax1)*(by2-by1)-(ay2-ay1)*(bx2-bx1);
+  if(d===0)return false;
+  const t=((bx1-ax1)*(by2-by1)-(by1-ay1)*(bx2-bx1))/d;
+  const u=((bx1-ax1)*(ay2-ay1)-(by1-ay1)*(ax2-ax1))/d;
+  return t>0&&t<1&&u>0&&u<1;
+}
+// Testa só cruzamento com as 4 arestas do bbox (não containment dos próprios endpoints) —
+// um endpoint pode legitimamente tocar a borda de um vizinho encostado (porta sai bem na
+// borda do card, ver getNodePortPositions) sem que a linha de fato atravesse esse vizinho.
+function segmentHitsNodeBbox(x1,y1,x2,y2,node,margin){
+  margin = margin||10;
+  const rx=node.x-margin, ry=node.y-margin;
+  const rw=nodeWidth(node)+margin*2, rh=nodeHeight(node)+margin*2;
+  const edges=[[rx,ry,rx+rw,ry],[rx+rw,ry,rx+rw,ry+rh],[rx+rw,ry+rh,rx,ry+rh],[rx,ry+rh,rx,ry]];
+  return edges.some(([ex1,ey1,ex2,ey2])=>segsIntersect(x1,y1,x2,y2,ex1,ey1,ex2,ey2));
+}
+function findBlockingNode(x1,y1,x2,y2,excludeUids){
+  return state.project.nodes.find(n=>!excludeUids.includes(n.uid)&&segmentHitsNodeBbox(x1,y1,x2,y2,n));
 }
 
 
@@ -537,8 +678,11 @@ function buildN2kBackbone(){
     return {node:n,dev,isTerm,isPower,isTee,len:lenContrib,dropM:n.n2kDrop||0.6};
   }).filter(x=>x);
 
-  // ordem: terminadores no topo/fundo, power no meio, devices no entre
-  all.sort((a,b)=>(a.node.n2kOrder||0)-(b.node.n2kOrder||0));
+  // ordem: terminadores no topo/fundo, power no meio, devices no entre.
+  // Node sem n2kOrder definido (recém-adicionado) cai no FIM por padrão, não no topo —
+  // ||0 empataria com quem já tem n2kOrder:0 e, por Array.sort ser stable, "saltaria" pro topo.
+  const ORD_END = 1e9;
+  all.sort((a,b)=>(a.node.n2kOrder??ORD_END)-(b.node.n2kOrder??ORD_END));
 
   // ordem inicial padrão: term(top), devices, power, devices, term(bottom)
   if(!all.some(d=>d.node.n2kOrder!==undefined)){
@@ -567,8 +711,11 @@ function calcN2kVoltagesPerNode(){
   // Quando há power tap, calcula em ambas direções a partir dele
   // MVP: assume power injection no centro (ou primeiro power encontrado, ou meio do array)
   const pIdx = powerIdx >= 0 ? powerIdx : Math.floor(ordered.length/2);
+  // Tensão de alimentação do power tap — ajustável pelo instalador (12 a 14.5V, ex: carregador/
+  // alternador ativo rodando acima do nominal de bateria). Default 12V quando não ajustado.
+  const baseV = (ordered[pIdx] && ordered[pIdx].node.n2kPowerV) || 12;
   // Para cada nó, calcula distância acumulada e LEN acumulado a partir do power
-  const result = ordered.map((d,i)=>({...d,V:12,vDrop:0,distance:0,segLen:0}));
+  const result = ordered.map((d,i)=>({...d,V:baseV,vDrop:0,distance:0,segLen:0}));
   // Direção UP (i < pIdx)
   let cumLen=0, cumLENPath=0;
   for(let i=pIdx-1; i>=0; i--){
@@ -580,7 +727,7 @@ function calcN2kVoltagesPerNode(){
     const I = lenAcum * 0.05;
     const vSeg = 0.053 * segLen * I * 2; // round trip
     cumLENPath += vSeg;
-    result[i].V = 12 - cumLENPath;
+    result[i].V = baseV - cumLENPath;
     result[i].vDrop = cumLENPath;
     result[i].distance = cumLen;
   }
@@ -594,12 +741,12 @@ function calcN2kVoltagesPerNode(){
     const I = lenAcum * 0.05;
     const vSeg = 0.053 * segLen * I * 2;
     cumLENPath += vSeg;
-    result[i].V = 12 - cumLENPath;
+    result[i].V = baseV - cumLENPath;
     result[i].vDrop = cumLENPath;
     result[i].distance = cumLen;
   }
-  // Power tap node = 12V (ou 13.8V padrão battery, mas usamos 12V min)
-  result[pIdx].V = 12;
+  // Power tap node = tensão de alimentação ajustada
+  result[pIdx].V = baseV;
   return result;
 }
 
@@ -620,6 +767,93 @@ function n2kBranchSplit(nodes){
   const statsA = stat(branchA); statsA.runLen = branchA[0].distance;
   const statsB = stat(branchB); statsB.runLen = branchB[branchB.length-1].distance;
   return {pIdx, hasSplit, branchA, branchB, statsA, statsB};
+}
+
+// Versão "print-safe" do backbone N2K estruturado, pra página N2K BACKBONE do PDF A3 Técnico
+// (ver renderA3Mode()). Reaproveita o cálculo puro (calcN2kVoltagesPerNode/n2kBranchSplit) mas
+// tem sua PRÓPRIA montagem de string SVG — deliberadamente separada de renderN2kBackboneView()
+// em vez de fatorada em conjunto: a versão on-screen usa var(--bg)/var(--text)/etc. (herda o
+// tema ativo do app), o que vazaria a cor do tema claro/escuro pro papel branco do PDF; aqui as
+// cores são fixas (mesmo padrão de buildSchematicSvg) e não há listeners/atributos interativos.
+function buildN2kBackboneSvg(width){
+  const nodes = calcN2kVoltagesPerNode();
+  if(!nodes.length){
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="120"><text x="50%" y="60" text-anchor="middle" fill="#666" font-size="13">Nenhum dispositivo N2K no projeto.</text></svg>`;
+  }
+  const split = n2kBranchSplit(nodes);
+  const hasSplit = split.hasSplit;
+  const startX = 80, rowH = 64, leftCol = 280, vCol = 820;
+  const topPad = hasSplit ? 58 : 40, botPad = hasSplit ? 58 : 40;
+  const lineTop = topPad, lineBottom = nodes.length*rowH + topPad;
+  const totalH = lineBottom + botPad;
+  const bg='#fff', text='#222', textDim='#666', bg2='#f4f4f4', bg3='#eee', accent='#d4a64a', garminAccent='#1f5dc4';
+
+  let svgInner = `<rect width="${width}" height="${totalH}" fill="${bg}"/>`;
+  if(hasSplit){
+    const yPower = topPad + split.pIdx*rowH + rowH/2;
+    const gap = 20;
+    const colA = '#5b8df6', colB = '#d4a64a';
+    svgInner += `<line x1="${startX}" y1="${lineTop}" x2="${startX}" y2="${yPower-gap}" stroke="${colA}" stroke-width="3"/>`;
+    svgInner += `<line x1="${startX}" y1="${yPower+gap}" x2="${startX}" y2="${lineBottom}" stroke="${colB}" stroke-width="3"/>`;
+    const vColorA = split.statsA.minV<10.33?'#ff5b6c':split.statsA.minV<11?'#f0b441':colA;
+    const vColorB = split.statsB.minV<10.33?'#ff5b6c':split.statsB.minV<11?'#f0b441':colB;
+    svgInner += `<text x="${leftCol+165}" y="18" text-anchor="middle" fill="${colA}" font-size="11" font-weight="700" letter-spacing="0.5">RAMAL A</text>`;
+    svgInner += `<text x="${leftCol+165}" y="32" text-anchor="middle" fill="${textDim}" font-size="9">${split.statsA.count} disp. · ΣLEN ${split.statsA.sumLen} · ${split.statsA.runLen.toFixed(1)}m · <tspan fill="${vColorA}" font-weight="700">min ${split.statsA.minV.toFixed(2)}V</tspan></text>`;
+    svgInner += `<text x="${leftCol+165}" y="${totalH-22}" text-anchor="middle" fill="${colB}" font-size="11" font-weight="700" letter-spacing="0.5">RAMAL B</text>`;
+    svgInner += `<text x="${leftCol+165}" y="${totalH-8}" text-anchor="middle" fill="${textDim}" font-size="9">${split.statsB.count} disp. · ΣLEN ${split.statsB.sumLen} · ${split.statsB.runLen.toFixed(1)}m · <tspan fill="${vColorB}" font-weight="700">min ${split.statsB.minV.toFixed(2)}V</tspan></text>`;
+  } else {
+    svgInner += `<line x1="${startX}" y1="${lineTop}" x2="${startX}" y2="${lineBottom}" stroke="#888" stroke-width="3"/>`;
+  }
+
+  nodes.forEach((d,i)=>{
+    const y = topPad + i*rowH + rowH/2;
+    svgInner += `<g>`;
+    const status = d.isPower?'pwr': d.isTerm?'term':
+      d.V<10.33 ? 'err' : d.V<11 ? 'warn' : 'ok';
+    const color = status==='err' ? '#ff5b6c' : status==='warn' ? '#f0b441' : status==='pwr' ? '#5fa8ff' : status==='term' ? '#ff5b6c' : '#3ec78f';
+
+    if(d.isTerm){
+      svgInner += `<g><circle cx="${startX}" cy="${y}" r="14" fill="#ff5b6c" stroke="#000" stroke-width="1"/>
+        <text x="${startX}" y="${y+5}" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">⊥</text>
+        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="${textDim}" font-size="10">Terminador</text></g>`;
+    } else if(d.isPower){
+      svgInner += `<g><rect x="${startX-12}" y="${y-12}" width="24" height="24" fill="#5fa8ff" stroke="#000" stroke-width="1" rx="3"/>
+        <text x="${startX}" y="${y+5}" text-anchor="middle" fill="#000" font-size="11" font-weight="700">⚡</text>
+        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="${textDim}" font-size="10">Alimentação</text></g>`;
+    } else {
+      svgInner += `<g><circle cx="${startX}" cy="${y}" r="6" fill="#888" stroke="#000" stroke-width="0.5"/>
+        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="${textDim}" font-size="9">Conector T</text></g>`;
+    }
+
+    if(!d.isTerm && !d.isPower){
+      const lineColor = '#3ec78f';
+      svgInner += `<line x1="${startX+8}" y1="${y}" x2="${leftCol+25}" y2="${y}" stroke="${lineColor}" stroke-width="2"/>`;
+      const dropLabel = `${d.dropM}m / ${(d.dropM*3.28084).toFixed(1)}ft`;
+      svgInner += `<rect x="${startX+30}" y="${y-13}" width="100" height="20" rx="3" fill="${bg2}" stroke="${lineColor}" stroke-width="0.5"/>`;
+      svgInner += `<text x="${startX+80}" y="${y+3}" text-anchor="middle" fill="${text}" font-size="10">${dropLabel}</text>`;
+      svgInner += `<text x="${startX+150}" y="${y-2}" fill="${textDim}" font-size="9">LEN</text>`;
+      svgInner += `<text x="${startX+150}" y="${y+10}" fill="${accent}" font-size="11" font-weight="700">${d.len}</text>`;
+      svgInner += `<g>
+        <rect x="${leftCol+25}" y="${y-22}" width="280" height="44" rx="3" fill="${bg3}" stroke="${color}" stroke-width="1"/>
+        <text x="${leftCol+35}" y="${y-7}" fill="${garminAccent}" font-size="9" font-weight="700" letter-spacing="1">${(d.dev.family||d.dev.brand||'').toUpperCase()}</text>
+        <text x="${leftCol+35}" y="${y+8}" fill="${text}" font-size="11" font-weight="700">${d.dev.model}</text>
+        <text x="${leftCol+35}" y="${y+19}" fill="${textDim}" font-size="8" font-family="monospace">${d.dev.sku}</text>
+      </g>`;
+      svgInner += `<rect x="${vCol}" y="${y-13}" width="70" height="26" rx="3" fill="${color}" opacity="0.9"/>`;
+      svgInner += `<text x="${vCol+35}" y="${y+5}" text-anchor="middle" fill="#000" font-size="13" font-weight="700">${d.V.toFixed(2)} V</text>`;
+      if(status==='warn'||status==='err'){
+        svgInner += `<text x="${vCol+85}" y="${y+5}" font-size="14">⚠</text>`;
+      }
+    } else if(d.isPower){
+      svgInner += `<line x1="${startX+8}" y1="${y}" x2="${leftCol+200}" y2="${y}" stroke="#ff5b6c" stroke-width="2"/>`;
+      svgInner += `<text x="${startX+150}" y="${y+5}" text-anchor="middle" fill="${text}" font-size="11" font-weight="700">Cabo Alimentação N2K</text>`;
+      svgInner += `<rect x="${leftCol+200}" y="${y-15}" width="100" height="30" rx="3" fill="#5fa8ff" opacity="0.9"/>`;
+      svgInner += `<text x="${leftCol+250}" y="${y+5}" text-anchor="middle" fill="#000" font-size="13" font-weight="700">${(d.node.n2kPowerV||12).toFixed(1)} VDC</text>`;
+    }
+    svgInner += `</g>`;
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${totalH+40}" viewBox="0 0 ${width} ${totalH+40}">${svgInner}</svg>`;
 }
 
 function renderN2kBackboneView(){
@@ -659,7 +893,7 @@ function renderN2kBackboneView(){
   const hasSplit = split.hasSplit;
   const W=document.getElementById('canvas').clientWidth || 1200;
   const startX = 80, rowH = 64, leftCol = 280, dropEnd = 700, vCol = 820;
-  // Com split, reserva uma faixa extra no topo/fundo pros rótulos "BRANCH A"/"BRANCH B"
+  // Com split, reserva uma faixa extra no topo/fundo pros rótulos "RAMAL A"/"RAMAL B"
   const topPad = hasSplit ? 58 : 40, botPad = hasSplit ? 58 : 40;
   const lineTop = topPad, lineBottom = nodes.length*rowH + topPad;
   const totalH = lineBottom + botPad;
@@ -676,9 +910,9 @@ function renderN2kBackboneView(){
     svgInner += `<line x1="${startX}" y1="${yPower+gap}" x2="${startX}" y2="${lineBottom}" stroke="${colB}" stroke-width="3"/>`;
     const vColorA = split.statsA.minV<10.33?'#ff5b6c':split.statsA.minV<11?'#f0b441':colA;
     const vColorB = split.statsB.minV<10.33?'#ff5b6c':split.statsB.minV<11?'#f0b441':colB;
-    svgInner += `<text x="${leftCol+165}" y="18" text-anchor="middle" fill="${colA}" font-size="11" font-weight="700" letter-spacing="0.5">BRANCH A</text>`;
+    svgInner += `<text x="${leftCol+165}" y="18" text-anchor="middle" fill="${colA}" font-size="11" font-weight="700" letter-spacing="0.5">RAMAL A</text>`;
     svgInner += `<text x="${leftCol+165}" y="32" text-anchor="middle" fill="var(--text-dim)" font-size="9">${split.statsA.count} disp. · ΣLEN ${split.statsA.sumLen} · ${split.statsA.runLen.toFixed(1)}m · <tspan fill="${vColorA}" font-weight="700">min ${split.statsA.minV.toFixed(2)}V</tspan></text>`;
-    svgInner += `<text x="${leftCol+165}" y="${totalH-22}" text-anchor="middle" fill="${colB}" font-size="11" font-weight="700" letter-spacing="0.5">BRANCH B</text>`;
+    svgInner += `<text x="${leftCol+165}" y="${totalH-22}" text-anchor="middle" fill="${colB}" font-size="11" font-weight="700" letter-spacing="0.5">RAMAL B</text>`;
     svgInner += `<text x="${leftCol+165}" y="${totalH-8}" text-anchor="middle" fill="var(--text-dim)" font-size="9">${split.statsB.count} disp. · ΣLEN ${split.statsB.sumLen} · ${split.statsB.runLen.toFixed(1)}m · <tspan fill="${vColorB}" font-weight="700">min ${split.statsB.minV.toFixed(2)}V</tspan></text>`;
   } else {
     // Backbone vertical único (linha cinza grossa à esquerda) — power tap no extremo ou ausente
@@ -708,11 +942,11 @@ function renderN2kBackboneView(){
     } else if(d.isPower){
       svgInner += `<g><rect x="${startX-12}" y="${y-12}" width="24" height="24" fill="#5fa8ff" stroke="#000" stroke-width="1" rx="3"/>
         <text x="${startX}" y="${y+5}" text-anchor="middle" fill="#000" font-size="11" font-weight="700">⚡</text>
-        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="var(--text-dim)" font-size="10">Power Tap</text></g>`;
+        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="var(--text-dim)" font-size="10">Alimentação</text></g>`;
     } else {
       // T-Joiner
       svgInner += `<g><circle cx="${startX}" cy="${y}" r="6" fill="#888" stroke="#000" stroke-width="0.5"/>
-        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="var(--text-dim)" font-size="9">T-Joiner</text></g>`;
+        <text x="${startX-25}" y="${y+5}" text-anchor="end" fill="var(--text-dim)" font-size="9">Conector T</text></g>`;
     }
 
     if(!d.isTerm && !d.isPower){
@@ -741,11 +975,11 @@ function renderN2kBackboneView(){
         svgInner += `<text x="${vCol+85}" y="${y+5}" font-size="14">⚠</text>`;
       }
     } else if(d.isPower){
-      // Power cable representation
+      // Power cable representation — clique na badge ajusta a tensão de alimentação (12-14.5V)
       svgInner += `<line x1="${startX+8}" y1="${y}" x2="${leftCol+200}" y2="${y}" stroke="#ff5b6c" stroke-width="2"/>`;
-      svgInner += `<text x="${startX+150}" y="${y+5}" text-anchor="middle" fill="var(--text)" font-size="11" font-weight="700">N2K Power Cable</text>`;
-      svgInner += `<rect x="${leftCol+200}" y="${y-15}" width="100" height="30" rx="3" fill="#5fa8ff" opacity="0.9"/>`;
-      svgInner += `<text x="${leftCol+250}" y="${y+5}" text-anchor="middle" fill="#000" font-size="13" font-weight="700">12 VDC</text>`;
+      svgInner += `<text x="${startX+150}" y="${y+5}" text-anchor="middle" fill="var(--text)" font-size="11" font-weight="700">Cabo Alimentação N2K</text>`;
+      svgInner += `<rect x="${leftCol+200}" y="${y-15}" width="100" height="30" rx="3" fill="#5fa8ff" opacity="0.9" data-edit-power-v="${d.node.uid}" style="cursor:pointer"/>`;
+      svgInner += `<text x="${leftCol+250}" y="${y+5}" text-anchor="middle" fill="#000" font-size="13" font-weight="700" pointer-events="none">${(d.node.n2kPowerV||12).toFixed(1)} VDC</text>`;
     } else if(d.isTerm){
       // termination only — already rendered the terminator badge
     }
@@ -765,6 +999,15 @@ function renderN2kBackboneView(){
       const cur = node.n2kDrop || 0.6;
       // simples: prompt-like usando inline modal (já que o real prompt() não funciona)
       _openInlineEditor(uid, cur);
+    });
+  });
+  // Bind: click na badge do power tap ajusta a tensão de alimentação (12-14.5V)
+  content.querySelectorAll('[data-edit-power-v]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const uid = el.dataset.editPowerV;
+      const node = state.project.nodes.find(n=>n.uid===uid);
+      if(!node) return;
+      _openPowerVEditor(uid, node.n2kPowerV || 12);
     });
   });
   // Bind: click no device seleciona
@@ -821,6 +1064,68 @@ function _openInlineEditor(uid, current){
   });
 }
 
+function _openPowerVEditor(uid, current){
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9500;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = `<div style="background:var(--bg-2);border:1px solid var(--line);border-radius:6px;padding:18px 24px;width:320px;box-shadow:0 8px 32px var(--shadow)">
+    <h3 style="margin:0 0 10px;color:var(--accent);font-size:11px;letter-spacing:.18em;text-transform:uppercase">Tensão de Alimentação N2K</h3>
+    <p style="font-size:11px;color:var(--text-dim);margin:0 0 12px">Ajuste pra refletir o estado real da bateria/carregador (12 a 14.5V). Padrão: 12V (pior caso, bateria descarregada).</p>
+    <input id="_pv_inp" type="number" min="12" max="14.5" step="0.1" value="${current}" style="width:100%;font-size:14px;padding:8px"/>
+    <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
+      <button id="_pv_cancel">Cancelar</button>
+      <button class="primary" id="_pv_save">Salvar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  const inp = document.getElementById('_pv_inp');
+  inp.focus();inp.select();
+  document.getElementById('_pv_cancel').addEventListener('click',()=>overlay.remove());
+  document.getElementById('_pv_save').addEventListener('click',()=>{
+    const v = parseFloat(inp.value);
+    if(v>=12 && v<=14.5){
+      const n = state.project.nodes.find(x=>x.uid===uid);
+      if(n){ n.n2kPowerV = v; }
+      overlay.remove();
+      render();
+    }else{toast('Tensão deve ser 12 a 14.5V')}
+  });
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter') document.getElementById('_pv_save').click();
+    if(e.key==='Escape') overlay.remove();
+  });
+}
+
+function _openInlineCableEditor(edgeUid, current){
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9500;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = `<div style="background:var(--bg-2);border:1px solid var(--line);border-radius:6px;padding:18px 24px;width:320px;box-shadow:0 8px 32px var(--shadow)">
+    <h3 style="margin:0 0 10px;color:var(--accent);font-size:11px;letter-spacing:.18em;text-transform:uppercase">Comprimento do Cabo Ethernet</h3>
+    <p style="font-size:11px;color:var(--text-dim);margin:0 0 12px">Comprimento em metros do cabo BlueNet/Marine Network.</p>
+    <input id="_cab_inp" type="number" min="0.1" step="0.1" value="${current}" style="width:100%;font-size:14px;padding:8px"/>
+    <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
+      <button id="_cab_cancel">Cancelar</button>
+      <button class="primary" id="_cab_save">Salvar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  const inp = document.getElementById('_cab_inp');
+  inp.focus();inp.select();
+  document.getElementById('_cab_cancel').addEventListener('click',()=>overlay.remove());
+  document.getElementById('_cab_save').addEventListener('click',()=>{
+    const v = parseFloat(inp.value);
+    if(v>0){
+      const e = state.project.edges.find(x=>x.uid===edgeUid);
+      if(e){ e.length = v; }
+      overlay.remove();
+      render();
+    }else{toast('Comprimento deve ser maior que 0')}
+  });
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter') document.getElementById('_cab_save').click();
+    if(e.key==='Escape') overlay.remove();
+  });
+}
+
 /* =================== ETHERNET VIEW ESTRUTURADA ===================
    Vista hub-and-spoke: identifica switch(es) central(is), distribui devices
    Ethernet ao redor com cabos rotulados (PN + comprimento). Inclui cabling
@@ -845,7 +1150,17 @@ function buildEthernetTopology(){
   const switches = ethDevs.filter(isSwitch);
   const endpoints = ethDevs.filter(d=>!isSwitch(d));
 
-  return {ethDevs, switches, endpoints};
+  // Mapeia cada endpoint pro switch a que está de fato cabeado (edge Ethernet real do
+  // projeto) — usado pra desenhar o endpoint sob o switch correto quando há 2+ switches.
+  const switchUids = new Set(switches.map(s=>s.node.uid));
+  const switchOf = {};
+  state.project.edges.forEach(e=>{
+    if(!['BlueNet','GarminMarineNet'].includes(e.type)) return;
+    if(switchUids.has(e.fromNode) && !switchUids.has(e.toNode)) switchOf[e.toNode]=e.fromNode;
+    else if(switchUids.has(e.toNode) && !switchUids.has(e.fromNode)) switchOf[e.fromNode]=e.toNode;
+  });
+
+  return {ethDevs, switches, endpoints, switchOf};
 }
 
 function renderEthernetView(){
@@ -855,7 +1170,7 @@ function renderEthernetView(){
   if(empty) empty.style.display = 'none';
   content.setAttribute('transform','');
 
-  const {ethDevs, switches, endpoints} = buildEthernetTopology();
+  const {ethDevs, switches, endpoints, switchOf} = buildEthernetTopology();
 
   if(!ethDevs.length){
     svg.removeAttribute('viewBox');
@@ -894,17 +1209,26 @@ function renderEthernetView(){
 
   let svgInner = '';
   const colorOf = d => d.hasBluenet ? '#5fb1f7' : '#3ec78f'; // BlueNet azul claro / Marine Net verde
+  const truncModel = (m,max) => m && m.length>max ? m.substring(0,max-1)+'…' : (m||'');
 
-  // Calcula altura total
+  // Lista os cabos Ethernet do projeto (edges ou adapters do tipo) — calculado antes do totalH
+  // pra a altura do painel Cabling List entrar na conta (evita transbordo, ver item 6b-4).
+  const ethEdges = state.project.edges.filter(e=>['BlueNet','GarminMarineNet'].includes(e.type));
+
+  // Calcula altura total — cada endpoint vai sob o switch a que está de fato cabeado
+  // (switchOf); endpoints ainda sem cabo definido caem no 1º switch como fallback visível.
   let cursorY = padY + 30;
   const hubLayouts = hubs.map(hub=>{
-    const hubLeaves = leaves;        // MVP: todos os leaves no 1º hub
+    const hubLeaves = switches.length
+      ? leaves.filter(l => (switchOf[l.node.uid] || hubs[0].node.uid) === hub.node.uid)
+      : (hub === hubs[0] ? leaves : []);
     const groupH = Math.max(120, hubLeaves.length * (endpointH+endpointGap) + 30);
-    const layout = {hub, leaves: hub === hubs[0] ? hubLeaves : [], y: cursorY, h: groupH};
+    const layout = {hub, leaves: hubLeaves, y: cursorY, h: groupH};
     cursorY += groupH + 30;
     return layout;
   });
-  const totalH = Math.max(cursorY + padY, 400);
+  const listContentH = 46 + ethEdges.length*36 + 14;
+  const totalH = Math.max(cursorY + padY, listContentH + padY*2, 400);
 
   // Background grid sutil
   svgInner += `<rect width="${W}" height="${totalH}" fill="var(--bg)"/>`;
@@ -913,8 +1237,6 @@ function renderEthernetView(){
   svgInner += `<g class="cabling-list">`;
   svgInner += `<rect x="${padX}" y="${padY}" width="${listColW}" height="${totalH-padY*2}" rx="4" fill="var(--bg-2)" stroke="var(--line)" stroke-width="1"/>`;
   svgInner += `<text x="${padX+12}" y="${padY+22}" fill="var(--accent)" font-size="10" font-weight="700" letter-spacing="2">CABLING LIST</text>`;
-  // Lista os cabos Ethernet do projeto (edges ou adapters do tipo)
-  const ethEdges = state.project.edges.filter(e=>['BlueNet','GarminMarineNet'].includes(e.type));
   let listY = padY + 46;
   if(!ethEdges.length){
     svgInner += `<text x="${padX+12}" y="${listY}" fill="var(--text-muted)" font-size="10">Nenhum cabo Ethernet conectado.</text>`;
@@ -946,7 +1268,7 @@ function renderEthernetView(){
     svgInner += `<g class="eth-hub" data-node="${hub.node.uid}" style="cursor:pointer">
       <rect x="${hubX}" y="${hubY}" width="${hubW}" height="60" rx="4" fill="var(--bg-3)" stroke="${hubColor}" stroke-width="${state.ui.selectedNode===hub.node.uid?2.5:1.5}"/>
       <text x="${hubX+hubW/2}" y="${hubY+15}" text-anchor="middle" fill="${hubColor}" font-size="9" font-weight="700" letter-spacing="1">${(hub.dev.family||'').toUpperCase()}</text>
-      <text x="${hubX+hubW/2}" y="${hubY+33}" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">${hub.dev.model}</text>
+      <text x="${hubX+hubW/2}" y="${hubY+33}" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">${truncModel(hub.dev.model,22)}</text>
       <text x="${hubX+hubW/2}" y="${hubY+48}" text-anchor="middle" fill="var(--text-dim)" font-size="9" font-family="monospace">${hub.dev.sku}</text>
     </g>`;
 
@@ -970,20 +1292,41 @@ function renderEthernetView(){
       const y2 = eY + endpointH/2;
       const stretch = Math.abs(x2-x1)*0.45;
       svgInner += `<path d="M${x1},${y1} C${x1+stretch},${y1} ${x2-stretch},${y2} ${x2},${y2}" stroke="${cColor}" stroke-width="2" fill="none"/>`;
-      // Label do cabo no meio
+      // Label do cabo no meio — clicável (quando existe edge real) pra editar o comprimento
       const labX = (x1+x2)/2;
       const labY = (y1+y2)/2 - 8;
       const labW = lenLab.length*6 + 16;
-      svgInner += `<rect x="${labX-labW/2}" y="${labY-9}" width="${labW}" height="14" rx="3" fill="var(--bg-2)" stroke="${cColor}" stroke-width="0.5"/>`;
-      svgInner += `<text x="${labX}" y="${labY+2}" text-anchor="middle" fill="var(--text)" font-size="10">${lenLab}</text>`;
+      svgInner += `<rect x="${labX-labW/2}" y="${labY-9}" width="${labW}" height="14" rx="3" fill="var(--bg-2)" stroke="${cColor}" stroke-width="0.5"${cable?` data-edit-cable="${cable.uid}" style="cursor:pointer"`:''}/>`;
+      svgInner += `<text x="${labX}" y="${labY+2}" text-anchor="middle" fill="var(--text)" font-size="10" pointer-events="none">${lenLab}</text>`;
       // Endpoint card
       svgInner += `<g class="eth-endpoint" data-node="${leaf.node.uid}" style="cursor:pointer">
         <rect x="${endpointX}" y="${eY}" width="${endpointW}" height="${endpointH}" rx="3" fill="var(--bg-3)" stroke="${leafColor}" stroke-width="${state.ui.selectedNode===leaf.node.uid?2.5:1}"/>
         <text x="${endpointX+10}" y="${eY+15}" fill="${leafColor}" font-size="9" font-weight="700" letter-spacing="1">${(leaf.dev.family||'').toUpperCase()}</text>
-        <text x="${endpointX+10}" y="${eY+30}" fill="var(--text)" font-size="11" font-weight="700">${leaf.dev.model}</text>
+        <text x="${endpointX+10}" y="${eY+30}" fill="var(--text)" font-size="11" font-weight="700">${truncModel(leaf.dev.model,26)}</text>
         <text x="${endpointX+10}" y="${eY+43}" fill="var(--text-dim)" font-size="8" font-family="monospace">${leaf.dev.sku}</text>
       </g>`;
     });
+  });
+
+  // ─── UPLINK SWITCH-A-SWITCH ───
+  // Cabo entre 2 switches (ex: 2 hubs Garmin Network interligados) não é hub→leaf — nenhum dos
+  // dois lados é "endpoint" — desenha como uma linha vertical tracejada entre os 2 hub boxes.
+  const switchNodeUids = new Set(switches.map(s=>s.node.uid));
+  const uplinkEdges = state.project.edges.filter(e=>
+    ['BlueNet','GarminMarineNet'].includes(e.type) &&
+    switchNodeUids.has(e.fromNode) && switchNodeUids.has(e.toNode) && e.fromNode!==e.toNode
+  );
+  uplinkEdges.forEach(e=>{
+    const layoutA = hubLayouts.find(l=>l.hub.node.uid===e.fromNode);
+    const layoutB = hubLayouts.find(l=>l.hub.node.uid===e.toNode);
+    if(!layoutA||!layoutB) return;
+    const yA = layoutA.y + layoutA.h/2;
+    const yB = layoutB.y + layoutB.h/2;
+    const x = hubX + hubW/2;
+    const lenLab = e.length ? `${e.length}m` : '?';
+    svgInner += `<path d="M${x},${yA} L${x},${yB}" stroke="#999" stroke-width="2" stroke-dasharray="5,3" fill="none"/>`;
+    svgInner += `<rect x="${x-24}" y="${(yA+yB)/2-9}" width="48" height="14" rx="3" fill="var(--bg-2)" stroke="#999" stroke-width="0.5" data-edit-cable="${e.uid}" style="cursor:pointer"/>`;
+    svgInner += `<text x="${x}" y="${(yA+yB)/2+2}" text-anchor="middle" fill="var(--text)" font-size="10" pointer-events="none">${lenLab}</text>`;
   });
 
   // ─── LEGENDA E POWER USE ───
@@ -1023,6 +1366,15 @@ function renderEthernetView(){
       render();
     });
   });
+  // Bind: click no label de comprimento do cabo edita e.length (mesmo padrão do drop N2K)
+  content.querySelectorAll('[data-edit-cable]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const edgeUid = el.dataset.editCable;
+      const edge = state.project.edges.find(x=>x.uid===edgeUid);
+      if(!edge) return;
+      _openInlineCableEditor(edgeUid, edge.length||0);
+    });
+  });
 }
 
 /* =================== FILTRO DE RELEVÂNCIA POR VIEW ===================
@@ -1042,11 +1394,8 @@ function nodeMatchesFilter(dev, filter){
   if(filter==='n2k'){
     return ports.some(p=>p.type==='N2K-Micro' || p.type==='N2K-Mini');
   }
-  if(filter==='power'){
-    const isPwrSource = /Alimenta|Power|Bateria/i.test(dev.model||'');
-    const consumes = (dev.power && (dev.power.watts>0 || /VDC/i.test(dev.power.voltage||'')));
-    return isPwrSource || consumes;
-  }
+  // filter==='power': inalcançável — renderCanvas() retorna cedo pra renderPowerTableView()
+  // antes de chegar aqui (a vista Energia virou tabela, não canvas SVG com dim/hide)
   return true;
 }
 // Devices "puro N2K" (Tee/Terminador/cabo de alimentação N2K) não fazem
@@ -1056,7 +1405,67 @@ function isN2kInfraOnly(dev){
   return /Tee.*N2K|N2K.*Tee|Terminador|Cabo Alimenta/i.test(dev.model||'');
 }
 
+/* =================== VISTA ENERGIA — TABELA DE CONSUMO + DIMENSIONAMENTO ===================
+   Lista cada device com consumo próprio (A/V/W) e sugere a bitola de cabo (AWG) do circuito
+   de alimentação, baseada no comprimento do cabo Power-12/24 já cadastrado no projeto e numa
+   queda de tensão alvo de 3% (ABYC E-11, circuito crítico — ver nota de confiança na tabela
+   AWG_TABLE em data.js). Substitui o canvas SVG por uma tabela HTML enquanto essa vista
+   estiver ativa (ver toggle de display em renderCanvas()).
+*/
+function renderPowerTableView(){
+  const wrap=document.getElementById('canvas-table-view');
+  const rows=computePowerRows();
+  const power=computePowerUse();
+  const activeRows=rows.filter(r=>r.amps>0);
+  const missingLen=activeRows.filter(r=>!r.hasLen).length;
+  let html=`<div class="summary-bar">
+    <div class="summary-item"><div class="label">12V Battery</div><div class="value">${power.batt12W.toFixed(0)} W · ${power.batt12A.toFixed(1)} A</div></div>
+    <div class="summary-item"><div class="label">12V Max (1.3×)</div><div class="value">${power.max12W.toFixed(0)} W · ${power.max12A.toFixed(1)} A</div></div>
+    <div class="summary-item"><div class="label">24V Battery</div><div class="value">${power.batt24W.toFixed(0)} W · ${power.batt24A.toFixed(1)} A</div></div>
+    <div class="summary-item"><div class="label">24V Max (1.3×)</div><div class="value">${power.max24W.toFixed(0)} W · ${power.max24A.toFixed(1)} A</div></div>
+    <div class="summary-item"><div class="label">Circuitos sem comprimento</div><div class="value" style="${missingLen?'color:var(--warn)':''}">${missingLen} / ${activeRows.length}</div></div>
+  </div>`;
+  if(!rows.length){
+    html+='<div class="empty-state">Nenhum dispositivo com especificação de energia no projeto.</div>';
+  } else {
+    html+='<table><thead><tr><th>Dispositivo</th><th>SKU</th><th>Categoria</th><th class="num">Tensão</th><th class="num">Potência (W)</th><th class="num">Corrente (A)</th><th class="num">Cabo</th><th>Bitola sugerida (≤3% queda)</th></tr></thead><tbody>';
+    rows.forEach(r=>{
+      const label=r.node.customLabel?`${esc(r.dev.model)} · ${esc(r.node.customLabel)}`:esc(r.dev.model);
+      const lenCell=r.hasLen?`${r.lenM.toFixed(1)} m`:'<span class="muted">sem comprimento</span>';
+      let awgCell='<span class="muted">—</span>';
+      if(r.amps<=0) awgCell='<span class="muted">sem consumo confirmado</span>';
+      else if(!r.hasLen) awgCell='<span class="muted">sem comprimento</span>';
+      else if(r.awg) awgCell=`<span class="awg-pill" style="background:${r.awg.sufficient?'var(--ok)':'var(--err)'}">${r.awg.awg} AWG</span> <span class="muted">(${r.awg.dropV.toFixed(2)}V)</span>`;
+      html+=`<tr data-node="${r.node.uid}"><td>${label}</td><td class="num" style="font-family:monospace">${r.dev.sku||'—'}</td><td>${r.dev.category||'—'}</td><td class="num">${r.vNom}V</td><td class="num">${r.watts||'—'}</td><td class="num">${r.amps?r.amps.toFixed(2):'—'}</td><td class="num">${lenCell}</td><td>${awgCell}</td></tr>`;
+    });
+    html+='</tbody></table>';
+  }
+  html+=`<div style="font-size:10px;color:var(--text-muted);margin-top:14px;line-height:1.6">
+    Bitola calculada pra queda de tensão ≤ 3% (ABYC E-11, circuito crítico/eletrônica de navegação), fórmula V = R(Ω/1000ft) × 2 × L(ft) × I / 1000.<br>
+    Tabela de resistência por AWG é referência de engenharia padrão (cobre sólido, 20°C) — confirmar contra a tabela oficial ABYC E-11 antes de tratar como spec certificada.<br>
+    Comprimento do cabo de energia vem da edge Power-12/24 conectada ao device — edite selecionando o cabo na vista "Tudo".
+  </div>`;
+  wrap.innerHTML=html;
+  wrap.querySelectorAll('tr[data-node]').forEach(tr=>{
+    tr.addEventListener('click',()=>{
+      state.ui.selectedNode=tr.dataset.node; state.ui.selectedEdge=null; state.ui.selectedZone=null;
+      renderInspector();
+    });
+  });
+}
+
 function renderCanvas(){
+  const svg=document.getElementById('canvas');
+  const tableView=document.getElementById('canvas-table-view');
+  const isPowerTable = state.ui.canvasFilter === 'power';
+  tableView.style.display = isPowerTable ? 'block' : 'none';
+  svg.style.display = isPowerTable ? 'none' : '';
+  const controlsEl=document.querySelector('.canvas-controls'); if(controlsEl) controlsEl.style.display = isPowerTable ? 'none' : '';
+  const legendEl=document.getElementById('canvas-legend'); if(legendEl) legendEl.style.display = isPowerTable ? 'none' : '';
+  if(isPowerTable){
+    renderPowerTableView();
+    return;
+  }
   // Se filtro é N2K, usa vista estruturada dedicada
   if(state.ui.canvasFilter === 'n2k'){
     renderN2kBackboneView();
@@ -1067,7 +1476,6 @@ function renderCanvas(){
     renderEthernetView();
     return;
   }
-  const svg=document.getElementById('canvas');
   // restore viewBox livre
   svg.removeAttribute('viewBox');
   const content=document.getElementById('canvas-content');
@@ -1092,7 +1500,7 @@ function renderCanvas(){
     if(f==='all') return ()=>true;
     if(f==='ethernet') return e=>['gmn','bluenet','eth-generic','eth-ray','eth-furuno'].includes(PORT_TYPES[e.type]?.group);
     if(f==='n2k') return e=>edgeIsType(e,'n2k');
-    if(f==='power') return e=>['pwr12','pwr24'].includes(PORT_TYPES[e.type]?.group);
+    // f==='power': inalcançável — renderCanvas() já retornou cedo pra renderPowerTableView()
     return ()=>true;
   })();
   let edgesSvg='';
@@ -1110,9 +1518,35 @@ function renderCanvas(){
     const dirB = tp.side==='left'?-1:1;
     const dx = x2-x1;
     const dy = y2-y1;
+
+    // Waypoint manual (arrastado pelo usuário, ver bindCanvas/bindGlobal) ou preview ao vivo
+    // durante o arrasto — tem prioridade sobre o roteamento automático.
+    const wDrag = state.ui.edgeWaypointDragging;
+    const liveWp = (wDrag && wDrag.edgeUid===edge.uid) ? wDrag.point : null;
+    const manualWp = (edge.waypoints && edge.waypoints[0]) || null;
+    let wp = liveWp || manualWp;
+
+    // Sem waypoint manual: verifica se a corda reta entre as 2 portas atravessa o bloco de
+    // outro device no caminho — se sim, desvia automaticamente por cima ou por baixo dele.
+    if(!wp){
+      const blocker = findBlockingNode(x1,y1,x2,y2,[fn.uid,tn.uid]);
+      if(blocker){
+        const bh = nodeHeight(blocker), bw = nodeWidth(blocker);
+        const midy = (y1+y2)/2;
+        const bTop = blocker.y-16, bBottom = blocker.y+bh+16;
+        const detourY = Math.abs(midy-bTop) <= Math.abs(bBottom-midy) ? bTop : bBottom;
+        const midx = Math.max(blocker.x-20, Math.min(blocker.x+bw+20, (x1+x2)/2));
+        wp = {x:midx, y:detourY};
+      }
+    }
+
     let path;
-    // Se from sai pra direita e to entra pela esquerda (caso comum) → curva normal
-    if(fp.side==='right' && tp.side==='left' && dx>40){
+    if(wp){
+      // Curva quadrática puxada pro waypoint (manual ou desvio automático) — contorna o
+      // obstáculo/reflete o ajuste do usuário sem precisar de múltiplos segmentos.
+      path = `M${x1},${y1} Q${wp.x},${wp.y} ${x2},${y2}`;
+    } else if(fp.side==='right' && tp.side==='left' && dx>40){
+      // Se from sai pra direita e to entra pela esquerda (caso comum) → curva normal
       const stretch = Math.max(40, Math.min(120, Math.abs(dx)*0.45));
       path = `M${x1},${y1} C${x1+stretch},${y1} ${x2-stretch},${y2} ${x2},${y2}`;
     } else if(fp.side==='left' && tp.side==='right' && dx<-40){
@@ -1130,7 +1564,8 @@ function renderCanvas(){
     const pt=PORT_TYPES[edge.type];
     const color=pt?.color||'#888';
     const dashed=pt?.stroke==='dashed'?' dashed':'';
-    const sel=state.ui.selectedEdge===edge.uid?' selected':'';
+    const isSel=state.ui.selectedEdge===edge.uid;
+    const sel=isSel?' selected':'';
     edgesSvg+=`<path class="edge-halo" d="${path}" stroke="var(--bg)" stroke-width="5" fill="none" pointer-events="none"/>`;
     edgesSvg+=`<path class="edge${dashed}${sel}" d="${path}" stroke="${color}" data-edge="${edge.uid}"/>`;
     if(edge.length){
@@ -1139,6 +1574,12 @@ function renderCanvas(){
       const labW = lab.length*5.2 + 10;
       edgesSvg+=`<rect class="edge-label-bg" x="${lx-labW/2}" y="${ly-10}" width="${labW}" height="14" rx="3"/>`;
       edgesSvg+=`<text class="edge-label" x="${lx}" y="${ly+1}" text-anchor="middle">${lab}</text>`;
+    }
+    // Grip de ajuste manual — só na edge selecionada, pra não poluir a vista. Arrastar define
+    // edge.waypoints; duplo-clique remove o waypoint manual e volta pro roteamento automático.
+    if(isSel){
+      const gx = wp ? wp.x : (x1+x2)/2, gy = wp ? wp.y : (y1+y2)/2;
+      edgesSvg+=`<circle class="edge-waypoint-grip" data-edge-grip="${edge.uid}" cx="${gx}" cy="${gy}" r="6" fill="${color}" stroke="#fff" stroke-width="1.5" style="cursor:grab"/>`;
     }
   });
 
@@ -1245,10 +1686,19 @@ function renderInspector(){
         <div class="inspector-row"><label>SKU</label><span style="font-family:monospace">${dev.sku}</span></div>
         <div class="inspector-row"><label>Categoria</label><span>${dev.category}</span></div>
         ${dev.power?.voltage?`<div class="inspector-row"><label>Tensão</label><span>${dev.power.voltage}</span></div>`:''}
+        ${(()=>{const v=(dev.power?.voltage||'').toString();const dual=/12/.test(v)&&/24/.test(v);
+          return dual?`<div class="inspector-row"><label>Barramento</label><select id="n-bus">
+            <option value="" ${!node.busOverride?'selected':''}>Auto (12V)</option>
+            <option value="12V" ${node.busOverride==='12V'?'selected':''}>12V</option>
+            <option value="24V" ${node.busOverride==='24V'?'selected':''}>24V</option>
+          </select></div>`:'';})()}
         <div class="inspector-row"><label>Zona</label><select id="n-zone">${zoneOpts}</select></div>
         <div class="inspector-row"><label>Rótulo extra</label><input id="n-label" value="${esc(node.customLabel)}" placeholder="ex: PROA"/></div>
         <div class="inspector-row"><label>Consumo (W) override</label><input id="n-watts" type="number" step="0.1" min="0" value="${node.wattsOverride||''}" placeholder="${dev.power?.watts||'-'}"/></div>
-        <div style="margin-top:10px"><button class="danger small" id="btn-del-node">Remover do projeto</button></div>
+        <div style="margin-top:10px;display:flex;gap:6px">
+          ${dev._free?`<button class="small" id="btn-edit-free">✎ Editar Item Livre</button>`:''}
+          <button class="danger small" id="btn-del-node">Remover do projeto</button>
+        </div>
         ${dev._verify?'<div style="margin-top:8px;padding:6px 8px;background:#3a2a10;border-left:2px solid var(--warn);font-size:10px;color:var(--warn)">Dados marcados como _verify — confirmar contra fonte oficial Garmin.</div>':''}
       </div>`;
     }
@@ -1400,6 +1850,13 @@ function bindInspector(){
       g('n-zone')?.addEventListener('change',e=>{n.zoneUid=e.target.value||undefined;render()});
       g('n-label')?.addEventListener('change',e=>{n.customLabel=e.target.value;render()});
       g('n-watts')?.addEventListener('change',e=>{n.wattsOverride=parseFloat(e.target.value)||0;if(!n.wattsOverride)delete n.wattsOverride;render()});
+      g('n-bus')?.addEventListener('change',e=>{n.busOverride=e.target.value||undefined;if(!n.busOverride)delete n.busOverride;render()});
+      g('btn-edit-free')?.addEventListener('click',()=>{
+        state.ui.editingFreeId=n.deviceId;
+        state.ui.libraryTab='free';
+        state.ui.libraryFilter={q:'',category:''};
+        render();
+      });
       g('btn-del-node')?.addEventListener('click',()=>{
         state.project.edges=state.project.edges.filter(ed=>ed.fromNode!==n.uid&&ed.toNode!==n.uid);
         state.project.nodes=state.project.nodes.filter(x=>x.uid!==n.uid);
@@ -1510,6 +1967,21 @@ function bindCanvas(){
       render();e.stopPropagation();
     });
   });
+  // Grip de ajuste manual da rota da edge selecionada (arrastar) — mousemove/mouseup globais
+  // em bindGlobal() cuidam do resto, mesmo padrão do drag-to-reorder do N2K Backbone.
+  svg.querySelectorAll('[data-edge-grip]').forEach(g=>{
+    g.addEventListener('mousedown',e=>{
+      e.stopPropagation();e.preventDefault();
+      const edgeUid=g.dataset.edgeGrip;
+      state.ui.edgeWaypointDragging={edgeUid, point:{x:parseFloat(g.getAttribute('cx')),y:parseFloat(g.getAttribute('cy'))}};
+    });
+    g.addEventListener('dblclick',e=>{
+      e.stopPropagation();
+      const edge=state.project.edges.find(x=>x.uid===g.dataset.edgeGrip);
+      if(edge) delete edge.waypoints;
+      render();
+    });
+  });
 }
 
 function svgPoint(evt){
@@ -1538,13 +2010,29 @@ function bindGlobal(){
     e.preventDefault();
     const id=e.dataTransfer.getData('text/plain');
     const dev=getDeviceById(id);if(!dev)return;
+    const isN2kDevice=(dev.ports||[]).some(p=>p.type==='N2K-Micro'||p.type==='N2K-Mini');
+    if(state.ui.canvasFilter==='n2k' && isN2kDevice){
+      // Solto em cima da vista N2K Backbone estruturada: insere na posição vertical exata onde
+      // o instalador soltou (T-Joiner naquele ponto do trunk), refletindo a ordem física real —
+      // em vez de cair sempre no topo (ver fallback ORD_END em buildN2kBackbone).
+      const existing=calcN2kVoltagesPerNode();
+      const rowH=64;
+      const topPad = n2kBranchSplit(existing).hasSplit ? 58 : 40;
+      const pt=svgViewBoxPoint(e);
+      const insertIdx=Math.round((pt.y-topPad)/rowH);
+      // x/y não têm efeito na vista N2K (posição é só n2kOrder/rowH), mas sobrevivem ao
+      // trocar pra vista "Tudo"/PDF — nunca deixar em (0,0), senão múltiplos devices soltos
+      // aqui ficam todos empilhados exatamente na origem do canvas fora desta vista.
+      const lastN = state.project.nodes[state.project.nodes.length-1];
+      const node=addDeviceNode(id, (lastN?lastN.x:100)+260, lastN?lastN.y:100);
+      const arr=existing.map(d=>d.node);
+      arr.splice(Math.max(0,Math.min(arr.length,insertIdx)),0,node);
+      arr.forEach((n,i)=>{n.n2kOrder=i});
+      state.ui.selectedNode=node.uid;render();
+      return;
+    }
     const pt=svgPoint(e);
-    const node={uid:uid(),deviceId:id,x:pt.x-NODE_W/2,y:pt.y-30};
-    // detecta zona automaticamente
-    state.project.zones.forEach(z=>{
-      if(pt.x>=z.x&&pt.x<=z.x+z.w&&pt.y>=z.y&&pt.y<=z.y+z.h) node.zoneUid=z.uid;
-    });
-    state.project.nodes.push(node);
+    const node=addDeviceNode(id, pt.x-NODE_W/2, pt.y-30, null, pt);
     state.ui.selectedNode=node.uid;render();
   });
   svg.addEventListener('mousedown',e=>{
@@ -1566,6 +2054,11 @@ function bindGlobal(){
         state.ui.n2kDragging.overIndex=idx;
         renderN2kBackboneView();
       }
+      return;
+    }
+    if(state.ui.edgeWaypointDragging){
+      state.ui.edgeWaypointDragging.point=svgPoint(e);
+      renderCanvas();
       return;
     }
     if(state.ui.resizing){
@@ -1615,6 +2108,14 @@ function bindGlobal(){
     }else if(state.ui.pendingConnection){renderCanvas()}
   });
   window.addEventListener('mouseup',()=>{
+    if(state.ui.edgeWaypointDragging){
+      const wd=state.ui.edgeWaypointDragging;
+      const edge=state.project.edges.find(x=>x.uid===wd.edgeUid);
+      if(edge) edge.waypoints=[wd.point];
+      state.ui.edgeWaypointDragging=null;
+      render();
+      return;
+    }
     if(state.ui.n2kDragging){
       const drag=state.ui.n2kDragging;
       const nodes=calcN2kVoltagesPerNode();
@@ -1764,29 +2265,36 @@ const FIX_HANDLERS = {
     if(!term_m||!term_f){toast('Terminadores não encontrados no catálogo');return}
     const cx = (state.ui.mousePos.x-state.ui.pan.x)/state.ui.zoom || 100;
     const cy = (state.ui.mousePos.y-state.ui.pan.y)/state.ui.zoom || 100;
-    state.project.nodes.push({uid:uid(),deviceId:term_m.id,x:cx,y:cy});
-    state.project.nodes.push({uid:uid(),deviceId:term_f.id,x:cx+250,y:cy});
+    const tm={uid:uid(),deviceId:term_m.id,x:cx,y:cy}, tf={uid:uid(),deviceId:term_f.id,x:cx+250,y:cy};
+    state.project.nodes.push(tm,tf);
+    assignSensibleN2kOrder(tm); assignSensibleN2kOrder(tf);
   },
   'R-N2K-02': function(){
     const pwr = ADAPTERS.find(a=>/Cabo Alimenta/i.test(a.model));
     if(!pwr){toast('Cabo de alimentação não encontrado');return}
     const cx = (state.ui.mousePos.x-state.ui.pan.x)/state.ui.zoom || 200;
     const cy = (state.ui.mousePos.y-state.ui.pan.y)/state.ui.zoom || 200;
-    state.project.nodes.push({uid:uid(),deviceId:pwr.id,x:cx,y:cy});
+    const n={uid:uid(),deviceId:pwr.id,x:cx,y:cy};
+    state.project.nodes.push(n);
+    assignSensibleN2kOrder(n);
   },
   'R-PANO-01': function(){
     const gls = CATALOG.find(d=>/GLS\s*10/i.test(d.model));
     if(!gls){toast('GLS 10 não encontrado');return}
     const cx = (state.ui.mousePos.x-state.ui.pan.x)/state.ui.zoom || 300;
     const cy = (state.ui.mousePos.y-state.ui.pan.y)/state.ui.zoom || 300;
-    state.project.nodes.push({uid:uid(),deviceId:gls.id,x:cx,y:cy});
+    const n={uid:uid(),deviceId:gls.id,x:cx,y:cy};
+    state.project.nodes.push(n);
+    assignSensibleN2kOrder(n);
   },
   'R-AP-01': function(){
     const ghc = CATALOG.find(d=>/GHC\s*50/i.test(d.model));
     if(!ghc){toast('GHC 50 não encontrado');return}
     const cx = (state.ui.mousePos.x-state.ui.pan.x)/state.ui.zoom || 400;
     const cy = (state.ui.mousePos.y-state.ui.pan.y)/state.ui.zoom || 400;
-    state.project.nodes.push({uid:uid(),deviceId:ghc.id,x:cx,y:cy});
+    const n={uid:uid(),deviceId:ghc.id,x:cx,y:cy};
+    state.project.nodes.push(n);
+    assignSensibleN2kOrder(n);
   }
 };
 
@@ -1825,7 +2333,11 @@ function computePowerUse(){
     const w=(typeof n.wattsOverride==='number'?n.wattsOverride:dev.power?.watts)||0;
     if(!w) return;
     const v=(dev.power?.voltage||'').toString();
-    const is24=/24/.test(v) && !/12/.test(v);
+    const has12=/12/.test(v), has24=/24/.test(v);
+    // devices dual-voltage (12-24VDC — a maioria do catálogo) precisam que o instalador escolha
+    // em qual barramento o device está de fato ligado NESSE barco; sem escolha, mantém o default
+    // histórico (12V) pra não quebrar projetos salvos antes desse campo existir
+    const is24=n.busOverride==='24V' ? true : n.busOverride==='12V' ? false : (has24 && !has12);
     if(is24){r.batt24W+=w}else{r.batt12W+=w}
   });
   r.max12W=r.batt12W*1.3; r.max24W=r.batt24W*1.3;
@@ -1833,6 +2345,67 @@ function computePowerUse(){
   r.batt24A=r.batt24W/24; r.max24A=r.max24W/24;
   r.combinedW=r.batt12W+r.batt24W; r.combinedMaxW=r.max12W+r.max24W;
   return r;
+}
+
+// V_drop = R(Ω/1000ft) × 2 (ida+volta) × L_ft × I / 1000 — fórmula padrão de queda de
+// tensão em corrente contínua. Percorre AWG_TABLE do mais fino pro mais grosso e retorna
+// o primeiro que fica dentro do alvo (ou o maior da tabela, marcado insuficiente).
+function awgForCurrent(amps, lenM, targetDropV){
+  if(!amps || !lenM) return null;
+  const lenFt = lenM * 3.28084;
+  for(const row of AWG_TABLE){
+    const drop = row.ohmsPer1000ft * 2 * lenFt * amps / 1000;
+    if(drop <= targetDropV) return {...row, dropV:drop, sufficient:true};
+  }
+  const last = AWG_TABLE[AWG_TABLE.length-1];
+  const drop = last.ohmsPer1000ft * 2 * lenFt * amps / 1000;
+  return {...last, dropV:drop, sufficient:false};
+}
+
+// Quebra por-device pra vista Energia (tabela) — mesma resolução de watts/voltage que
+// computePowerUse() (consistência com os totais já mostrados), mas devolve 1 linha por node.
+function computePowerRows(){
+  return state.project.nodes.map(n=>{
+    const dev=getDeviceById(n.deviceId);
+    if(!dev || isN2kInfraOnly(dev)) return null; // Tee/Terminador/Cabo Alim. N2K não têm circuito próprio
+    if(!dev.power) return null; // sem spec de energia (antena, adapter passivo, Item Livre) — não inventar
+    const vRaw=(dev.power.voltage||'').toString();
+    const has12=/12/.test(vRaw), has24=/24/.test(vRaw);
+    const is24=n.busOverride==='24V' ? true : n.busOverride==='12V' ? false : (has24 && !has12);
+    const vNom=is24?24:12;
+    const w=(typeof n.wattsOverride==='number'?n.wattsOverride:dev.power.watts)||0;
+    const amps=w?w/vNom:0;
+    const group=is24?'pwr24':'pwr12';
+    const edge=state.project.edges.find(e=>PORT_TYPES[e.type]?.group===group && (e.fromNode===n.uid||e.toNode===n.uid));
+    const hasLen=!!(edge && edge.length);
+    const lenM=hasLen?edge.length:0;
+    const awg=(hasLen && amps>0) ? awgForCurrent(amps, lenM, vNom*POWER_TARGET_DROP_PCT) : null;
+    return {node:n, dev, vRaw, vNom, is24, watts:w, amps, hasLen, lenM, awg};
+  }).filter(Boolean).sort((a,b)=>b.amps-a.amps); // maior consumo primeiro (mais acionável pro instalador)
+}
+
+// Versão HTML "print-safe" da tabela de energia — página ENERGIA do PDF A3 Técnico (ver
+// renderA3Mode()), reaproveita a mesma lógica de computePowerRows() da vista on-screen.
+function buildEnergiaTableHtml(){
+  const rows = computePowerRows();
+  const power = computePowerUse();
+  if(!rows.length) return `<div style="padding:20pt;text-align:center;color:#666;font-size:9pt">Nenhum dispositivo com especificação de energia no projeto.</div>`;
+  let html = `<div style="display:flex;gap:14pt;margin-bottom:8pt;font-family:Menlo,Consolas,monospace;font-size:8pt;color:#444">
+    <div><strong>12V</strong> ${power.batt12W.toFixed(0)}W · ${power.batt12A.toFixed(1)}A (batt) · ${power.max12A.toFixed(1)}A (max)</div>
+    <div><strong>24V</strong> ${power.batt24W.toFixed(0)}W · ${power.batt24A.toFixed(1)}A (batt) · ${power.max24A.toFixed(1)}A (max)</div>
+  </div>`;
+  html += `<table><thead><tr><th>Dispositivo</th><th>SKU</th><th class="num">Tensão</th><th class="num">W</th><th class="num">A</th><th class="num">Cabo</th><th>Bitola (≤3%)</th></tr></thead><tbody>`;
+  rows.forEach(r=>{
+    const label = r.node.customLabel ? `${esc(r.dev.model)} · ${esc(r.node.customLabel)}` : esc(r.dev.model);
+    const lenCell = r.hasLen ? `${r.lenM.toFixed(1)}m` : '—';
+    let awgCell = '—';
+    if(r.amps>0 && r.hasLen && r.awg) awgCell = `${r.awg.awg} AWG (${r.awg.dropV.toFixed(2)}V)${r.awg.sufficient?'':' ⚠'}`;
+    else if(r.amps>0 && !r.hasLen) awgCell = 'sem comprimento';
+    html += `<tr><td>${label}</td><td style="font-family:Menlo,Consolas,monospace">${r.dev.sku||'—'}</td><td class="num">${r.vNom}V</td><td class="num">${r.watts||'—'}</td><td class="num">${r.amps?r.amps.toFixed(2):'—'}</td><td class="num">${lenCell}</td><td>${awgCell}</td></tr>`;
+  });
+  html += `</tbody></table>
+  <div style="font-size:7.5pt;color:#888;margin-top:6pt">Bitola calculada pra queda de tensão ≤ 3% (ABYC E-11, circuito crítico). Tabela AWG é referência de engenharia — confirmar contra o documento oficial ABYC E-11.</div>`;
+  return html;
 }
 
 
@@ -1992,7 +2565,6 @@ function renderClienteMode(){
   const slide=(svgInner,viewLabel)=>`
     <div class="slide">
       <img class="wb-logo-mark" src="logo.png" alt="">
-      <div class="wb-watermark">WONDER BOAT<small>SYSTEM BUILDER</small></div>
       <div class="slide-brand-tl"><img class="print-head-logo" src="logo.png" alt=""><span>WONDER BOAT<small>SYSTEM BUILDER · GARMIN</small></span></div>
       ${viewLabel?`<div class="view-tag">${viewLabel}</div>`:''}
       <div class="slide-canvas">${svgInner}</div>
@@ -2002,7 +2574,7 @@ function renderClienteMode(){
           <div class="info-tag">SISTEMA ELETRÔNICO DE NAVEGAÇÃO</div>
           <div class="info-title">${subtitle}</div>
           <div class="info-client">Cliente<strong>${esc(proj.client)||'—'}</strong></div>
-          <div class="info-sig"><span>${esc(proj.installer)||'Lucas de Araújo Souza'}</span><span>${dateFmt}</span></div>
+          <div class="info-sig"><span class="info-sig-name"><img class="info-sig-logo" src="logo.png" alt="">Projetista <strong>${esc(proj.installer)||'Lucas de Araújo Souza'}</strong></span><span>${dateFmt}</span></div>
         </div>
       </div>
     </div>
@@ -2080,16 +2652,15 @@ function renderA3Mode(){
     </div>
   `;
 
-  // Página 1: Tudo, Página 2: Ethernet, Página 3: N2K Backbone, Página 4: Energia
+  // Página 1: Tudo, Página 2: Ethernet, Página 3: N2K Backbone (vista estruturada, igual à
+  // tela — não o schematic livre filtrado), Página 4: Energia (tabela de consumo/dimensionamento)
   const sLayout = buildSchematicSvg(1450, 800, {padding:40, watermark:false});
   const sEth = buildSchematicSvg(1450, 800, {padding:40, watermark:false,
     filterEdge:e=>['gmn','bluenet','eth-generic','eth-ray','eth-furuno'].includes(PORT_TYPES[e.type]?.group)});
-  const sN2K = buildSchematicSvg(1450, 800, {padding:40, watermark:false,
-    filterEdge:e=>edgeIsType(e,'n2k')});
-  const sPower = buildSchematicSvg(1450, 800, {padding:40, watermark:false,
-    filterEdge:e=>['pwr12','pwr24'].includes(PORT_TYPES[e.type]?.group)});
+  const sN2K = buildN2kBackboneSvg(1350);
+  const sEnergia = buildEnergiaTableHtml();
 
-  document.getElementById('print-a3').innerHTML = a3(sLayout,'TUDO') + a3(sEth,'ETHERNET') + a3(sN2K,'N2K BACKBONE') + a3(sPower,'ENERGIA');
+  document.getElementById('print-a3').innerHTML = a3(sLayout,'TUDO') + a3(sEth,'ETHERNET') + a3(sN2K,'N2K BACKBONE') + a3(sEnergia,'ENERGIA');
 }
 
 /* =================== RENDER PRINT — LISTA DE CABOS =================== */
@@ -2179,7 +2750,7 @@ function renderSearchResults(q){
       const id=item.dataset.id;
       const cx=(window.innerWidth/2-state.ui.pan.x)/state.ui.zoom;
       const cy=(window.innerHeight/2-state.ui.pan.y)/state.ui.zoom;
-      state.project.nodes.push({uid:uid(),deviceId:id,x:cx-110,y:cy-30});
+      addDeviceNode(id, cx-110, cy-30);
       closeSearch();render();
     });
   });
@@ -2189,7 +2760,7 @@ function renderSearchResults(q){
       const id=b.dataset.add;
       const cx=(window.innerWidth/2-state.ui.pan.x)/state.ui.zoom;
       const cy=(window.innerHeight/2-state.ui.pan.y)/state.ui.zoom;
-      state.project.nodes.push({uid:uid(),deviceId:id,x:cx-110,y:cy-30});
+      addDeviceNode(id, cx-110, cy-30);
       closeSearch();render();
     });
   });

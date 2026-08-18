@@ -17,7 +17,7 @@ Inspirada na experiência em desenvolvimento de projetos eletrônicos marítimos
   - **Tudo** — layout geral livre
   - **N2K Backbone** — vertical estruturada profissional (T-Joiners, drops editáveis, voltagem por nó, drag-to-reorder pra refletir a posição física real dos equipamentos a bordo, split visual em Branch A/B quando o power tap não está no extremo)
   - **Ethernet** — hub-and-spoke estruturada (switch/gateway central + devices ao redor + cabling list + Power Use)
-  - **Energia** — filtra por consumo, com auto-hide de infraestrutura irrelevante (Tees/terminadores N2K)
+  - **Energia** — tabela de consumo por dispositivo (A/V/W) com dimensionamento automático de bitola de cabo (AWG, ≤3% de queda de tensão)
 - Auto-hide/dim de dispositivos irrelevantes por vista (reduz poluição visual em projetos grandes)
 - Toggle **Foto oficial Garmin / Silhueta Wonder BOAT** nos cards da biblioteca (165/165 SKUs com foto real embutida em base64 — 100% de cobertura)
 - Validação automática contra normas NMEA 2000 / ABYC E-11 / ISO 13297 com 11 regras (R-N2K-01..R-CABLE-01)

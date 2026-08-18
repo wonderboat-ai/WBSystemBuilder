@@ -81,31 +81,31 @@ const CATALOG = [
 {id:'gar-gpsmap-8416xsv',sku:'010-02093-02',family:'GPSMAP 8400',model:'GPSMAP 8416xsv',category:'MFD',
  description:'MFD glass-helm 16" Full HD com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8612',sku:'010-02092-50',family:'GPSMAP 8600',model:'GPSMAP 8612',category:'MFD',
  description:'MFD 12" all-in-one (display+computador) — Marine Network legacy.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8612xsv',sku:'010-02092-51',family:'GPSMAP 8600',model:'GPSMAP 8612xsv',category:'MFD',
  description:'MFD 12" all-in-one com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8616',sku:'010-02093-50',family:'GPSMAP 8600',model:'GPSMAP 8616',category:'MFD',
  description:'MFD 16" all-in-one — Marine Network legacy.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'Power-12',qty:1}],_verify:true},
 {id:'gar-gpsmap-8616xsv',sku:'010-02093-51',family:'GPSMAP 8600',model:'GPSMAP 8616xsv',category:'MFD',
  description:'MFD 16" all-in-one com sondador integrado.',
  power:{voltage:'12-24VDC'},ports:[
-  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},
+  {type:'GarminMarineNet',qty:2},{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'J1939',qty:1},
   {type:'WiFi',qty:1},{type:'Bluetooth',qty:1},{type:'HDMI',qty:1},{type:'Video-BNC',qty:2},{type:'USB',qty:1},
   {type:'SonarConn',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
@@ -275,7 +275,7 @@ const CATALOG = [
 
 {id:'gar-ais-800',sku:'010-02087-00',family:'AIS',model:'AIS 800 Class B SOTDMA',category:'AIS',
  description:'Transponder AIS Classe B/SO 5W com splitter VHF integrado.',
- power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
+ power:{voltage:'12VDC'},ports:[{type:'N2K-Micro',qty:1},{type:'NMEA0183',qty:1},{type:'VHFAntenna',qty:1},{type:'GPSAntenna',qty:1},{type:'Power-12',qty:1}],_verify:true},
 
 /* ============== Instrumentos ============== */
 {id:'gar-gmi-20',sku:'010-01140-00',family:'GMI',model:'GMI 20 Marine Instrument',category:'Instrument',
@@ -450,6 +450,26 @@ const COMPAT = {};
 ['AP-RudderFeedback'].forEach(p=>{COMPAT[p]=['AP-RudderFeedback']});
 
 /* =========================================================================
+   DIMENSIONAMENTO ELÉTRICO — bitola de cabo (AWG) pra vista Energia
+   Tabela de resistência por AWG (Ω/1000ft, cobre sólido, ~20°C) — referência de
+   engenharia padrão (Wikipedia "American wire gauge", Engineering Toolbox, Misumi),
+   NÃO é a tabela oficial ABYC E-11 (que usa cabo multifilar estanhado e prevê
+   derating térmico) — tratar como estimativa até confirmar contra o documento
+   oficial ABYC E-11 (REGRA #1 do CLAUDE.md aplica por analogia: não afirmar como
+   spec certificada sem fonte primária).
+   ========================================================================= */
+const AWG_TABLE = [
+  {awg:'20', ohmsPer1000ft:10.15},{awg:'18', ohmsPer1000ft:6.385},
+  {awg:'16', ohmsPer1000ft:4.016},{awg:'14', ohmsPer1000ft:2.525},
+  {awg:'12', ohmsPer1000ft:1.588},{awg:'10', ohmsPer1000ft:0.999},
+  {awg:'8',  ohmsPer1000ft:0.628},{awg:'6',  ohmsPer1000ft:0.395},
+  {awg:'4',  ohmsPer1000ft:0.249},{awg:'2',  ohmsPer1000ft:0.156},
+  {awg:'1',  ohmsPer1000ft:0.124},{awg:'1/0',ohmsPer1000ft:0.0983},
+  {awg:'2/0',ohmsPer1000ft:0.0779}
+]; // ordenado do mais fino pro mais grosso
+const POWER_TARGET_DROP_PCT = 0.03; // 3% — ABYC E-11 "circuito crítico" (eletrônica de navegação)
+
+/* =========================================================================
    RULES — validação Garmin
    ========================================================================= */
 const RULES = [
@@ -488,18 +508,19 @@ const RULES = [
    return issues;
  }},
 
-{id:'R-BN-01',name:'BlueNet 30 Gateway exigido para Marine Network legacy',severity:'error',
+{id:'R-BN-01',name:'BlueNet 30 Gateway/Adaptador exigido para Marine Network legacy',severity:'error',
  check:(project,api)=>{
    const issues=[];
-   // verifica se há nodes BlueNet conectados a nodes Marine Network sem passar por gateway
+   // verifica se há nodes BlueNet conectados a nodes Marine Network sem passar por gateway/adaptador
    const bnComps=api.getNetworkComponents(e=>api.edgeIsType(e,'bluenet'));
    const gmnComps=api.getNetworkComponents(e=>api.edgeIsType(e,'gmn'));
-   const hasBN=bnComps.length>0;
-   const hasGMN=gmnComps.length>0;
-   if(hasBN&&hasGMN){
-     const hasGateway=project.nodes.some(n=>{const d=api.getDeviceById(n.deviceId);return d&&/BlueNet\s*30/i.test(d.model)});
-     if(!hasGateway) issues.push({title:'Coexistência BlueNet + Marine Network sem gateway',msg:'Equipamento BlueNet (GPSMAP 9000) e Marine Network legacy não interoperam diretamente.',fix:'Adicionar BlueNet 30 Gateway entre as duas redes.'});
-   }
+   if(bnComps.length===0||gmnComps.length===0) return issues;
+   // nó-ponte: aparece num componente BlueNet E num componente Marine Network ao mesmo tempo —
+   // cobre tanto o BlueNet 30 Gateway (portas BlueNet+GarminMarineNet) quanto o cabo adaptador
+   // BlueNet -> RJ45 010-12531-01 (id 'cab-bn-rj45-adapter', mesmo par de portas)
+   const bnNodes=new Set(bnComps.flat());
+   const hasBridge=gmnComps.flat().some(uid=>bnNodes.has(uid));
+   if(!hasBridge) issues.push({title:'Coexistência BlueNet + Marine Network sem gateway',msg:'Equipamento BlueNet (GPSMAP 9000) e Marine Network legacy não interoperam diretamente.',fix:'Adicionar BlueNet 30 Gateway ou cabo adaptador BlueNet → RJ45 (010-12531-01) fazendo a ponte entre as duas redes.'});
    return issues;
  }},
 
@@ -589,6 +610,10 @@ const RULES = [
 {id:'R-J1939-01',name:'J1939 deve passar por gateway antes de N2K',severity:'error',
  check:(project,api)=>{
    const issues=[];
+   // conectividade real ignorando o tipo de porta — só possível existir ponte entre grupos de
+   // porta diferentes passando por um node com ambos os tipos, dado o COMPAT
+   const anyComps=api.getNetworkComponents(()=>true);
+   const n2kNodeSet=new Set(api.getNetworkComponents(e=>api.edgeIsType(e,'n2k')).flat());
    project.nodes.forEach(n=>{
      const d=api.getDeviceById(n.deviceId);
      if(!d) return;
@@ -596,6 +621,11 @@ const RULES = [
      if(!hasJ) return;
      const hasN2K=(d.ports||[]).some(p=>p.type==='N2K-Micro');
      if(hasN2K) return;
+     // barramentos J1939 totalmente isolados da rede N2K real (nenhum device do grupo a alcança)
+     // não entram nessa regra — ex: barramento CAN de motor próprio, sem ponte pro NMEA 2000 do barco
+     const myComp=anyComps.find(c=>c.includes(n.uid));
+     const nearN2K=myComp&&myComp.some(uid=>n2kNodeSet.has(uid));
+     if(!nearN2K) return;
      const eds=project.edges.filter(e=>e.fromNode===n.uid||e.toNode===n.uid);
      const ok=eds.some(e=>{
        const ouid=e.fromNode===n.uid?e.toNode:e.fromNode;
